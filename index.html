@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tanjung Setia - Portal Wisata & Booking Modern</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏄‍♂️</text></svg>">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       NAVBAR / HEADER
+       ========================================================================== -->
+  <header class="header" id="header">
+    <div class="container">
+      <a href="#home" class="logo" id="logoLink">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12,1.8C6.5,1.8,2,6.3,2,11.8s4.5,10,10,10c5.5,0,10-4.5,10-10S17.5,1.8,12,1.8z M12,19.8c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S16.4,19.8,12,19.8z"/>
+          <path d="M12.8,7.2c-0.8,0.2-1.3,0.9-1.3,1.7s0.5,1.5,1.3,1.7c0.8,0.2,1.3,0.9,1.3,1.7s-0.5,1.5-1.3,1.7v1.1h-1.5v-1.1c-0.8-0.2-1.3-0.9-1.3-1.7h1.5c0,0.4,0.3,0.7,0.7,0.7c0.4,0,0.7-0.3,0.7-0.7c0-0.4-0.3-0.7-0.7-0.7c-0.8-0.2-1.3-0.9-1.3-1.7s0.5-1.5,1.3-1.7V6.5h1.5v1.1c0.8,0.2,1.3,0.9,1.3,1.7H13.5C13.5,8.8,13.2,8.5,12.8,7.2L12.8,7.2z" style="display:none;"/>
+          <!-- Wave Icon SVG -->
+          <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M7 6l10 0" stroke="currentColor" stroke-width="1" stroke-linecap="round" style="display:none;"/>
+          <!-- Little Palm Tree leaf mock -->
+          <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        </svg>
+        <span>TANJUNG SETIA</span>
+      </a>
+
+      <!-- Desktop Nav Menu -->
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#home" class="nav-link active" data-target="home">Beranda</a></li>
+          <li><a href="#home#destinasi" class="nav-link" data-target="destinasi">Destinasi</a></li>
+          <li><a href="#home#paket" class="nav-link" data-target="paket">Paket Wisata</a></li>
+          <li><a href="#home#pemandu" class="nav-link" data-target="pemandu">Jasa Pemandu</a></li>
+          <li><a href="#home#galeri" class="nav-link" data-target="galeri">Galeri</a></li>
+          <li><a href="#home#artikel" class="nav-link" data-target="artikel">Artikel</a></li>
+          <li><a href="#home#tentang" class="nav-link" data-target="tentang">Tentang Kami</a></li>
+        </ul>
+      </nav>
+
+      <!-- Nav Actions -->
+      <div class="header-actions">
+        <a href="#booking" class="btn btn-primary" id="headerBookingBtn">
+          <i class="fa-solid fa-calendar-check"></i> Pesan Sekarang
+        </a>
+        <a href="#auth" class="profile-trigger" id="profileTrigger" title="Login / Register">
+          <i class="fa-solid fa-user"></i>
+        </a>
+        <div class="menu-toggle" id="menuToggle">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN APP CONTAINER (SPA SWAPPING VIEWS)
+       ========================================================================== -->
+  <main id="main-content">
+
+    <!-- ------------------------------------------------------------------------
+         VIEW 1: LANDING PAGE (HOME)
+         ------------------------------------------------------------------------ -->
+    <div id="view-home" class="spa-view">
+      
+      <!-- Hero Section -->
+      <section class="hero" id="hero">
+        <div class="hero-bg" id="heroBg" style="background-image: url('https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1920&q=80');"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+          <div class="hero-content">
+            <div class="hero-tag">
+              <span class="circle"></span>
+              <span>Destinasi Surfing & Pantai Kelas Dunia</span>
+            </div>
+            <h1>Temukan Keindahan<br><span class="text-gradient-orange">Tanjung Setia</span></h1>
+            <p class="subheadline">Nikmati pesona pantai eksotis, ombak legendaris, keindahan alam tropis, dan pengalaman wisata lokal yang tak terlupakan di Lampung Barat.</p>
+            <div class="hero-buttons">
+              <a href="#home#destinasi" class="btn btn-primary btn-lg">
+                <i class="fa-solid fa-compass"></i> Jelajahi Destinasi
+              </a>
+              <a href="#booking" class="btn btn-outline btn-lg">
+                <i class="fa-solid fa-ticket"></i> Pesan Tiket & Pemandu
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search Reservation Bar -->
+        <div class="search-bar-container">
+          <div class="search-bar bg-glass">
+            <div class="search-input-group">
+              <label for="search-dest"><i class="fa-solid fa-map-pin"></i> Mau menjelajah apa?</label>
+              <select id="search-dest">
+                <option value="">Pilih Destinasi / Paket</option>
+                <option value="surf">Paket Surfing Adventure</option>
+                <option value="beach">Paket Explore Beach</option>
+                <option value="sunset">Paket Sunset Experience</option>
+                <option value="family">Paket Wisata Keluarga</option>
+              </select>
+            </div>
+            <div class="search-input-group">
+              <label for="search-date"><i class="fa-solid fa-calendar"></i> Tanggal Kunjungan</label>
+              <input type="date" id="search-date">
+            </div>
+            <div class="search-input-group">
+              <label for="search-guests"><i class="fa-solid fa-users"></i> Jumlah Orang</label>
+              <select id="search-guests">
+                <option value="1">1 Orang</option>
+                <option value="2">2 Orang</option>
+                <option value="3">3 Orang</option>
+                <option value="4">4 Orang</option>
+                <option value="5">5+ Orang</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" id="searchBarBtn">
+              <i class="fa-solid fa-magnifying-glass"></i> Cari
+            </button>
+          </div>
+        </div>
+
+        <div class="scroll-indicator">
+          <span>Scroll ke bawah</span>
+          <div class="scroll-mouse">
+            <div class="scroll-wheel"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Destinasi Wisata -->
+      <section class="section-padding" id="destinasi">
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">Destinasi Populer</span>
+            <h2>Jelajahi Pesona Tanjung Setia</h2>
+            <p>Temukan tempat-tempat menarik dan pantai eksotis yang wajib Anda kunjungi.</p>
+          </div>
+
+          <div class="destinations-grid" id="destinationsGrid">
+            <!-- Dynamic cards injected by app.js (fallback/templates below) -->
+            <div class="dest-card">
+              <div class="dest-img-container">
+                <span class="badge badge-accent dest-badge"><i class="fa-solid fa-star"></i> 4.9</span>
+                <img src="https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=800&q=80" alt="Pantai Karang Nyimbor" class="dest-img">
+              </div>
+              <div class="dest-content">
+                <div class="dest-meta">
+                  <div class="dest-location"><i class="fa-solid fa-location-dot"></i> Pesisir Selatan, Lampung</div>
+                </div>
+                <h3 class="dest-title">Pantai Karang Nyimbor</h3>
+                <p class="dest-desc">Surga peselancar dunia dengan gulungan ombak legendaris (Ujung Bocur) setinggi 6-7 meter yang menantang adrenalin.</p>
+                <div class="dest-footer">
+                  <div>
+                    <span class="dest-price-label">Mulai dari</span>
+                    <div class="dest-price">Rp 15.000 <span style="font-size:0.8rem; color:var(--color-text-light); font-weight:500;">/org</span></div>
+                  </div>
+                  <button class="btn btn-secondary btn-sm view-detail-trigger" data-id="1">Lihat Detail</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="dest-card">
+              <div class="dest-img-container">
+                <span class="badge badge-accent dest-badge"><i class="fa-solid fa-star"></i> 4.8</span>
+                <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=800&q=80" alt="Pantai Way Jambu" class="dest-img">
+              </div>
+              <div class="dest-content">
+                <div class="dest-meta">
+                  <div class="dest-location"><i class="fa-solid fa-location-dot"></i> Way Jambu, Lampung</div>
+                </div>
+                <h3 class="dest-title">Pantai Way Jambu</h3>
+                <p class="dest-desc">Dikenal sebagai "The Pipeline" Lampung. Ombak besar yang sangat konsisten dengan hamparan pohon kelapa yang asri di tepian pasir.</p>
+                <div class="dest-footer">
+                  <div>
+                    <span class="dest-price-label">Mulai dari</span>
+                    <div class="dest-price">Rp 10.000 <span style="font-size:0.8rem; color:var(--color-text-light); font-weight:500;">/org</span></div>
+                  </div>
+                  <button class="btn btn-secondary btn-sm view-detail-trigger" data-id="2">Lihat Detail</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="dest-card">
+              <div class="dest-img-container">
+                <span class="badge badge-accent dest-badge"><i class="fa-solid fa-star"></i> 4.7</span>
+                <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=80" alt="Pantai Biha" class="dest-img">
+              </div>
+              <div class="dest-content">
+                <div class="dest-meta">
+                  <div class="dest-location"><i class="fa-solid fa-location-dot"></i> Biha, Lampung Barat</div>
+                </div>
+                <h3 class="dest-title">Pantai Biha & Pesisir</h3>
+                <p class="dest-desc">Pantai berpasir putih keemasan yang tenang, cocok untuk liburan keluarga, menikmati seafood segar, dan melihat perahu nelayan tradisional.</p>
+                <div class="dest-footer">
+                  <div>
+                    <span class="dest-price-label">Mulai dari</span>
+                    <div class="dest-price">Rp 10.000 <span style="font-size:0.8rem; color:var(--color-text-light); font-weight:500;">/org</span></div>
+                  </div>
+                  <button class="btn btn-secondary btn-sm view-detail-trigger" data-id="3">Lihat Detail</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Paket Wisata -->
+      <section class="section-padding" id="paket" style="background-color: var(--color-white);">
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-accent">Penawaran Spesial</span>
+            <h2>Pilih Pengalaman Wisatamu</h2>
+            <p>Berbagai pilihan paket wisata menarik yang dikurasi khusus untuk petualangan terbaik Anda.</p>
+          </div>
+
+          <div class="packages-grid" id="packagesGrid">
+            <!-- Package 1 -->
+            <div class="package-card popular">
+              <span class="popular-ribbon"><i class="fa-solid fa-fire"></i> Paling Populer</span>
+              <div class="package-img-container">
+                <img src="https://images.unsplash.com/photo-1455717974081-0436a537c1f1?auto=format&fit=crop&w=800&q=80" alt="Paket Surfing Adventure" class="package-img">
+              </div>
+              <div class="package-content">
+                <h3 class="package-title">Paket Surfing Adventure</h3>
+                <div class="package-meta-row">
+                  <div class="package-meta-item"><i class="fa-solid fa-clock"></i> 3 Hari 2 Malam</div>
+                  <div class="package-meta-item"><i class="fa-solid fa-user-group"></i> Min. 2 Orang</div>
+                </div>
+                <ul class="package-amenities">
+                  <li><i class="fa-solid fa-circle-check"></i> Menginap di Surf Camp Premium</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Papan Surfing & Pelatih Profesional</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Antar-jemput Spot Ombak Terbaik</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Makan 3x Sehari (Menu Khas Lokal)</li>
+                </ul>
+                <div class="package-price-box">
+                  <span class="price-label">Harga Spesial</span>
+                  <div class="price">Rp 2.450.000 <span>/ pax</span></div>
+                </div>
+                <button class="btn btn-primary btn-block select-package-booking" data-package="surf">Pesan Sekarang</button>
+              </div>
+            </div>
+
+            <!-- Package 2 -->
+            <div class="package-card">
+              <div class="package-img-container">
+                <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80" alt="Paket Explore Beach" class="package-img">
+              </div>
+              <div class="package-content">
+                <h3 class="package-title">Paket Explore Beach</h3>
+                <div class="package-meta-row">
+                  <div class="package-meta-item"><i class="fa-solid fa-clock"></i> 2 Hari 1 Malam</div>
+                  <div class="package-meta-item"><i class="fa-solid fa-user-group"></i> Min. 3 Orang</div>
+                </div>
+                <ul class="package-amenities">
+                  <li><i class="fa-solid fa-circle-check"></i> Homestay AC Pinggir Pantai</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Tour Guide Lokal berpengalaman</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Sewa Sepeda Motor / Mobil Offroad</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Dokumentasi Foto DSLR & Drone</li>
+                </ul>
+                <div class="package-price-box">
+                  <span class="price-label">Harga Mulai</span>
+                  <div class="price">Rp 1.200.000 <span>/ pax</span></div>
+                </div>
+                <button class="btn btn-secondary btn-block select-package-booking" data-package="beach">Pesan Sekarang</button>
+              </div>
+            </div>
+
+            <!-- Package 3 -->
+            <div class="package-card">
+              <div class="package-img-container">
+                <img src="https://images.unsplash.com/photo-1495954484750-af469f2f9be5?auto=format&fit=crop&w=800&q=80" alt="Paket Sunset Experience" class="package-img">
+              </div>
+              <div class="package-content">
+                <h3 class="package-title">Paket Sunset & Culture</h3>
+                <div class="package-meta-row">
+                  <div class="package-meta-item"><i class="fa-solid fa-clock"></i> 1 Hari (Full Day)</div>
+                  <div class="package-meta-item"><i class="fa-solid fa-user-group"></i> Tanpa Minimal</div>
+                </div>
+                <ul class="package-amenities">
+                  <li><i class="fa-solid fa-circle-check"></i> Transportasi keliling desa</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Kulineran Seafood di tepi pantai</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Kunjungan Sentra Kerajinan Tapis</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Welcome drink kelapa muda segar</li>
+                </ul>
+                <div class="package-price-box">
+                  <span class="price-label">Harga Tiket</span>
+                  <div class="price">Rp 450.000 <span>/ pax</span></div>
+                </div>
+                <button class="btn btn-secondary btn-block select-package-booking" data-package="sunset">Pesan Sekarang</button>
+              </div>
+            </div>
+
+            <!-- Package 4 -->
+            <div class="package-card">
+              <div class="package-img-container">
+                <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800&q=80" alt="Paket Wisata Keluarga" class="package-img">
+              </div>
+              <div class="package-content">
+                <h3 class="package-title">Paket Wisata Keluarga</h3>
+                <div class="package-meta-row">
+                  <div class="package-meta-item"><i class="fa-solid fa-clock"></i> 3 Hari 2 Malam</div>
+                  <div class="package-meta-item"><i class="fa-solid fa-user-group"></i> Min. 4 Orang</div>
+                </div>
+                <ul class="package-amenities">
+                  <li><i class="fa-solid fa-circle-check"></i> Vila Keluarga dengan Private Pool</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Tour Edukasi Penyu (Kawasan Konservasi)</li>
+                  <li><i class="fa-solid fa-circle-check"></i> BBQ Party di Pinggir Pantai malam hari</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Ramah anak & lansia, full asuransi</li>
+                </ul>
+                <div class="package-price-box">
+                  <span class="price-label">Harga Mulai</span>
+                  <div class="price">Rp 1.850.000 <span>/ pax</span></div>
+                </div>
+                <button class="btn btn-secondary btn-block select-package-booking" data-package="family">Pesan Sekarang</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Jasa Pemandu -->
+      <section class="section-padding" id="pemandu">
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">Pemandu Lokal Berlisensi</span>
+            <h2>Jelajahi Bersama Pemandu Lokal</h2>
+            <p>Rasakan petualangan otentik dipandu oleh warga lokal yang mengenal seluk beluk Tanjung Setia luar dalam.</p>
+          </div>
+
+          <div class="guides-grid">
+            <!-- Guide 1 -->
+            <div class="guide-card">
+              <div class="guide-avatar-box">
+                <div class="guide-avatar-ring"></div>
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&h=300&q=80" alt="Yudi Antara" class="guide-avatar">
+                <span class="guide-status" title="Tersedia"></span>
+              </div>
+              <h3 class="guide-name">Yudi Antara</h3>
+              <span class="badge badge-primary guide-badge">Surfing Coach</span>
+              <div class="rating-stars guide-rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <span style="color:var(--color-text-light); font-size:0.8rem; font-weight:600; margin-left:4px;">(48 Ulasan)</span>
+              </div>
+              <div class="guide-info-list">
+                <div class="guide-info-item">
+                  <span class="info-label">Pengalaman</span>
+                  <span class="info-value">8 Tahun</span>
+                </div>
+                <div class="guide-info-item">
+                  <span class="info-label">Bahasa</span>
+                  <span class="info-value">ID, EN</span>
+                </div>
+              </div>
+              <div class="guide-price-section">
+                <span class="guide-price-label">Tarif Jasa</span>
+                <div class="guide-price">Rp 350.000 <span>/ hari</span></div>
+              </div>
+              <button class="btn btn-secondary btn-block book-guide-trigger" data-guide="Yudi Antara">Pesan Pemandu</button>
+            </div>
+
+            <!-- Guide 2 -->
+            <div class="guide-card">
+              <div class="guide-avatar-box">
+                <div class="guide-avatar-ring"></div>
+                <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&h=300&q=80" alt="Rian Kurniawan" class="guide-avatar">
+                <span class="guide-status" title="Tersedia"></span>
+              </div>
+              <h3 class="guide-name">Rian Kurniawan</h3>
+              <span class="badge badge-primary guide-badge">Nature & Trekking</span>
+              <div class="rating-stars guide-rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half-stroke"></i>
+                <span style="color:var(--color-text-light); font-size:0.8rem; font-weight:600; margin-left:4px;">(32 Ulasan)</span>
+              </div>
+              <div class="guide-info-list">
+                <div class="guide-info-item">
+                  <span class="info-label">Pengalaman</span>
+                  <span class="info-value">5 Tahun</span>
+                </div>
+                <div class="guide-info-item">
+                  <span class="info-label">Bahasa</span>
+                  <span class="info-value">ID, EN, JP</span>
+                </div>
+              </div>
+              <div class="guide-price-section">
+                <span class="guide-price-label">Tarif Jasa</span>
+                <div class="guide-price">Rp 250.000 <span>/ hari</span></div>
+              </div>
+              <button class="btn btn-secondary btn-block book-guide-trigger" data-guide="Rian Kurniawan">Pesan Pemandu</button>
+            </div>
+
+            <!-- Guide 3 -->
+            <div class="guide-card">
+              <div class="guide-avatar-box">
+                <div class="guide-avatar-ring"></div>
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&h=300&q=80" alt="Santi Rahayu" class="guide-avatar">
+                <span class="guide-status" title="Tersedia"></span>
+              </div>
+              <h3 class="guide-name">Santi Rahayu</h3>
+              <span class="badge badge-primary guide-badge">Culture & Foodies</span>
+              <div class="rating-stars guide-rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <span style="color:var(--color-text-light); font-size:0.8rem; font-weight:600; margin-left:4px;">(54 Ulasan)</span>
+              </div>
+              <div class="guide-info-list">
+                <div class="guide-info-item">
+                  <span class="info-label">Pengalaman</span>
+                  <span class="info-value">6 Tahun</span>
+                </div>
+                <div class="guide-info-item">
+                  <span class="info-label">Bahasa</span>
+                  <span class="info-value">ID, EN</span>
+                </div>
+              </div>
+              <div class="guide-price-section">
+                <span class="guide-price-label">Tarif Jasa</span>
+                <div class="guide-price">Rp 250.000 <span>/ hari</span></div>
+              </div>
+              <button class="btn btn-secondary btn-block book-guide-trigger" data-guide="Santi Rahayu">Pesan Pemandu</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Kenapa Harus Tanjung Setia? -->
+      <section class="section-padding why-section" id="tentang">
+        <div class="why-bg-overlay"></div>
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-accent">Keunggulan Kami</span>
+            <h2>Mengapa Harus Tanjung Setia?</h2>
+            <p>Pengalaman liburan tropis terbaik yang tidak bisa Anda temukan di tempat lain.</p>
+          </div>
+
+          <div class="why-grid">
+            <div class="why-card">
+              <div class="why-icon-box">
+                <i class="fa-solid fa-water"></i>
+              </div>
+              <h4 class="why-card-title">Pantai & Ombak Indah</h4>
+              <p class="why-card-desc">Pasir keemasan yang bersih berpadu dengan air laut biru jernih dan formasi batuan karang yang menawan.</p>
+            </div>
+
+            <div class="why-card">
+              <div class="why-icon-box">
+                <i class="fa-solid fa-person-surfing"></i>
+              </div>
+              <h4 class="why-card-title">Destinasi Surfing Dunia</h4>
+              <p class="why-card-desc">Ombak bergulir sempurna sepanjang 200 meter yang sangat populer di kalangan peselancar internasional.</p>
+            </div>
+
+            <div class="why-card">
+              <div class="why-icon-box">
+                <i class="fa-solid fa-tree"></i>
+              </div>
+              <h4 class="why-card-title">Alam yang Eksotis</h4>
+              <p class="why-card-desc">Dikelilingi kebun kelapa rimbun, hutan adat yang asri, serta kawasan konservasi penyu yang mengedukasi.</p>
+            </div>
+
+            <div class="why-card">
+              <div class="why-icon-box">
+                <i class="fa-solid fa-handshake-angle"></i>
+              </div>
+              <h4 class="why-card-title">Wisata Budaya Lokal</h4>
+              <p class="why-card-desc">Rasakan keramahtamahan warga lokal, pertunjukan seni adat Lampung, dan kelezatan seafood bakar segar.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Galeri -->
+      <section class="section-padding" id="galeri">
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">Sudut Visual</span>
+            <h2>Galeri Keindahan Alam</h2>
+            <p>Intip sedikit pesona pantai, sunset, dan keseruan aktivitas wisatawan di Tanjung Setia.</p>
+          </div>
+
+          <div class="gallery-filter">
+            <button class="gallery-filter-btn active" data-filter="all">Semua Foto</button>
+            <button class="gallery-filter-btn" data-filter="pantai">Pantai</button>
+            <button class="gallery-filter-btn" data-filter="surfing">Surfing</button>
+            <button class="gallery-filter-btn" data-filter="sunset">Sunset</button>
+            <button class="gallery-filter-btn" data-filter="aktivitas">Aktivitas</button>
+          </div>
+
+          <div class="gallery-grid">
+            <!-- 1 -->
+            <div class="gallery-item tall" data-category="surfing">
+              <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=500&q=80" alt="Surfing Action">
+              <div class="gallery-overlay">
+                <span class="gallery-tag">Surfing</span>
+                <h4 class="gallery-title">Menembus Ombak Ujung Bocur</h4>
+              </div>
+            </div>
+            <!-- 2 -->
+            <div class="gallery-item wide" data-category="sunset">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Sunset Beach">
+              <div class="gallery-overlay">
+                <span class="gallery-tag">Sunset</span>
+                <h4 class="gallery-title">Matahari Terbenam Keemasan di Pesisir Barat</h4>
+              </div>
+            </div>
+            <!-- 3 -->
+            <div class="gallery-item" data-category="pantai">
+              <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=500&q=80" alt="Coconut tree beach">
+              <div class="gallery-overlay">
+                <span class="gallery-tag">Pantai</span>
+                <h4 class="gallery-title">Pohon Kelapa Teduh Way Jambu</h4>
+              </div>
+            </div>
+            <!-- 4 -->
+            <div class="gallery-item" data-category="aktivitas">
+              <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80" alt="Beach walking">
+              <div class="gallery-overlay">
+                <span class="gallery-tag">Aktivitas</span>
+                <h4 class="gallery-title">Menyusuri Pasir Putih Bersama Pasangan</h4>
+              </div>
+            </div>
+            <!-- 5 -->
+            <div class="gallery-item" data-category="pantai">
+              <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=500&q=80" alt="Traditional boat">
+              <div class="gallery-overlay">
+                <span class="gallery-tag">Pantai</span>
+                <h4 class="gallery-title">Perahu Nelayan Tradisional di Biha</h4>
+              </div>
+            </div>
+            <!-- 6 -->
+            <div class="gallery-item wide" data-category="surfing">
+              <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=800&q=80" alt="Surfer diving">
+              <div class="gallery-overlay">
+                <span class="gallery-tag">Surfing</span>
+                <h4 class="gallery-title">Eksplorasi Keindahan Laut Bawah Air</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-cta">
+            <button class="btn btn-secondary" id="seeAllGalleryBtn"><i class="fa-solid fa-images"></i> Lihat Semua Galeri</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Artikel Wisata -->
+      <section class="section-padding" id="artikel" style="background-color: var(--color-white);">
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">Informasi & Edukasi</span>
+            <h2>Cerita & Informasi Tanjung Setia</h2>
+            <p>Temukan tips perjalanan menarik, kabar desa wisata terbaru, dan panduan liburan di sini.</p>
+          </div>
+
+          <div class="articles-grid">
+            <!-- Article 1 -->
+            <article class="article-card">
+              <div class="article-img-box">
+                <span class="article-category">Tips Wisata</span>
+                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=500&q=80" alt="Tips Wisata" class="article-img">
+              </div>
+              <div class="article-content">
+                <span class="article-date"><i class="fa-solid fa-clock"></i> 10 Agustus 2026</span>
+                <h3 class="article-title">Panduan Lengkap Backpacker ke Tanjung Setia dari Jakarta</h3>
+                <p class="article-desc">Ingin liburan murah ke Lampung Barat? Simak rute perjalanan bus, kapal penyeberangan, hingga penginapan backpacker hemat.</p>
+                <a href="#home#artikel" class="article-link">Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="article-card">
+              <div class="article-img-box">
+                <span class="article-category">Surfing</span>
+                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=500&q=80" alt="Surfing Guide" class="article-img">
+              </div>
+              <div class="article-content">
+                <span class="article-date"><i class="fa-solid fa-clock"></i> 28 Juli 2026</span>
+                <h3 class="article-title">Musim Ombak Terbaik di Tanjung Setia untuk Peselancar Pemula</h3>
+                <p class="article-desc">Jangan salah bulan berkunjung! Ketahui grafik pasang surut air laut dan bulan-bulan terbaik untuk berselancar aman bagi pemula.</p>
+                <a href="#home#artikel" class="article-link">Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </article>
+
+            <!-- Article 3 -->
+            <article class="article-card">
+              <div class="article-img-box">
+                <span class="article-category">Budaya</span>
+                <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=500&q=80" alt="Culture" class="article-img">
+              </div>
+              <div class="article-content">
+                <span class="article-date"><i class="fa-solid fa-clock"></i> 15 Juli 2026</span>
+                <h3 class="article-title">Mengenal Tradisi Kerajinan Kain Tapis Khas Pesisir Barat</h3>
+                <p class="article-desc">Eksplorasi nilai historis di balik tenunan emas kain tradisional Tapis Lampung Barat yang dibuat secara manual dengan penuh kesabaran.</p>
+                <a href="#home#artikel" class="article-link">Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Booking CTA Banner -->
+      <section class="booking-cta" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');">
+        <div class="booking-cta-overlay"></div>
+        <div class="container">
+          <h2>Siap Memulai Petualangan?</h2>
+          <p>Dapatkan diskon paket hemat pariwisata Tanjung Setia dengan melakukan reservasi online hari ini.</p>
+          <a href="#booking" class="btn btn-primary btn-lg"><i class="fa-solid fa-paper-plane"></i> Mulai Pemesanan Sekarang</a>
+        </div>
+      </section>
+
+    </div>
+
+
+    <!-- ------------------------------------------------------------------------
+         VIEW 2: DETAIL DESTINASI WISATA
+         ------------------------------------------------------------------------ -->
+    <div id="view-detail" class="spa-view hidden">
+      <section class="detail-view section-padding">
+        <div class="container">
+          
+          <a href="#home" class="detail-back-btn" id="detailBackBtn"><i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda</a>
+          
+          <div class="detail-header" id="detailHeaderArea">
+            <!-- Dynamic Injection of Header -->
+            <div class="detail-title-row">
+              <h1 id="detailTitle">Pantai Karang Nyimbor</h1>
+              <div class="detail-price-tag">
+                <span class="label">Harga Tiket Masuk</span>
+                <div class="price" id="detailPrice">Rp 15.000 <span>/ org</span></div>
+              </div>
+            </div>
+            <div class="detail-meta">
+              <div class="detail-meta-item"><i class="fa-solid fa-location-dot"></i> <span id="detailLocation">Pesisir Selatan, Lampung</span></div>
+              <div class="detail-meta-item"><i class="fa-solid fa-star" style="color:var(--color-sunset-orange);"></i> <span id="detailRating">4.9 / 5.0 (Rating Warga)</span></div>
+              <div class="detail-meta-item"><i class="fa-solid fa-clock"></i> <span id="detailHours">Buka 24 Jam</span></div>
+            </div>
+          </div>
+
+          <div class="detail-hero-img-box">
+            <img src="" alt="Hero Destination Image" id="detailHeroImg">
+          </div>
+
+          <div class="detail-layout">
+            <!-- Left Main Column -->
+            <div class="detail-main">
+              <h3>Deskripsi Destinasi</h3>
+              <p id="detailLongDesc">Loading deskripsi destinasi...</p>
+              
+              <h3>Fasilitas Pendukung</h3>
+              <div class="detail-amenities-grid" id="detailAmenities">
+                <!-- Injected facilities -->
+                <div class="detail-amenity-card"><i class="fa-solid fa-square-parking"></i> Parkir Luas</div>
+                <div class="detail-amenity-card"><i class="fa-solid fa-restroom"></i> Toilet & Shower</div>
+                <div class="detail-amenity-card"><i class="fa-solid fa-campground"></i> Gazebo / Surf camp</div>
+                <div class="detail-amenity-card"><i class="fa-solid fa-utensils"></i> Warung Makan Lokal</div>
+              </div>
+
+              <h3>Galeri Foto</h3>
+              <div class="detail-gallery-grid" id="detailGalleryThumbs">
+                <!-- Injected thumbnails -->
+              </div>
+
+              <h3>Lokasi Peta Wisata</h3>
+              <div class="detail-map-mock">
+                <!-- Mock Map Iframe for Lampung Barat/Tanjung Setia -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15915.228129849503!2d103.99268800971033!3d-5.202357774776106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e4745a5578a1bc1%3A0xe543e33f380145ef!2sTanjung%20Setia%20Beach!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </div>
+
+            <!-- Right Sidebar Panel -->
+            <div class="detail-sidebar">
+              <div class="detail-sidebar-card">
+                <h4>Informasi Tiket</h4>
+                <div class="sidebar-info-row">
+                  <span class="label">Kategori Destinasi</span>
+                  <span class="val" id="detailCategory">Wisata Pantai / Surfing</span>
+                </div>
+                <div class="sidebar-info-row">
+                  <span class="label">Aksesibilitas Jalan</span>
+                  <span class="val">Mudah (Aspal Mulus)</span>
+                </div>
+                <div class="sidebar-info-row">
+                  <span class="label">Kebersihan</span>
+                  <span class="val"><i class="fa-solid fa-circle-check" style="color:var(--color-success);"></i> Terawat</span>
+                </div>
+                <div style="margin-top: 1.5rem;">
+                  <button class="btn btn-primary btn-block" id="detailBookNowBtn"><i class="fa-solid fa-ticket"></i> Pesan Layanan Sekarang</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Related Package Grid -->
+          <div class="detail-related-section">
+            <h3 style="font-family:var(--font-secondary); font-size:1.8rem; color:var(--color-deep-navy); margin-bottom:1.5rem; text-align:center;">Paket Terkait Yang Direkomendasikan</h3>
+            <div class="packages-grid" id="detailRelatedPackages">
+              <!-- Injected by app.js -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ------------------------------------------------------------------------
+         VIEW 3: BOOKING WIZARD (MULTI-STEP)
+         ------------------------------------------------------------------------ -->
+    <div id="view-booking" class="spa-view hidden">
+      <section class="booking-view section-padding">
+        <div class="container">
+          
+          <!-- Steps Bar -->
+          <div class="booking-steps-bar">
+            <div class="booking-steps-progress-line"></div>
+            <div class="booking-steps-progress-active-line" id="bookingStepsProgress"></div>
+            
+            <div class="booking-step-item active" data-step="1">
+              <div class="booking-step-circle">1</div>
+              <span class="booking-step-label">Layanan</span>
+            </div>
+            <div class="booking-step-item" data-step="2">
+              <div class="booking-step-circle">2</div>
+              <span class="booking-step-label">Data Pemesan</span>
+            </div>
+            <div class="booking-step-item" data-step="3">
+              <div class="booking-step-circle">3</div>
+              <span class="booking-step-label">Konfirmasi</span>
+            </div>
+            <div class="booking-step-item" data-step="4">
+              <div class="booking-step-circle">4</div>
+              <span class="booking-step-label">Selesai</span>
+            </div>
+          </div>
+
+          <!-- Booking Content Form & Summary Grid -->
+          <div class="booking-layout" id="bookingMainLayout">
+            <!-- Left Side Forms -->
+            <div class="booking-form-container">
+              
+              <!-- STEP 1: PILIH LAYANAN -->
+              <div class="booking-step-view" id="booking-step-1">
+                <h3>Pilih Paket & Layanan Wisata</h3>
+                <div class="service-cards-selector">
+                  <div class="service-select-card selected" data-value="surf" data-price="2450000">
+                    <input type="radio" name="booking-service" id="svc-surf" value="surf" checked>
+                    <div class="service-select-card-details">
+                      <h5>Paket Surfing Adventure <span class="badge badge-accent" style="margin-left: 5px;">Terlaris</span></h5>
+                      <p>Homestay, papan selancar, pelatih profesional & antar jemput spot</p>
+                    </div>
+                    <div class="service-select-card-price">Rp 2.450.000 <span style="font-size:0.75rem; font-weight:500; color:var(--color-text-light);">/ pax</span></div>
+                  </div>
+
+                  <div class="service-select-card" data-value="beach" data-price="1200000">
+                    <input type="radio" name="booking-service" id="svc-beach" value="beach">
+                    <div class="service-select-card-details">
+                      <h5>Paket Explore Beach</h5>
+                      <p>Vila, pemandu lokal, sewa motor & dokumentasi lengkap</p>
+                    </div>
+                    <div class="service-select-card-price">Rp 1.200.000 <span style="font-size:0.75rem; font-weight:500; color:var(--color-text-light);">/ pax</span></div>
+                  </div>
+
+                  <div class="service-select-card" data-value="sunset" data-price="450000">
+                    <input type="radio" name="booking-service" id="svc-sunset" value="sunset">
+                    <div class="service-select-card-details">
+                      <h5>Paket Sunset & Culture</h5>
+                      <p>Kuliner seafood tepi pantai, keliling desa adat & tenun Tapis</p>
+                    </div>
+                    <div class="service-select-card-price">Rp 450.000 <span style="font-size:0.75rem; font-weight:500; color:var(--color-text-light);">/ pax</span></div>
+                  </div>
+
+                  <div class="service-select-card" data-value="family" data-price="1850000">
+                    <input type="radio" name="booking-service" id="svc-family" value="family">
+                    <div class="service-select-card-details">
+                      <h5>Paket Wisata Keluarga</h5>
+                      <p>Vila privat, konservasi edukasi penyu & pesta BBQ</p>
+                    </div>
+                    <div class="service-select-card-price">Rp 1.850.000 <span style="font-size:0.75rem; font-weight:500; color:var(--color-text-light);">/ pax</span></div>
+                  </div>
+                </div>
+
+                <h3>Tambahan Opsional</h3>
+                <div class="form-grid">
+                  <div class="form-group-full">
+                    <label class="checkbox-container">
+                      <input type="checkbox" id="chk-guide" value="350000">
+                      <span>Jasa Pemandu Surfing Eksklusif (+ Rp 350.000/hari)</span>
+                    </label>
+                  </div>
+                  <div class="form-group-full">
+                    <label class="checkbox-container">
+                      <input type="checkbox" id="chk-photo" value="250000">
+                      <span>Dokumentasi Drone & Video Sinematik (+ Rp 250.000)</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STEP 2: DATA PEMESAN -->
+              <div class="booking-step-view hidden" id="booking-step-2">
+                <h3>Isi Data Pemesan</h3>
+                <div class="form-grid">
+                  <div class="form-group form-group-full">
+                    <label for="book-name">Nama Lengkap <span class="required">*</span></label>
+                    <input type="text" id="book-name" class="form-control" placeholder="Masukkan nama lengkap Anda">
+                    <span class="form-error-msg hidden" id="err-name">Nama wajib diisi</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="book-phone">Nomor WhatsApp <span class="required">*</span></label>
+                    <input type="tel" id="book-phone" class="form-control" placeholder="Contoh: 081234567890">
+                    <span class="form-error-msg hidden" id="err-phone">Nomor WhatsApp tidak valid</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="book-email">Alamat Email <span class="required">*</span></label>
+                    <input type="email" id="book-email" class="form-control" placeholder="Contoh: nama@domain.com">
+                    <span class="form-error-msg hidden" id="err-email">Email tidak valid</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="book-date">Tanggal Kunjungan <span class="required">*</span></label>
+                    <input type="date" id="book-date" class="form-control">
+                    <span class="form-error-msg hidden" id="err-date">Pilih tanggal kunjungan</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="book-guests">Jumlah Wisatawan <span class="required">*</span></label>
+                    <input type="number" id="book-guests" class="form-control" value="1" min="1" max="100">
+                    <span class="form-error-msg hidden" id="err-guests">Jumlah wisatawan minimal 1 orang</span>
+                  </div>
+                  <div class="form-group form-group-full">
+                    <label for="book-notes">Catatan Tambahan (Opsional)</label>
+                    <textarea id="book-notes" class="form-control" placeholder="Tuliskan permintaan khusus Anda di sini (misal: menu vegetarian, penjemputan bandara, dll.)"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STEP 3: KONFIRMASI -->
+              <div class="booking-step-view hidden" id="booking-step-3">
+                <h3>Konfirmasi Detail Pemesanan</h3>
+                <p style="font-size:0.95rem; color:var(--color-text-medium); margin-bottom: 1.5rem;">Silakan periksa kembali semua informasi sebelum melakukan konfirmasi pemesanan.</p>
+                
+                <div class="confirm-review-box">
+                  <div class="confirm-review-title">
+                    <i class="fa-solid fa-suitcase"></i> Paket Layanan Utama
+                  </div>
+                  <div class="confirm-grid">
+                    <div class="confirm-item"><span class="label">Paket Wisata: </span><span class="val" id="conf-package">Loading...</span></div>
+                    <div class="confirm-item"><span class="label">Tarif Utama: </span><span class="val" id="conf-base-price">Loading...</span></div>
+                  </div>
+                </div>
+
+                <div class="confirm-review-box">
+                  <div class="confirm-review-title">
+                    <i class="fa-solid fa-circle-info"></i> Layanan Tambahan (Add-ons)
+                  </div>
+                  <div id="conf-addons-list" style="font-size:0.875rem; color:var(--color-text-dark); font-weight:600;">
+                    Tidak ada layanan tambahan
+                  </div>
+                </div>
+
+                <div class="confirm-review-box">
+                  <div class="confirm-review-title">
+                    <i class="fa-solid fa-user-tag"></i> Data Personal Pemesan
+                  </div>
+                  <div class="confirm-grid">
+                    <div class="confirm-item"><span class="label">Nama: </span><span class="val" id="conf-name">Loading...</span></div>
+                    <div class="confirm-item"><span class="label">WhatsApp: </span><span class="val" id="conf-phone">Loading...</span></div>
+                    <div class="confirm-item"><span class="label">Email: </span><span class="val" id="conf-email">Loading...</span></div>
+                    <div class="confirm-item"><span class="label">Tanggal Kunjungan: </span><span class="val" id="conf-date">Loading...</span></div>
+                    <div class="confirm-item"><span class="label">Jumlah Tamu: </span><span class="val" id="conf-guests">Loading...</span></div>
+                  </div>
+                </div>
+
+                <div class="confirm-review-box">
+                  <div class="confirm-review-title">
+                    <i class="fa-solid fa-note-sticky"></i> Catatan Tambahan
+                  </div>
+                  <p id="conf-notes" style="font-size:0.875rem; font-weight:600; color:var(--color-text-dark); font-style:italic;">Tidak ada catatan tambahan</p>
+                </div>
+              </div>
+
+              <!-- Navigation Action Buttons -->
+              <div class="booking-nav-buttons">
+                <button class="btn btn-secondary" id="btn-prev" disabled><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+                <button class="btn btn-primary" id="btn-next">Lanjutkan <i class="fa-solid fa-arrow-right"></i></button>
+              </div>
+
+            </div>
+
+            <!-- Right Side Persistent Order Summary Panel -->
+            <div class="order-summary-card" id="bookingSummaryCard">
+              <h4>Rincian Pembayaran</h4>
+              <div class="summary-details-list">
+                <div class="summary-detail-item">
+                  <span class="label">Paket Terpilih</span>
+                  <span class="val" id="sum-pkg-name">Paket Surfing Adventure</span>
+                </div>
+                <div class="summary-detail-item">
+                  <span class="label">Harga Satuan</span>
+                  <span class="val" id="sum-pkg-price">Rp 2.450.000</span>
+                </div>
+                <div class="summary-detail-item">
+                  <span class="label">Jumlah Wisatawan</span>
+                  <span class="val" id="sum-guests">1 Orang</span>
+                </div>
+                <div class="summary-detail-item">
+                  <span class="label">Subtotal Paket</span>
+                  <span class="val" id="sum-pkg-subtotal">Rp 2.450.000</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-detail-item" id="sum-addon-guide-row" style="display:none;">
+                  <span class="label">Jasa Pemandu</span>
+                  <span class="val" id="sum-addon-guide">Rp 350.000</span>
+                </div>
+                <div class="summary-detail-item" id="sum-addon-photo-row" style="display:none;">
+                  <span class="label">Dokumentasi Video</span>
+                  <span class="val" id="sum-addon-photo">Rp 250.000</span>
+                </div>
+              </div>
+              <div class="summary-divider"></div>
+              <div class="summary-total">
+                <span class="label">Total Estimasi</span>
+                <span class="val" id="sum-total">Rp 2.450.000</span>
+              </div>
+              <div style="font-size:0.75rem; color:var(--color-text-light); text-align:center; margin-top: 1rem; font-weight:600;">
+                *Pembayaran diverifikasi manual oleh pengelola pasca pemesanan.
+              </div>
+            </div>
+          </div>
+
+          <!-- SUCCESS SCREEN (STEP 4) -->
+          <div class="booking-success-wrapper hidden" id="bookingSuccessScreen">
+            <div class="success-icon-box">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <h2>Pemesanan Berhasil!</h2>
+            <p>Terima kasih atas kepercayaan Anda. Reservasi Anda telah diterima oleh sistem dan sedang menunggu konfirmasi admin.</p>
+            
+            <div class="booking-code-card">
+              <span class="code-label">Kode Booking</span>
+              <span class="code-val" id="bookingSuccessCode">TS-2026-0811</span>
+            </div>
+
+            <div class="booking-success-info">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <strong>Informasi Langkah Selanjutnya:</strong><br>
+              Pengelola desa wisata akan menghubungi Anda secara langsung melalui WhatsApp/Email dalam kurun waktu maks. 24 jam untuk verifikasi kedatangan dan mengirimkan panduan perjalanan.
+            </div>
+
+            <div class="booking-success-actions">
+              <a href="#home" class="btn btn-primary"><i class="fa-solid fa-house"></i> Kembali Ke Beranda</a>
+              <a href="#home#artikel" class="btn btn-secondary"><i class="fa-solid fa-book"></i> Baca Panduan Wisata</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ------------------------------------------------------------------------
+         VIEW 4: LOGIN / REGISTER PORTAL
+         ------------------------------------------------------------------------ -->
+    <div id="view-auth" class="spa-view hidden">
+      <section class="auth-view">
+        <!-- Visual side -->
+        <div class="auth-visual-side" style="background-image: url('https://images.unsplash.com/photo-1455717974081-0436a537c1f1?auto=format&fit=crop&w=1000&q=80');">
+          <div class="auth-visual-overlay"></div>
+          <div class="auth-visual-logo">
+            <a href="#home" class="logo">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              </svg>
+              <span>TANJUNG SETIA</span>
+            </a>
+          </div>
+          <div class="auth-visual-quote">
+            <h2>Petualangan Tropis<br>Telah Menantimu.</h2>
+            <p>"Menikmati deburan ombak terbaik dengan balutan kenyamanan kultur lokal Pesisir Barat Lampung."</p>
+          </div>
+          <div class="auth-visual-footer">
+            &copy; 2026 Desa Wisata Tanjung Setia. All Rights Reserved.
+          </div>
+        </div>
+
+        <!-- Form side -->
+        <div class="auth-form-side">
+          <div class="auth-form-box">
+            
+            <!-- Login Form view -->
+            <div id="auth-login-box">
+              <h3>Selamat Datang Kembali</h3>
+              <p class="auth-subtitle">Belum punya akun? <a href="#" id="authGoRegister">Daftar Sekarang</a></p>
+              
+              <!-- Simulated credentials banner info -->
+              <div style="background-color: rgba(24,183,176,0.06); border:1px solid rgba(24,183,176,0.2); padding: 0.75rem; border-radius: var(--border-radius-sm); margin-bottom:1.5rem; font-size:0.8rem; color:var(--color-text-medium);">
+                <strong>Login Uji Coba (Admin):</strong><br>
+                Email: <code>admin@tanjungsetia.com</code><br>
+                Password: <code>admin123</code>
+              </div>
+
+              <div class="auth-toast hidden" id="loginToast"></div>
+
+              <form id="loginForm" onsubmit="return false;">
+                <div class="form-grid" style="grid-template-cols: 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
+                  <div class="form-group">
+                    <label for="login-email">Alamat Email</label>
+                    <input type="email" id="login-email" class="form-control" placeholder="Masukkan alamat email Anda" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="login-password">Kata Sandi</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="Masukkan kata sandi Anda" required>
+                  </div>
+                </div>
+
+                <div class="auth-extra-actions">
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="login-remember">
+                    <span>Ingat Saya</span>
+                  </label>
+                  <a href="#" class="forgot-link">Lupa Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Masuk Ke Akun</button>
+              </form>
+            </div>
+
+            <!-- Register Form view -->
+            <div id="auth-register-box" class="hidden">
+              <h3>Daftar Akun Baru</h3>
+              <p class="auth-subtitle">Sudah punya akun? <a href="#" id="authGoLogin">Masuk</a></p>
+              
+              <div class="auth-toast hidden" id="registerToast"></div>
+
+              <form id="registerForm" onsubmit="return false;">
+                <div class="form-grid" style="grid-template-cols: 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
+                  <div class="form-group">
+                    <label for="reg-name">Nama Lengkap</label>
+                    <input type="text" id="reg-name" class="form-control" placeholder="Contoh: Budi Santoso" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="reg-email">Alamat Email</label>
+                    <input type="email" id="reg-email" class="form-control" placeholder="Contoh: budi@gmail.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="reg-password">Kata Sandi</label>
+                    <input type="password" id="reg-password" class="form-control" placeholder="Buat kata sandi minimal 6 karakter" required>
+                  </div>
+                </div>
+
+                <label class="checkbox-container" style="margin-bottom:1.5rem; font-size: 0.85rem;">
+                  <input type="checkbox" id="reg-terms" required>
+                  <span>Saya menyetujui Ketentuan Layanan & Kebijakan Privasi</span>
+                </label>
+
+                <button type="submit" class="btn btn-primary btn-block" id="registerBtn">Daftar Akun</button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ------------------------------------------------------------------------
+         VIEW 5: ADMIN DASHBOARD
+         ------------------------------------------------------------------------ -->
+    <div id="view-admin" class="spa-view hidden">
+      <section class="admin-layout">
+        
+        <!-- Left Sidebar -->
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar-logo">
+            <div class="logo">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              </svg>
+              <span>TS ADMIN</span>
+            </div>
+          </div>
+          
+          <nav style="flex-grow: 1;">
+            <ul class="admin-nav" id="adminSidebarNav">
+              <li class="admin-nav-item active" data-tab="dashboard">
+                <a href="#admin"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+              </li>
+              <li class="admin-nav-item" data-tab="destinasi">
+                <a href="#admin"><i class="fa-solid fa-map-location-dot"></i> Destinasi</a>
+              </li>
+              <li class="admin-nav-item" data-tab="paket">
+                <a href="#admin"><i class="fa-solid fa-suitcase"></i> Paket Wisata</a>
+              </li>
+              <li class="admin-nav-item" data-tab="pemandu">
+                <a href="#admin"><i class="fa-solid fa-user-ninja"></i> Jasa Pemandu</a>
+              </li>
+              <li class="admin-nav-item" data-tab="galeri">
+                <a href="#admin"><i class="fa-solid fa-images"></i> Galeri</a>
+              </li>
+              <li class="admin-nav-item" data-tab="artikel">
+                <a href="#admin"><i class="fa-solid fa-newspaper"></i> Artikel</a>
+              </li>
+              <li class="admin-nav-item" data-tab="pemesanan">
+                <a href="#admin"><i class="fa-solid fa-clipboard-list"></i> Pemesanan <span class="badge badge-accent" id="adminBadgePemesanan" style="font-size:0.6rem; padding:1px 5px;">0</span></a>
+              </li>
+              <li class="admin-nav-item" data-tab="pengguna">
+                <a href="#admin"><i class="fa-solid fa-users"></i> Pengguna</a>
+              </li>
+              <li class="admin-nav-item" data-tab="pengaturan">
+                <a href="#admin"><i class="fa-solid fa-gear"></i> Pengaturan</a>
+              </li>
+            </ul>
+          </nav>
+
+          <div class="admin-sidebar-footer">
+            <button class="admin-logout-btn" id="adminLogoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Keluar Admin</button>
+          </div>
+        </aside>
+
+        <!-- Right Content Main -->
+        <main class="admin-main">
+          
+          <!-- Topbar -->
+          <div class="admin-topbar">
+            <div class="admin-title-area">
+              <h2 id="adminTabTitle">Overview Dashboard</h2>
+              <p id="adminTabSubtitle">Statistik umum dan manajemen data Desa Wisata Tanjung Setia.</p>
+            </div>
+            
+            <div class="admin-user-profile">
+              <div class="admin-user-info">
+                <span class="name">Administrator</span>
+                <span class="role">Super Admin</span>
+              </div>
+              <div class="admin-user-avatar">
+                AD
+              </div>
+            </div>
+          </div>
+
+          <!-- Body -->
+          <div class="admin-body">
+            
+            <!-- MAIN TAB: DASHBOARD -->
+            <div class="admin-tab-content" id="admin-tab-dashboard">
+              
+              <!-- Stats Row -->
+              <div class="admin-stats-grid">
+                <div class="stat-widget-card">
+                  <div class="stat-widget-info">
+                    <span class="label">Total Pemesanan</span>
+                    <span class="val" id="stat-total-booking">0</span>
+                  </div>
+                  <div class="stat-widget-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+                </div>
+
+                <div class="stat-widget-card">
+                  <div class="stat-widget-info">
+                    <span class="label">Pemesanan Hari Ini</span>
+                    <span class="val" id="stat-today-booking">0</span>
+                  </div>
+                  <div class="stat-widget-icon"><i class="fa-solid fa-calendar-day"></i></div>
+                </div>
+
+                <div class="stat-widget-card">
+                  <div class="stat-widget-info">
+                    <span class="label">Paket Terdaftar</span>
+                    <span class="val">4 Paket</span>
+                  </div>
+                  <div class="stat-widget-icon"><i class="fa-solid fa-suitcase"></i></div>
+                </div>
+
+                <div class="stat-widget-card">
+                  <div class="stat-widget-info">
+                    <span class="label">Pendapatan Wisata</span>
+                    <span class="val" id="stat-total-revenue">Rp 0</span>
+                  </div>
+                  <div class="stat-widget-icon"><i class="fa-solid fa-wallet"></i></div>
+                </div>
+              </div>
+
+              <!-- Visual Columns (Chart & Top Selling Packages) -->
+              <div class="admin-data-columns">
+                <!-- Sales chart mock -->
+                <div class="admin-data-card">
+                  <div class="admin-data-card-header">
+                    <h3>Grafik Tren Pemesanan Bulanan</h3>
+                    <span class="badge badge-primary">Tahun 2026</span>
+                  </div>
+                  <div class="chart-sim-wrapper">
+                    <div class="chart-bars">
+                      <div class="chart-bar-group">
+                        <div class="chart-bar-col" data-value="12" style="height: 40%;"></div>
+                        <span class="label">Mar</span>
+                      </div>
+                      <div class="chart-bar-group">
+                        <div class="chart-bar-col" data-value="18" style="height: 60%;"></div>
+                        <span class="label">Apr</span>
+                      </div>
+                      <div class="chart-bar-group">
+                        <div class="chart-bar-col" data-value="26" style="height: 85%;"></div>
+                        <span class="label">Mei</span>
+                      </div>
+                      <div class="chart-bar-group">
+                        <div class="chart-bar-col" data-value="31" style="height: 100%;"></div>
+                        <span class="label">Jun</span>
+                      </div>
+                      <div class="chart-bar-group">
+                        <div class="chart-bar-col" data-value="22" style="height: 70%;"></div>
+                        <span class="label">Jul</span>
+                      </div>
+                      <div class="chart-bar-group">
+                        <div class="chart-bar-col" data-value="15" style="height: 50%;"></div>
+                        <span class="label">Agt</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Package Popularity list -->
+                <div class="admin-data-card">
+                  <div class="admin-data-card-header">
+                    <h3>Paket Terpopuler</h3>
+                  </div>
+                  <div style="padding: 1.5rem; display:flex; flex-direction:column; gap:1.25rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <div style="display:flex; align-items:center; gap:0.75rem;">
+                        <span style="font-weight:700; color:var(--color-ocean-blue); font-size:1.1rem; width:20px;">1.</span>
+                        <div>
+                          <span style="font-weight:700; font-size:0.9rem; color:var(--color-deep-navy); display:block;">Paket Surfing Adventure</span>
+                          <span style="font-size:0.8rem; color:var(--color-text-light);">3 Hari 2 Malam</span>
+                        </div>
+                      </div>
+                      <span class="badge badge-accent">54% Bookings</span>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <div style="display:flex; align-items:center; gap:0.75rem;">
+                        <span style="font-weight:700; color:var(--color-ocean-blue); font-size:1.1rem; width:20px;">2.</span>
+                        <div>
+                          <span style="font-weight:700; font-size:0.9rem; color:var(--color-deep-navy); display:block;">Paket Explore Beach</span>
+                          <span style="font-size:0.8rem; color:var(--color-text-light);">2 Hari 1 Malam</span>
+                        </div>
+                      </div>
+                      <span class="badge badge-primary">26% Bookings</span>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <div style="display:flex; align-items:center; gap:0.75rem;">
+                        <span style="font-weight:700; color:var(--color-ocean-blue); font-size:1.1rem; width:20px;">3.</span>
+                        <div>
+                          <span style="font-weight:700; font-size:0.9rem; color:var(--color-deep-navy); display:block;">Paket Sunset & Culture</span>
+                          <span style="font-size:0.8rem; color:var(--color-text-light);">Full Day Tour</span>
+                        </div>
+                      </div>
+                      <span class="badge badge-primary">12% Bookings</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Latest Bookings Table -->
+              <div class="admin-data-card">
+                <div class="admin-data-card-header">
+                  <h3>Pemesanan Reservasi Terbaru</h3>
+                  <button class="btn btn-secondary btn-sm" id="adminGoToPemesananTab">Lihat Semua Pemesanan</button>
+                </div>
+                <div class="table-responsive">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Kode</th>
+                        <th>Nama Pemesan</th>
+                        <th>Paket Wisata</th>
+                        <th>Tanggal</th>
+                        <th>Pax</th>
+                        <th>Total Biaya</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminDashboardTableBody">
+                      <!-- Dynamic rows -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- OTHER TABS (TEMPLATES) -->
+            <div class="admin-tab-content hidden" id="admin-tab-destinasi">
+              <div class="admin-data-card" style="padding: 2.5rem; text-align: center;">
+                <i class="fa-solid fa-map-location-dot" style="font-size:4rem; color:var(--color-turquoise); margin-bottom:1.5rem;"></i>
+                <h3 style="font-size:1.5rem; color:var(--color-deep-navy); margin-bottom:0.5rem;">Kelola Data Destinasi</h3>
+                <p style="color:var(--color-text-medium); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">Menu ini digunakan untuk menambah, mengedit, atau menghapus destinasi pantai yang tampil di halaman landing utama website.</p>
+                <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Tambah Destinasi Baru</button>
+              </div>
+            </div>
+
+            <div class="admin-tab-content hidden" id="admin-tab-paket">
+              <div class="admin-data-card" style="padding: 2.5rem; text-align: center;">
+                <i class="fa-solid fa-suitcase" style="font-size:4rem; color:var(--color-turquoise); margin-bottom:1.5rem;"></i>
+                <h3 style="font-size:1.5rem; color:var(--color-deep-navy); margin-bottom:0.5rem;">Kelola Paket Wisata</h3>
+                <p style="color:var(--color-text-medium); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">Ubah rincian harga paket, fasilitas, durasi hari, dan status popularitas paket wisata Tanjung Setia.</p>
+                <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Buat Paket Wisata Baru</button>
+              </div>
+            </div>
+
+            <div class="admin-tab-content hidden" id="admin-tab-pemandu">
+              <div class="admin-data-card" style="padding: 2.5rem; text-align: center;">
+                <i class="fa-solid fa-users-gear" style="font-size:4rem; color:var(--color-turquoise); margin-bottom:1.5rem;"></i>
+                <h3 style="font-size:1.5rem; color:var(--color-deep-navy); margin-bottom:0.5rem;">Manajemen Jasa Pemandu Lokal</h3>
+                <p style="color:var(--color-text-medium); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">Kelola database profil pemandu lokal, status ketersediaan harian, kompetensi bahasa, ulasan bintang, dan pembagian fee jasa.</p>
+                <button class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Daftarkan Pemandu Baru</button>
+              </div>
+            </div>
+
+            <div class="admin-tab-content hidden" id="admin-tab-galeri">
+              <div class="admin-data-card" style="padding: 2.5rem; text-align: center;">
+                <i class="fa-solid fa-images" style="font-size:4rem; color:var(--color-turquoise); margin-bottom:1.5rem;"></i>
+                <h3 style="font-size:1.5rem; color:var(--color-deep-navy); margin-bottom:0.5rem;">Eksplorasi Galeri Media</h3>
+                <p style="color:var(--color-text-medium); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">Upload foto petualangan surfing, pantai, sunrise, dan kebudayaan Lampung Barat untuk mempercantik tampilan visual website.</p>
+                <button class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Foto Baru</button>
+              </div>
+            </div>
+
+            <div class="admin-tab-content hidden" id="admin-tab-artikel">
+              <div class="admin-data-card" style="padding: 2.5rem; text-align: center;">
+                <i class="fa-solid fa-newspaper" style="font-size:4rem; color:var(--color-turquoise); margin-bottom:1.5rem;"></i>
+                <h3 style="font-size:1.5rem; color:var(--color-deep-navy); margin-bottom:0.5rem;">Manajemen Blog & Artikel</h3>
+                <p style="color:var(--color-text-medium); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">Tulis tips perjalanan baru, promosikan budaya lokal pesisir barat, serta rilis berita resmi pengelolaan desa wisata.</p>
+                <button class="btn btn-primary"><i class="fa-solid fa-pen-nib"></i> Tulis Artikel Baru</button>
+              </div>
+            </div>
+
+            <div class="admin-tab-content hidden" id="admin-tab-pemesanan">
+              <div class="admin-data-card">
+                <div class="admin-data-card-header">
+                  <h3>Seluruh Data Booking Masuk</h3>
+                </div>
+                <div class="table-responsive">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Kode</th>
+                        <th>Nama Pemesan</th>
+                        <th>Nomor WA</th>
+                        <th>Layanan Paket</th>
+                        <th>Tanggal Wisata</th>
+                        <th>Pax</th>
+                        <th>Total Biaya</th>
+                        <th>Status Booking</th>
+                        <th>Tindakan Operasional</th>
+                      </tr>
+                    </thead>
+                    <tbody id="adminFullBookingsTableBody">
+                      <!-- Dynamic rows -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-tab-content hidden" id="admin-tab-pengguna">
+              <div class="admin-data-card" style="padding: 2.5rem; text-align: center;">
+                <i class="fa-solid fa-user-shield" style="font-size:4rem; color:var(--color-turquoise); margin-bottom:1.5rem;"></i>
+                <h3 style="font-size:1.5rem; color:var(--color-deep-navy); margin-bottom:0.5rem;">Manajemen Hak Akses Pengguna</h3>
+                <p style="color:var(--color-text-medium); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">Ubah kata sandi admin, tambahkan akun moderator desa wisata baru, dan atur batasan hak akses operasional.</p>
+                <button class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Tambah Pengguna Admin</button>
+              </div>
+            </div>
+
+            <div class="admin-tab-content hidden" id="admin-tab-pengaturan">
+              <div class="admin-data-card" style="padding: 2rem;">
+                <h3 style="font-size:1.3rem; color:var(--color-deep-navy); margin-bottom:1.5rem; border-bottom:1px solid var(--color-border); padding-bottom:0.5rem;">Pengaturan Sistem Website</h3>
+                <form onsubmit="return false;" style="display:flex; flex-direction:column; gap:1.25rem; max-width: 600px;">
+                  <div class="form-group">
+                    <label>Nama Desa Wisata</label>
+                    <input type="text" class="form-control" value="Desa Wisata Tanjung Setia">
+                  </div>
+                  <div class="form-group">
+                    <label>Nomor WhatsApp Hotline</label>
+                    <input type="text" class="form-control" value="+62 812-3456-7890">
+                  </div>
+                  <div class="form-group">
+                    <label>Email Kontak Resmi</label>
+                    <input type="email" class="form-control" value="info@tanjungsetialampung.com">
+                  </div>
+                  <div class="form-group">
+                    <label>Alamat Sekretariat</label>
+                    <input type="text" class="form-control" value="Jl. Lintas Barat, Tanjung Setia, Pesisir Selatan, Pesisir Barat, Lampung">
+                  </div>
+                  <button class="btn btn-primary" style="align-self: flex-start;" onclick="alert('Pengaturan berhasil disimpan!');"><i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan</button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+        </main>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER (ONLY VISIBLE ON NON-ADMIN VIEWS)
+       ========================================================================== */ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#home" class="logo">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            </svg>
+            <span>TANJUNG SETIA</span>
+          </a>
+          <p>Temukan pengalaman liburan tropis terbaik dan sensasi menaklukkan ombak laut legendaris di Pantai Tanjung Setia, Lampung.</p>
+          <div class="social-links">
+            <a href="https://instagram.com" target="_blank" class="social-link" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://facebook.com" target="_blank" class="social-link" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://youtube.com" target="_blank" class="social-link" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navigasi</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Beranda</a></li>
+            <li><a href="#home#destinasi">Destinasi</a></li>
+            <li><a href="#home#paket">Paket Wisata</a></li>
+            <li><a href="#home#pemandu">Jasa Pemandu</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Destinasi Populer</h4>
+          <ul class="footer-links">
+            <li><a href="#home#destinasi" class="view-detail-trigger" data-id="1">Pantai Karang Nyimbor</a></li>
+            <li><a href="#home#destinasi" class="view-detail-trigger" data-id="2">Pantai Way Jambu</a></li>
+            <li><a href="#home#destinasi" class="view-detail-trigger" data-id="3">Pantai Biha & Pesisir</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Layanan Bantuan</h4>
+          <ul class="footer-links">
+            <li><a href="#booking">Pemesanan Online</a></li>
+            <li><a href="#home#tentang">Syarat Ketentuan</a></li>
+            <li><a href="#home#tentang">Kebijakan Privasi</a></li>
+            <li><a href="#home#tentang">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Hubungi Kami</h4>
+          <ul class="footer-contact">
+            <li><i class="fa-solid fa-phone"></i> <span>+62 812-3456-7890</span></li>
+            <li><i class="fa-solid fa-envelope"></i> <span>info@tanjungsetialampung.com</span></li>
+            <li><i class="fa-solid fa-location-dot"></i> <span>Tanjung Setia, Pesisir Selatan, Pesisir Barat, Lampung 34875</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Desa Wisata Tanjung Setia. Didesain dengan penuh cinta & profesionalisme pariwisata.</p>
+        <div class="footer-legal">
+          <a href="#home">Syarat Penggunaan</a>
+          <a href="#home">Kebijakan Privasi</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Custom Logic Script -->
+  <script src="app.js"></script>
+</body>
+</html>
