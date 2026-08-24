@@ -1367,7 +1367,7 @@ function initInteractiveTriggers() {
 // 12. 3D MAP & REAL-TIME GOOGLE MAPS INTEGRATION
 let tourismMapInstance = null;
 let currentLayer = 'sat';
-let is3DTiltEnabled = true;
+let is3DTiltEnabled = false;
 let mapMarkers = [];
 let userLocationMarker = null;
 
@@ -1381,9 +1381,12 @@ function init3DMap() {
     zoom: 11,
     minZoom: 9,
     maxZoom: 18,
-    zoomControl: true,
+    zoomControl: false,
     attributionControl: false
   });
+
+  // Add Zoom Control to Top Right so it doesn't collide with Top Left HUD
+  L.control.zoom({ position: 'topright' }).addTo(tourismMapInstance);
 
   window.tourismMapInstance = tourismMapInstance;
 
