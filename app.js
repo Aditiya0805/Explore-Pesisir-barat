@@ -1490,6 +1490,13 @@ function init3DMap() {
     };
   }
 
+  // Handle window resize / mobile orientation change
+  window.addEventListener('resize', () => {
+    if (tourismMapInstance) {
+      tourismMapInstance.invalidateSize();
+    }
+  });
+
   // "Lokasi Saya" Geolocation Button
   const btnMyLoc = document.getElementById('btnMyLocation');
   if (btnMyLoc) {
@@ -1819,8 +1826,40 @@ function filterSpotsBySearch(query) {
   });
 }
 
-// 11. INITIALIZATION ON DOM CONTENT LOADED
+// 11. SPLASH SCREEN PRELOADER
+function initSplashScreen() {
+  const splash = document.getElementById('splashScreen');
+  const progress = document.getElementById('splashProgress');
+  const status = document.getElementById('splashStatus');
+  if (!splash) return;
+
+  setTimeout(() => {
+    if (progress) progress.style.width = '35%';
+    if (status) status.textContent = 'Memuat data destinasi & keindahan pesisir...';
+  }, 150);
+
+  setTimeout(() => {
+    if (progress) progress.style.width = '75%';
+    if (status) status.textContent = 'Menyiapkan peta wisata 3D & koordinat GPS...';
+  }, 550);
+
+  setTimeout(() => {
+    if (progress) progress.style.width = '100%';
+    if (status) status.textContent = 'Selamat datang di Explore Pesisir Barat!';
+  }, 950);
+
+  setTimeout(() => {
+    splash.classList.add('fade-out');
+  }, 1300);
+
+  setTimeout(() => {
+    splash.style.display = 'none';
+  }, 1950);
+}
+
+// 12. INITIALIZATION ON DOM CONTENT LOADED
 document.addEventListener('DOMContentLoaded', () => {
+  initSplashScreen();
   initRouter();
   initHeaderBehaviors();
   initBookingWizardEvents();
@@ -1829,3 +1868,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initInteractiveTriggers();
   init3DMap();
 });
+
