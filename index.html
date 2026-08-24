@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tanjung Setia - Portal Wisata & Booking Modern</title>
+  <title>Explore Pesisir Barat - Portal Wisata & Booking Modern</title>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏄‍♂️</text></svg>">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
   
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
@@ -22,24 +25,22 @@
   <header class="header" id="header">
     <div class="container">
       <a href="#home" class="logo" id="logoLink">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12,1.8C6.5,1.8,2,6.3,2,11.8s4.5,10,10,10c5.5,0,10-4.5,10-10S17.5,1.8,12,1.8z M12,19.8c-4.4,0-8-3.6-8-8s3.6-8,8-8s8,3.6,8,8S16.4,19.8,12,19.8z"/>
-          <path d="M12.8,7.2c-0.8,0.2-1.3,0.9-1.3,1.7s0.5,1.5,1.3,1.7c0.8,0.2,1.3,0.9,1.3,1.7s-0.5,1.5-1.3,1.7v1.1h-1.5v-1.1c-0.8-0.2-1.3-0.9-1.3-1.7h1.5c0,0.4,0.3,0.7,0.7,0.7c0.4,0,0.7-0.3,0.7-0.7c0-0.4-0.3-0.7-0.7-0.7c-0.8-0.2-1.3-0.9-1.3-1.7s0.5-1.5,1.3-1.7V6.5h1.5v1.1c0.8,0.2,1.3,0.9,1.3,1.7H13.5C13.5,8.8,13.2,8.5,12.8,7.2L12.8,7.2z" style="display:none;"/>
-          <!-- Wave Icon SVG -->
-          <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
-          <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M7 6l10 0" stroke="currentColor" stroke-width="1" stroke-linecap="round" style="display:none;"/>
-          <!-- Little Palm Tree leaf mock -->
-          <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-        </svg>
-        <span>TANJUNG SETIA</span>
+        <div class="logo-icon-box">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <span class="logo-text">EXPLORE PESISIR BARAT</span>
       </a>
 
       <!-- Desktop Nav Menu -->
-      <nav>
+      <nav class="nav-wrapper">
         <ul class="nav-menu" id="navMenu">
           <li><a href="#home" class="nav-link active" data-target="home">Beranda</a></li>
           <li><a href="#home#destinasi" class="nav-link" data-target="destinasi">Destinasi</a></li>
+          <li><a href="#home#peta" class="nav-link" data-target="peta"><i class="fa-solid fa-earth-asia"></i> Peta 3D</a></li>
           <li><a href="#home#paket" class="nav-link" data-target="paket">Paket Wisata</a></li>
           <li><a href="#home#pemandu" class="nav-link" data-target="pemandu">Jasa Pemandu</a></li>
           <li><a href="#home#galeri" class="nav-link" data-target="galeri">Galeri</a></li>
@@ -51,12 +52,12 @@
       <!-- Nav Actions -->
       <div class="header-actions">
         <a href="#booking" class="btn btn-primary" id="headerBookingBtn">
-          <i class="fa-solid fa-calendar-check"></i> Pesan Sekarang
+          <i class="fa-solid fa-calendar-check"></i> <span>Pesan Sekarang</span>
         </a>
         <a href="#auth" class="profile-trigger" id="profileTrigger" title="Login / Register">
           <i class="fa-solid fa-user"></i>
         </a>
-        <div class="menu-toggle" id="menuToggle">
+        <div class="menu-toggle" id="menuToggle" title="Buka Menu">
           <i class="fa-solid fa-bars"></i>
         </div>
       </div>
@@ -83,8 +84,8 @@
               <span class="circle"></span>
               <span>Destinasi Surfing & Pantai Kelas Dunia</span>
             </div>
-            <h1>Temukan Keindahan<br><span class="text-gradient-orange">Tanjung Setia</span></h1>
-            <p class="subheadline">Nikmati pesona pantai eksotis, ombak legendaris, keindahan alam tropis, dan pengalaman wisata lokal yang tak terlupakan di Lampung Barat.</p>
+            <h1>Temukan Keindahan<br><span class="text-gradient-orange">Pesisir Barat</span></h1>
+            <p class="subheadline">Jelajahi surga tersembunyi Lampung: deburan ombak surfing kelas dunia, eksotisme Pulau Pisang, air terjun asri, hingga kekayaan budaya tenun Tapis.</p>
             <div class="hero-buttons">
               <a href="#home#destinasi" class="btn btn-primary btn-lg">
                 <i class="fa-solid fa-compass"></i> Jelajahi Destinasi
@@ -104,9 +105,9 @@
               <select id="search-dest">
                 <option value="">Pilih Destinasi / Paket</option>
                 <option value="surf">Paket Surfing Adventure</option>
-                <option value="beach">Paket Explore Beach</option>
-                <option value="sunset">Paket Sunset Experience</option>
-                <option value="family">Paket Wisata Keluarga</option>
+                <option value="beach">Paket Explore Krui</option>
+                <option value="sunset">Paket Sunset & Culture</option>
+                <option value="family">Paket Wisata Pulau Pisang</option>
               </select>
             </div>
             <div class="search-input-group">
@@ -142,8 +143,8 @@
         <div class="container">
           <div class="section-header">
             <span class="badge badge-primary">Destinasi Populer</span>
-            <h2>Jelajahi Pesona Tanjung Setia</h2>
-            <p>Temukan tempat-tempat menarik dan pantai eksotis yang wajib Anda kunjungi.</p>
+            <h2>Jelajahi Pesona Pesisir Barat</h2>
+            <p>Pilihan destinasi terbaik dari spot surfing legendaris, pantai berpasir putih, hingga pesona kuliner bahari lokal.</p>
           </div>
 
           <div class="destinations-grid" id="destinationsGrid">
@@ -151,7 +152,7 @@
             <div class="dest-card">
               <div class="dest-img-container">
                 <span class="badge badge-accent dest-badge"><i class="fa-solid fa-star"></i> 4.9</span>
-                <img src="https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=800&q=80" alt="Pantai Karang Nyimbor" class="dest-img">
+                <img src="assets/images/pantai-karang-nyimbor.jpg" alt="Pantai Karang Nyimbor" class="dest-img">
               </div>
               <div class="dest-content">
                 <div class="dest-meta">
@@ -172,7 +173,7 @@
             <div class="dest-card">
               <div class="dest-img-container">
                 <span class="badge badge-accent dest-badge"><i class="fa-solid fa-star"></i> 4.8</span>
-                <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=800&q=80" alt="Pantai Way Jambu" class="dest-img">
+                <img src="assets/images/pantai-way-jambu.jpg" alt="Pantai Way Jambu" class="dest-img">
               </div>
               <div class="dest-content">
                 <div class="dest-meta">
@@ -193,11 +194,11 @@
             <div class="dest-card">
               <div class="dest-img-container">
                 <span class="badge badge-accent dest-badge"><i class="fa-solid fa-star"></i> 4.7</span>
-                <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=80" alt="Pantai Biha" class="dest-img">
+                <img src="assets/images/pantai-biha.jpg" alt="Pantai Biha" class="dest-img">
               </div>
               <div class="dest-content">
                 <div class="dest-meta">
-                  <div class="dest-location"><i class="fa-solid fa-location-dot"></i> Biha, Lampung Barat</div>
+                  <div class="dest-location"><i class="fa-solid fa-location-dot"></i> Biha, Pesisir Barat</div>
                 </div>
                 <h3 class="dest-title">Pantai Biha & Pesisir</h3>
                 <p class="dest-desc">Pantai berpasir putih keemasan yang tenang, cocok untuk liburan keluarga, menikmati seafood segar, dan melihat perahu nelayan tradisional.</p>
@@ -208,6 +209,149 @@
                   </div>
                   <button class="btn btn-secondary btn-sm view-detail-trigger" data-id="3">Lihat Detail</button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           Section: PETA WISATA 3D & NAVIGASI REAL-TIME
+           ====================================================================== -->
+      <section class="section-padding map-section" id="peta">
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary"><i class="fa-solid fa-earth-asia"></i> Eksplorasi Interaktif 3D</span>
+            <h2>Peta Wisata 3D & Navigasi Real-Time</h2>
+            <p>Jelajahi titik-titik spot wisata eksotis di seluruh Pesisir Barat. Terhubung langsung dengan Google Maps untuk panduan rute akurat dan navigasi GPS secara real-time.</p>
+          </div>
+
+          <div class="map-container-card">
+            <!-- Map Toolbar Header -->
+            <div class="map-toolbar">
+              <!-- Category Filter Buttons -->
+              <div class="map-filters-scroll" id="mapFiltersScroll">
+                <button class="map-filter-btn active" data-category="all">
+                  <i class="fa-solid fa-layer-group"></i> Semua Spot (<span id="count-all">16</span>)
+                </button>
+                <button class="map-filter-btn" data-category="surfing">
+                  <i class="fa-solid fa-water"></i> Surfing & Ombak (<span id="count-surfing">2</span>)
+                </button>
+                <button class="map-filter-btn" data-category="beach">
+                  <i class="fa-solid fa-umbrella-beach"></i> Pantai Eksotis (<span id="count-beach">2</span>)
+                </button>
+                <button class="map-filter-btn" data-category="nature">
+                  <i class="fa-solid fa-tree"></i> Air Terjun & Alam (<span id="count-nature">4</span>)
+                </button>
+                <button class="map-filter-btn" data-category="culture">
+                  <i class="fa-solid fa-landmark"></i> Budaya & Sejarah (<span id="count-culture">2</span>)
+                </button>
+                <button class="map-filter-btn" data-category="landmark">
+                  <i class="fa-solid fa-mountain-sun"></i> Landmark & Bukit (<span id="count-landmark">2</span>)
+                </button>
+                <button class="map-filter-btn" data-category="island">
+                  <i class="fa-solid fa-sailboat"></i> Pulau & Bahari (<span id="count-island">1</span>)
+                </button>
+                <button class="map-filter-btn" data-category="culinary">
+                  <i class="fa-solid fa-utensils"></i> Kuliner Seruit (<span id="count-culinary">1</span>)
+                </button>
+                <button class="map-filter-btn" data-category="conservation">
+                  <i class="fa-solid fa-shield-halved"></i> Konservasi & TNBBS (<span id="count-conservation">2</span>)
+                </button>
+              </div>
+
+              <!-- Map Control Actions -->
+              <div class="map-view-controls">
+                <div class="map-layer-selector">
+                  <button class="map-control-btn active" id="btnLayerSat" title="Tampilan Satelit Real">
+                    <i class="fa-solid fa-satellite"></i> <span>Satelit</span>
+                  </button>
+                  <button class="map-control-btn" id="btnLayerStreet" title="Tampilan Peta Topografi">
+                    <i class="fa-solid fa-map"></i> <span>Topografi</span>
+                  </button>
+                  <button class="map-control-btn" id="btnLayerDark" title="Mode Malam">
+                    <i class="fa-solid fa-moon"></i> <span>Malam</span>
+                  </button>
+                </div>
+
+                <div class="map-quick-actions">
+                  <button class="map-control-btn btn-tilt active" id="btnToggle3D" title="Toggle Perspektif 3D Tilt">
+                    <i class="fa-solid fa-cube"></i> <span id="tiltStatusText">Tilt 3D: ON</span>
+                  </button>
+                  <button class="map-control-btn btn-geo" id="btnMyLocation" title="Lacak Posisi Saya Sekarang">
+                    <i class="fa-solid fa-location-crosshairs"></i> <span>Lokasi Saya</span>
+                  </button>
+                  <button class="map-control-btn btn-reset" id="btnResetMap" title="Kembali ke Tampilan Utama">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Map Layout Grid (Map Canvas + Interactive Sidebar) -->
+            <div class="map-layout-grid">
+              <!-- 3D Map Viewport Frame -->
+              <div class="map-viewport-wrapper is-3d-tilt" id="mapViewportWrapper">
+                <div id="tourismMap" class="tourism-map-frame"></div>
+                
+                <!-- Live Compass & HUD Overlay -->
+                <div class="map-hud-overlay">
+                  <div class="hud-item compass-hud">
+                    <i class="fa-regular fa-compass fa-spin-pulse" style="--fa-animation-duration: 10s;"></i>
+                    <span>PESISIR BARAT 3D TERRAIN</span>
+                  </div>
+                  <div class="hud-item coords-hud" id="mapCoordsHud">
+                    <i class="fa-solid fa-satellite-dish"></i> GPS: -5.3134, 103.9982
+                  </div>
+                </div>
+
+                <!-- Floating Quick Action on Map -->
+                <div class="map-floating-legend">
+                  <span class="legend-item"><span class="legend-dot dot-surf"></span> Surfing</span>
+                  <span class="legend-item"><span class="legend-dot dot-beach"></span> Pantai</span>
+                  <span class="legend-item"><span class="legend-dot dot-nature"></span> Air Terjun</span>
+                  <span class="legend-item"><span class="legend-dot dot-culture"></span> Budaya</span>
+                  <span class="legend-item"><span class="legend-dot dot-landmark"></span> Bukit</span>
+                  <span class="legend-item"><span class="legend-dot dot-island"></span> Pulau</span>
+                  <span class="legend-item"><span class="legend-dot dot-culinary"></span> Kuliner</span>
+                  <span class="legend-item"><span class="legend-dot dot-conservation"></span> Konservasi</span>
+                </div>
+              </div>
+
+              <!-- Interactive Sidebar Directory -->
+              <div class="map-sidebar">
+                <div class="map-sidebar-header">
+                  <div class="sidebar-search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="mapSearchInput" placeholder="Cari nama spot wisata...">
+                  </div>
+                  <div class="sidebar-meta-row">
+                    <span id="spotCountBadge" class="badge badge-accent">8 Titik Wisata Ditemukan</span>
+                    <span class="sidebar-hint"><i class="fa-solid fa-hand-pointer"></i> Klik spot untuk fly-to</span>
+                  </div>
+                </div>
+
+                <div class="map-spots-list" id="mapSpotsList">
+                  <!-- Injected by app.js -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Map Footer Live Google Maps Banner -->
+            <div class="map-footer-banner">
+              <div class="gmaps-direct-info">
+                <div class="gmaps-icon-circle">
+                  <i class="fa-brands fa-google"></i>
+                </div>
+                <div>
+                  <h4>Terhubung Langsung dengan Google Maps (GPS Real-Time)</h4>
+                  <p>Akses rute perjalanan, jarak tempuh, serta estimasi waktu lalu lintas langsung dari lokasi Anda saat ini menuju berbagai titik wisata di Pesisir Barat.</p>
+                </div>
+              </div>
+              <div class="map-footer-actions">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=-5.313426,103.998218" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="openMainGmapsBtn">
+                  <i class="fa-solid fa-diamond-turn-right"></i> Petunjuk Rute ke Titik Pusat
+                </a>
               </div>
             </div>
           </div>
@@ -228,7 +372,7 @@
             <div class="package-card popular">
               <span class="popular-ribbon"><i class="fa-solid fa-fire"></i> Paling Populer</span>
               <div class="package-img-container">
-                <img src="https://images.unsplash.com/photo-1455717974081-0436a537c1f1?auto=format&fit=crop&w=800&q=80" alt="Paket Surfing Adventure" class="package-img">
+                <img src="assets/images/paket-surfing.jpg" alt="Paket Surfing Adventure" class="package-img">
               </div>
               <div class="package-content">
                 <h3 class="package-title">Paket Surfing Adventure</h3>
@@ -253,10 +397,10 @@
             <!-- Package 2 -->
             <div class="package-card">
               <div class="package-img-container">
-                <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80" alt="Paket Explore Beach" class="package-img">
+                <img src="assets/images/paket-explore-krui.jpg" alt="Paket Explore Krui" class="package-img">
               </div>
               <div class="package-content">
-                <h3 class="package-title">Paket Explore Beach</h3>
+                <h3 class="package-title">Paket Explore Krui</h3>
                 <div class="package-meta-row">
                   <div class="package-meta-item"><i class="fa-solid fa-clock"></i> 2 Hari 1 Malam</div>
                   <div class="package-meta-item"><i class="fa-solid fa-user-group"></i> Min. 3 Orang</div>
@@ -278,7 +422,7 @@
             <!-- Package 3 -->
             <div class="package-card">
               <div class="package-img-container">
-                <img src="https://images.unsplash.com/photo-1495954484750-af469f2f9be5?auto=format&fit=crop&w=800&q=80" alt="Paket Sunset Experience" class="package-img">
+                <img src="assets/images/paket-sunset.jpg" alt="Paket Sunset & Culture" class="package-img">
               </div>
               <div class="package-content">
                 <h3 class="package-title">Paket Sunset & Culture</h3>
@@ -303,23 +447,23 @@
             <!-- Package 4 -->
             <div class="package-card">
               <div class="package-img-container">
-                <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800&q=80" alt="Paket Wisata Keluarga" class="package-img">
+                <img src="assets/images/paket-pulau-pisang.jpg" alt="Paket Wisata Pulau Pisang" class="package-img">
               </div>
               <div class="package-content">
-                <h3 class="package-title">Paket Wisata Keluarga</h3>
+                <h3 class="package-title">Paket Wisata Pulau Pisang</h3>
                 <div class="package-meta-row">
-                  <div class="package-meta-item"><i class="fa-solid fa-clock"></i> 3 Hari 2 Malam</div>
-                  <div class="package-meta-item"><i class="fa-solid fa-user-group"></i> Min. 4 Orang</div>
+                  <div class="package-meta-item"><i class="fa-solid fa-clock"></i> 1 Day Trip & Explore</div>
+                  <div class="package-meta-item"><i class="fa-solid fa-user-group"></i> Tanpa Minimal</div>
                 </div>
                 <ul class="package-amenities">
-                  <li><i class="fa-solid fa-circle-check"></i> Vila Keluarga dengan Private Pool</li>
-                  <li><i class="fa-solid fa-circle-check"></i> Tour Edukasi Penyu (Kawasan Konservasi)</li>
-                  <li><i class="fa-solid fa-circle-check"></i> BBQ Party di Pinggir Pantai malam hari</li>
-                  <li><i class="fa-solid fa-circle-check"></i> Ramah anak & lansia, full asuransi</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Tour Pulau Pisang, Batu Ghuri & Goa Liang</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Hunting Sunset & Manasuar View Pulau</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Kearifan Lokal Pengrajin Tapis & Sekolah Belanda</li>
+                  <li><i class="fa-solid fa-circle-check"></i> Guide Lokal, Pelampung, Makan & BBQ Ikan Bakar</li>
                 </ul>
                 <div class="package-price-box">
                   <span class="price-label">Harga Mulai</span>
-                  <div class="price">Rp 1.850.000 <span>/ pax</span></div>
+                  <div class="price">Rp 300.000 <span>/ pack</span></div>
                 </div>
                 <button class="btn btn-secondary btn-block select-package-booking" data-package="family">Pesan Sekarang</button>
               </div>
@@ -334,7 +478,7 @@
           <div class="section-header">
             <span class="badge badge-primary">Pemandu Lokal Berlisensi</span>
             <h2>Jelajahi Bersama Pemandu Lokal</h2>
-            <p>Rasakan petualangan otentik dipandu oleh warga lokal yang mengenal seluk beluk Tanjung Setia luar dalam.</p>
+            <p>Rasakan petualangan otentik dipandu oleh pemandu lokal berlisensi yang mengenal seluk beluk seluruh penjuru Pesisir Barat luar dalam.</p>
           </div>
 
           <div class="guides-grid">
@@ -443,13 +587,13 @@
         </div>
       </section>
 
-      <!-- Section: Kenapa Harus Tanjung Setia? -->
+      <!-- Section: Kenapa Harus Pesisir Barat? -->
       <section class="section-padding why-section" id="tentang">
         <div class="why-bg-overlay"></div>
         <div class="container">
           <div class="section-header">
             <span class="badge badge-accent">Keunggulan Kami</span>
-            <h2>Mengapa Harus Tanjung Setia?</h2>
+            <h2>Mengapa Harus Pesisir Barat?</h2>
             <p>Pengalaman liburan tropis terbaik yang tidak bisa Anda temukan di tempat lain.</p>
           </div>
 
@@ -495,7 +639,7 @@
           <div class="section-header">
             <span class="badge badge-primary">Sudut Visual</span>
             <h2>Galeri Keindahan Alam</h2>
-            <p>Intip sedikit pesona pantai, sunset, dan keseruan aktivitas wisatawan di Tanjung Setia.</p>
+            <p>Intip sedikit pesona pantai, sunset, air terjun, dan keseruan aktivitas wisatawan di Pesisir Barat.</p>
           </div>
 
           <div class="gallery-filter">
@@ -517,7 +661,7 @@
             </div>
             <!-- 2 -->
             <div class="gallery-item wide" data-category="sunset">
-              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Sunset Beach">
+              <img src="assets/images/paket-sunset.jpg" alt="Sunset Beach">
               <div class="gallery-overlay">
                 <span class="gallery-tag">Sunset</span>
                 <h4 class="gallery-title">Matahari Terbenam Keemasan di Pesisir Barat</h4>
@@ -525,7 +669,7 @@
             </div>
             <!-- 3 -->
             <div class="gallery-item" data-category="pantai">
-              <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=500&q=80" alt="Coconut tree beach">
+              <img src="assets/images/pantai-way-jambu.jpg" alt="Pohon Kelapa Teduh Way Jambu">
               <div class="gallery-overlay">
                 <span class="gallery-tag">Pantai</span>
                 <h4 class="gallery-title">Pohon Kelapa Teduh Way Jambu</h4>
@@ -533,7 +677,7 @@
             </div>
             <!-- 4 -->
             <div class="gallery-item" data-category="aktivitas">
-              <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=500&q=80" alt="Beach walking">
+              <img src="assets/images/galeri-santai-pantai.jpg" alt="Menyusuri Pasir Putih Bersama Pasangan">
               <div class="gallery-overlay">
                 <span class="gallery-tag">Aktivitas</span>
                 <h4 class="gallery-title">Menyusuri Pasir Putih Bersama Pasangan</h4>
@@ -541,7 +685,7 @@
             </div>
             <!-- 5 -->
             <div class="gallery-item" data-category="pantai">
-              <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=500&q=80" alt="Traditional boat">
+              <img src="assets/images/pantai-biha.jpg" alt="Perahu Nelayan Tradisional di Biha">
               <div class="gallery-overlay">
                 <span class="gallery-tag">Pantai</span>
                 <h4 class="gallery-title">Perahu Nelayan Tradisional di Biha</h4>
@@ -568,7 +712,7 @@
         <div class="container">
           <div class="section-header">
             <span class="badge badge-primary">Informasi & Edukasi</span>
-            <h2>Cerita & Informasi Tanjung Setia</h2>
+            <h2>Cerita & Informasi Pesisir Barat</h2>
             <p>Temukan tips perjalanan menarik, kabar desa wisata terbaru, dan panduan liburan di sini.</p>
           </div>
 
@@ -581,8 +725,8 @@
               </div>
               <div class="article-content">
                 <span class="article-date"><i class="fa-solid fa-clock"></i> 10 Agustus 2026</span>
-                <h3 class="article-title">Panduan Lengkap Backpacker ke Tanjung Setia dari Jakarta</h3>
-                <p class="article-desc">Ingin liburan murah ke Lampung Barat? Simak rute perjalanan bus, kapal penyeberangan, hingga penginapan backpacker hemat.</p>
+                <h3 class="article-title">Panduan Lengkap Backpacker ke Pesisir Barat dari Jakarta</h3>
+                <p class="article-desc">Ingin liburan murah ke pesisir barat? Simak rute perjalanan bus, kapal penyeberangan, hingga penginapan backpacker hemat.</p>
                 <a href="#home#artikel" class="article-link">Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i></a>
               </div>
             </article>
@@ -591,11 +735,11 @@
             <article class="article-card">
               <div class="article-img-box">
                 <span class="article-category">Surfing</span>
-                <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=500&q=80" alt="Surfing Guide" class="article-img">
+                <img src="assets/images/musim-ombak.jpg" alt="Musim Ombak Terbaik di Pesisir Barat" class="article-img">
               </div>
               <div class="article-content">
                 <span class="article-date"><i class="fa-solid fa-clock"></i> 28 Juli 2026</span>
-                <h3 class="article-title">Musim Ombak Terbaik di Tanjung Setia untuk Peselancar Pemula</h3>
+                <h3 class="article-title">Musim Ombak Terbaik di Pesisir Barat untuk Peselancar Pemula</h3>
                 <p class="article-desc">Jangan salah bulan berkunjung! Ketahui grafik pasang surut air laut dan bulan-bulan terbaik untuk berselancar aman bagi pemula.</p>
                 <a href="#home#artikel" class="article-link">Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i></a>
               </div>
@@ -605,12 +749,12 @@
             <article class="article-card">
               <div class="article-img-box">
                 <span class="article-category">Budaya</span>
-                <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=500&q=80" alt="Culture" class="article-img">
+                <img src="assets/images/kain-tapis.jpg" alt="Mengenal Tradisi Kerajinan Kain Tapis Khas Pesisir Barat" class="article-img">
               </div>
               <div class="article-content">
                 <span class="article-date"><i class="fa-solid fa-clock"></i> 15 Juli 2026</span>
                 <h3 class="article-title">Mengenal Tradisi Kerajinan Kain Tapis Khas Pesisir Barat</h3>
-                <p class="article-desc">Eksplorasi nilai historis di balik tenunan emas kain tradisional Tapis Lampung Barat yang dibuat secara manual dengan penuh kesabaran.</p>
+                <p class="article-desc">Eksplorasi nilai historis di balik tenunan emas kain tradisional Tapis Pesisir barat yang dibuat secara manual dengan penuh kesabaran.</p>
                 <a href="#home#artikel" class="article-link">Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i></a>
               </div>
             </article>
@@ -623,7 +767,7 @@
         <div class="booking-cta-overlay"></div>
         <div class="container">
           <h2>Siap Memulai Petualangan?</h2>
-          <p>Dapatkan diskon paket hemat pariwisata Tanjung Setia dengan melakukan reservasi online hari ini.</p>
+          <p>Dapatkan diskon paket hemat pariwisata Pesisir Barat dengan melakukan reservasi online hari ini.</p>
           <a href="#booking" class="btn btn-primary btn-lg"><i class="fa-solid fa-paper-plane"></i> Mulai Pemesanan Sekarang</a>
         </div>
       </section>
@@ -682,7 +826,7 @@
 
               <h3>Lokasi Peta Wisata</h3>
               <div class="detail-map-mock">
-                <!-- Mock Map Iframe for Lampung Barat/Tanjung Setia -->
+                <!-- Mock Map Iframe for Pesisir barat -->
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15915.228129849503!2d103.99268800971033!3d-5.202357774776106!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e4745a5578a1bc1%3A0xe543e33f380145ef!2sTanjung%20Setia%20Beach!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
               </div>
             </div>
@@ -774,7 +918,7 @@
                   <div class="service-select-card" data-value="beach" data-price="1200000">
                     <input type="radio" name="booking-service" id="svc-beach" value="beach">
                     <div class="service-select-card-details">
-                      <h5>Paket Explore Beach</h5>
+                      <h5>Paket Explore Krui</h5>
                       <p>Vila, pemandu lokal, sewa motor & dokumentasi lengkap</p>
                     </div>
                     <div class="service-select-card-price">Rp 1.200.000 <span style="font-size:0.75rem; font-weight:500; color:var(--color-text-light);">/ pax</span></div>
@@ -789,13 +933,13 @@
                     <div class="service-select-card-price">Rp 450.000 <span style="font-size:0.75rem; font-weight:500; color:var(--color-text-light);">/ pax</span></div>
                   </div>
 
-                  <div class="service-select-card" data-value="family" data-price="1850000">
+                  <div class="service-select-card" data-value="family" data-price="300000">
                     <input type="radio" name="booking-service" id="svc-family" value="family">
                     <div class="service-select-card-details">
-                      <h5>Paket Wisata Keluarga</h5>
-                      <p>Vila privat, konservasi edukasi penyu & pesta BBQ</p>
+                      <h5>Paket Wisata Pulau Pisang</h5>
+                      <p>Tour Pulau, Batu Ghuri, Goa Liang, Pengrajin Tapis & BBQ Ikan Bakar</p>
                     </div>
-                    <div class="service-select-card-price">Rp 1.850.000 <span style="font-size:0.75rem; font-weight:500; color:var(--color-text-light);">/ pax</span></div>
+                    <div class="service-select-card-price">Rp 300.000 <span style="font-size:0.75rem; font-weight:500; color:var(--color-text-light);">/ pack</span></div>
                   </div>
                 </div>
 
@@ -977,109 +1121,127 @@
 
 
     <!-- ------------------------------------------------------------------------
-         VIEW 4: LOGIN / REGISTER PORTAL
+         VIEW 4: LOGIN / REGISTER PORTAL (CENTERED)
          ------------------------------------------------------------------------ -->
     <div id="view-auth" class="spa-view hidden">
-      <section class="auth-view">
-        <!-- Visual side -->
-        <div class="auth-visual-side" style="background-image: url('https://images.unsplash.com/photo-1455717974081-0436a537c1f1?auto=format&fit=crop&w=1000&q=80');">
-          <div class="auth-visual-overlay"></div>
-          <div class="auth-visual-logo">
-            <a href="#home" class="logo">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
-                <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-              </svg>
-              <span>TANJUNG SETIA</span>
-            </a>
-          </div>
-          <div class="auth-visual-quote">
-            <h2>Petualangan Tropis<br>Telah Menantimu.</h2>
-            <p>"Menikmati deburan ombak terbaik dengan balutan kenyamanan kultur lokal Pesisir Barat Lampung."</p>
-          </div>
-          <div class="auth-visual-footer">
-            &copy; 2026 Desa Wisata Tanjung Setia. All Rights Reserved.
-          </div>
-        </div>
+      <div class="auth-centered-wrapper">
+        <!-- Floating Back to Home button -->
+        <a href="#home" class="auth-floating-back" title="Kembali ke Beranda">
+          <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke Beranda</span>
+        </a>
 
-        <!-- Form side -->
-        <div class="auth-form-side">
-          <div class="auth-form-box">
+        <div class="auth-card">
+          <!-- Card Brand Header -->
+          <div class="auth-card-header">
+            <div class="auth-brand-logo">
+              <div class="logo-icon-box">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                  <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                </svg>
+              </div>
+              <span class="auth-brand-name">EXPLORE PESISIR BARAT</span>
+            </div>
+            <span class="auth-badge"><i class="fa-solid fa-shield-halved"></i> Portal Pengelola & Admin</span>
+          </div>
+
+          <!-- Login Form view -->
+          <div id="auth-login-box">
+            <div class="auth-title-group">
+              <h3>Masuk ke Akun Admin</h3>
+              <p class="auth-subtitle">Kelola pemesanan, paket wisata & operasional Pesisir Barat</p>
+            </div>
             
-            <!-- Login Form view -->
-            <div id="auth-login-box">
-              <h3>Selamat Datang Kembali</h3>
-              <p class="auth-subtitle">Belum punya akun? <a href="#" id="authGoRegister">Daftar Sekarang</a></p>
-              
-              <!-- Simulated credentials banner info -->
-              <div style="background-color: rgba(24,183,176,0.06); border:1px solid rgba(24,183,176,0.2); padding: 0.75rem; border-radius: var(--border-radius-sm); margin-bottom:1.5rem; font-size:0.8rem; color:var(--color-text-medium);">
-                <strong>Login Uji Coba (Admin):</strong><br>
-                Email: <code>admin@tanjungsetia.com</code><br>
-                Password: <code>admin123</code>
+            <!-- Interactive Auto-fill Demo Box -->
+            <div class="auth-demo-box" id="fillDemoCreds" title="Klik untuk otomatis mengisi email & sandi admin">
+              <div class="demo-box-header">
+                <span><i class="fa-solid fa-key"></i> Akun Pengelola (Admin)</span>
+                <span class="demo-auto-pill">Klik Isi Cepat</span>
+              </div>
+              <div class="demo-box-creds">
+                <div><span>Email:</span> <code>admin@tanjungsetia.com</code></div>
+                <div><span>Sandi:</span> <code>admin123</code></div>
+              </div>
+            </div>
+
+            <div class="auth-toast hidden" id="loginToast"></div>
+
+            <form id="loginForm" onsubmit="return false;">
+              <div class="form-group" style="margin-bottom: 1.15rem;">
+                <label for="login-email"><i class="fa-solid fa-envelope"></i> Alamat Email</label>
+                <div class="input-icon-wrapper">
+                  <input type="email" id="login-email" class="form-control" placeholder="admin@tanjungsetia.com" required>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom: 1.15rem;">
+                <label for="login-password"><i class="fa-solid fa-lock"></i> Kata Sandi</label>
+                <div class="input-icon-wrapper">
+                  <input type="password" id="login-password" class="form-control" placeholder="Masukkan kata sandi" required>
+                  <button type="button" class="btn-toggle-pwd" id="toggleLoginPwd" title="Lihat Sandi">
+                    <i class="fa-regular fa-eye"></i>
+                  </button>
+                </div>
               </div>
 
-              <div class="auth-toast hidden" id="loginToast"></div>
-
-              <form id="loginForm" onsubmit="return false;">
-                <div class="form-grid" style="grid-template-cols: 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
-                  <div class="form-group">
-                    <label for="login-email">Alamat Email</label>
-                    <input type="email" id="login-email" class="form-control" placeholder="Masukkan alamat email Anda" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="login-password">Kata Sandi</label>
-                    <input type="password" id="login-password" class="form-control" placeholder="Masukkan kata sandi Anda" required>
-                  </div>
-                </div>
-
-                <div class="auth-extra-actions">
-                  <label class="checkbox-container">
-                    <input type="checkbox" id="login-remember">
-                    <span>Ingat Saya</span>
-                  </label>
-                  <a href="#" class="forgot-link">Lupa Password?</a>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Masuk Ke Akun</button>
-              </form>
-            </div>
-
-            <!-- Register Form view -->
-            <div id="auth-register-box" class="hidden">
-              <h3>Daftar Akun Baru</h3>
-              <p class="auth-subtitle">Sudah punya akun? <a href="#" id="authGoLogin">Masuk</a></p>
-              
-              <div class="auth-toast hidden" id="registerToast"></div>
-
-              <form id="registerForm" onsubmit="return false;">
-                <div class="form-grid" style="grid-template-cols: 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
-                  <div class="form-group">
-                    <label for="reg-name">Nama Lengkap</label>
-                    <input type="text" id="reg-name" class="form-control" placeholder="Contoh: Budi Santoso" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="reg-email">Alamat Email</label>
-                    <input type="email" id="reg-email" class="form-control" placeholder="Contoh: budi@gmail.com" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="reg-password">Kata Sandi</label>
-                    <input type="password" id="reg-password" class="form-control" placeholder="Buat kata sandi minimal 6 karakter" required>
-                  </div>
-                </div>
-
-                <label class="checkbox-container" style="margin-bottom:1.5rem; font-size: 0.85rem;">
-                  <input type="checkbox" id="reg-terms" required>
-                  <span>Saya menyetujui Ketentuan Layanan & Kebijakan Privasi</span>
+              <div class="auth-extra-actions">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="login-remember" checked>
+                  <span>Ingat Saya</span>
                 </label>
+                <a href="#" class="forgot-link" id="forgotPwdLink">Lupa Password?</a>
+              </div>
 
-                <button type="submit" class="btn btn-primary btn-block" id="registerBtn">Daftar Akun</button>
-              </form>
+              <button type="submit" class="btn btn-primary btn-block btn-auth-submit" id="loginBtn">
+                <i class="fa-solid fa-right-to-bracket"></i> Masuk Ke Dashboard Admin
+              </button>
+            </form>
+
+            <div class="auth-switch-prompt">
+              Belum punya akun admin? <a href="#" id="authGoRegister">Daftar Akun Baru</a>
             </div>
-
           </div>
+
+          <!-- Register Form view -->
+          <div id="auth-register-box" class="hidden">
+            <div class="auth-title-group">
+              <h3>Daftar Akun Pengelola</h3>
+              <p class="auth-subtitle">Buat akun untuk mengelola reservasi dan paket wisata</p>
+            </div>
+            
+            <div class="auth-toast hidden" id="registerToast"></div>
+
+            <form id="registerForm" onsubmit="return false;">
+              <div class="form-group" style="margin-bottom: 1.15rem;">
+                <label for="reg-name"><i class="fa-solid fa-user"></i> Nama Lengkap</label>
+                <input type="text" id="reg-name" class="form-control" placeholder="Contoh: Budi Santoso" required>
+              </div>
+              <div class="form-group" style="margin-bottom: 1.15rem;">
+                <label for="reg-email"><i class="fa-solid fa-envelope"></i> Alamat Email</label>
+                <input type="email" id="reg-email" class="form-control" placeholder="budi@tanjungsetia.com" required>
+              </div>
+              <div class="form-group" style="margin-bottom: 1.15rem;">
+                <label for="reg-password"><i class="fa-solid fa-lock"></i> Kata Sandi</label>
+                <input type="password" id="reg-password" class="form-control" placeholder="Minimal 6 karakter" required>
+              </div>
+
+              <label class="checkbox-container" style="margin-bottom:1.25rem; font-size: 0.825rem;">
+                <input type="checkbox" id="reg-terms" required>
+                <span>Saya menyetujui Ketentuan Layanan & Kebijakan Privasi</span>
+              </label>
+
+              <button type="submit" class="btn btn-primary btn-block btn-auth-submit" id="registerBtn">
+                <i class="fa-solid fa-user-plus"></i> Selesaikan Pendaftaran
+              </button>
+            </form>
+
+            <div class="auth-switch-prompt">
+              Sudah memiliki akun? <a href="#" id="authGoLogin">Masuk Sekarang</a>
+            </div>
+          </div>
+
         </div>
-      </section>
+      </div>
     </div>
 
 
@@ -1146,7 +1308,7 @@
           <div class="admin-topbar">
             <div class="admin-title-area">
               <h2 id="adminTabTitle">Overview Dashboard</h2>
-              <p id="adminTabSubtitle">Statistik umum dan manajemen data Desa Wisata Tanjung Setia.</p>
+              <p id="adminTabSubtitle">Statistik umum dan manajemen data Wisata Pesisir Barat.</p>
             </div>
             
             <div class="admin-user-profile">
@@ -1260,7 +1422,7 @@
                       <div style="display:flex; align-items:center; gap:0.75rem;">
                         <span style="font-weight:700; color:var(--color-ocean-blue); font-size:1.1rem; width:20px;">2.</span>
                         <div>
-                          <span style="font-weight:700; font-size:0.9rem; color:var(--color-deep-navy); display:block;">Paket Explore Beach</span>
+                          <span style="font-weight:700; font-size:0.9rem; color:var(--color-deep-navy); display:block;">Paket Explore Krui</span>
                           <span style="font-size:0.8rem; color:var(--color-text-light);">2 Hari 1 Malam</span>
                         </div>
                       </div>
@@ -1324,7 +1486,7 @@
               <div class="admin-data-card" style="padding: 2.5rem; text-align: center;">
                 <i class="fa-solid fa-suitcase" style="font-size:4rem; color:var(--color-turquoise); margin-bottom:1.5rem;"></i>
                 <h3 style="font-size:1.5rem; color:var(--color-deep-navy); margin-bottom:0.5rem;">Kelola Paket Wisata</h3>
-                <p style="color:var(--color-text-medium); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">Ubah rincian harga paket, fasilitas, durasi hari, dan status popularitas paket wisata Tanjung Setia.</p>
+                <p style="color:var(--color-text-medium); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">Ubah rincian harga paket, fasilitas, durasi hari, dan status popularitas paket wisata Pesisir Barat.</p>
                 <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Buat Paket Wisata Baru</button>
               </div>
             </div>
@@ -1342,7 +1504,7 @@
               <div class="admin-data-card" style="padding: 2.5rem; text-align: center;">
                 <i class="fa-solid fa-images" style="font-size:4rem; color:var(--color-turquoise); margin-bottom:1.5rem;"></i>
                 <h3 style="font-size:1.5rem; color:var(--color-deep-navy); margin-bottom:0.5rem;">Eksplorasi Galeri Media</h3>
-                <p style="color:var(--color-text-medium); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">Upload foto petualangan surfing, pantai, sunrise, dan kebudayaan Lampung Barat untuk mempercantik tampilan visual website.</p>
+                <p style="color:var(--color-text-medium); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">Upload foto petualangan surfing, pantai, sunrise, dan kebudayaan Pesisir barat untuk mempercantik tampilan visual website.</p>
                 <button class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Foto Baru</button>
               </div>
             </div>
@@ -1399,7 +1561,7 @@
                 <form onsubmit="return false;" style="display:flex; flex-direction:column; gap:1.25rem; max-width: 600px;">
                   <div class="form-group">
                     <label>Nama Desa Wisata</label>
-                    <input type="text" class="form-control" value="Desa Wisata Tanjung Setia">
+                    <input type="text" class="form-control" value="Explore Pesisir Barat">
                   </div>
                   <div class="form-group">
                     <label>Nomor WhatsApp Hotline</label>
@@ -1439,11 +1601,11 @@
               <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
             </svg>
-            <span>TANJUNG SETIA</span>
+            <span>EXPLORE PESISIR BARAT</span>
           </a>
-          <p>Temukan pengalaman liburan tropis terbaik dan sensasi menaklukkan ombak laut legendaris di Pantai Tanjung Setia, Lampung.</p>
+          <p>Temukan pengalaman liburan tropis terbaik, petualangan ombak samudra, eksotisme pulau, dan kearifan budaya lokal di Pesisir Barat, Lampung.</p>
           <div class="social-links">
-            <a href="https://instagram.com" target="_blank" class="social-link" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.instagram.com/kruitourism_?utm_source=ig_web_button_share_sheet&igsi=ZDNlZDc0MzIxNw==" target="_blank" class="social-link" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
             <a href="https://facebook.com" target="_blank" class="social-link" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
             <a href="https://youtube.com" target="_blank" class="social-link" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
           </div>
@@ -1454,6 +1616,7 @@
           <ul class="footer-links">
             <li><a href="#home">Beranda</a></li>
             <li><a href="#home#destinasi">Destinasi</a></li>
+            <li><a href="#home#peta">Peta Wisata 3D</a></li>
             <li><a href="#home#paket">Paket Wisata</a></li>
             <li><a href="#home#pemandu">Jasa Pemandu</a></li>
           </ul>
@@ -1481,15 +1644,15 @@
         <div>
           <h4 class="footer-title">Hubungi Kami</h4>
           <ul class="footer-contact">
-            <li><i class="fa-solid fa-phone"></i> <span>+62 812-3456-7890</span></li>
-            <li><i class="fa-solid fa-envelope"></i> <span>info@tanjungsetialampung.com</span></li>
+            <li><i class="fa-solid fa-phone"></i> <span>+62-822-8942-4809</span></li>
+            <li><i class="fa-solid fa-envelope"></i> <span>Adityapratama2292@gmail.com</span></li>
             <li><i class="fa-solid fa-location-dot"></i> <span>Tanjung Setia, Pesisir Selatan, Pesisir Barat, Lampung 34875</span></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; 2026 Desa Wisata Tanjung Setia. Didesain dengan penuh cinta & profesionalisme pariwisata.</p>
+        <p>&copy; 2026 Explore Pesisir Barat. Didesain oleh Aditiya Pratama.</p>
         <div class="footer-legal">
           <a href="#home">Syarat Penggunaan</a>
           <a href="#home">Kebijakan Privasi</a>
@@ -1497,6 +1660,9 @@
       </div>
     </div>
   </footer>
+
+  <!-- Leaflet Map JS Library -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
   <!-- Custom Logic Script -->
   <script src="app.js"></script>

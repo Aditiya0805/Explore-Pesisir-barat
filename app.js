@@ -15,9 +15,9 @@ const DESTINATIONS = [
     category: "Pantai & Surfing Kelas Dunia",
     description: "Surga peselancar dunia dengan gulungan ombak legendaris Ujung Bocur.",
     longDescription: "Pantai Karang Nyimbor adalah pusat utama kegiatan surfing internasional di Tanjung Setia. Pantai ini memiliki salah satu ombak kidal (left-hander) terpanjang dan paling konsisten di dunia yang dikenal sebagai 'Ujung Bocur Wave'. Gulungan ombaknya bisa mencapai ketinggian 6 hingga 7 meter di musim puncak (Mei - Oktober). Selain untuk berselancar, pantai ini menawarkan panorama karang laut eksotis, deretan gazebo tradisional untuk bersantai, serta pasir putih keemasan yang menawan saat senja tiba.",
-    coverImg: "https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=1200&q=80",
+    coverImg: "assets/images/pantai-karang-nyimbor.jpg",
     thumbs: [
-      "https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=400&q=80",
+      "assets/images/pantai-karang-nyimbor.jpg",
       "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=400&q=80",
       "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=400&q=80"
     ],
@@ -33,9 +33,9 @@ const DESTINATIONS = [
     category: "Pantai & Konservasi Alam",
     description: "Dikenal sebagai 'The Pipeline' Lampung dengan ombak barrel yang menantang.",
     longDescription: "Pantai Way Jambu menyuguhkan pemandangan pantai tropis klasik dengan deretan pohon kelapa rimbun yang berjejer di sepanjang tepian pasir pantai. Ombak di Way Jambu bertipe barel cepat dan tajam di atas batu karang dangkal, menjadikannya destinasi favorit bagi peselancar profesional tingkat lanjut. Bagi non-peselancar, Way Jambu menawarkan suasana damai yang jauh dari keramaian kota, kebersihan yang sangat terjaga, serta pemandangan sunset berlatar ombak besar yang memecah karang.",
-    coverImg: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=1200&q=80",
+    coverImg: "assets/images/pantai-way-jambu.jpg",
     thumbs: [
-      "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&w=400&q=80",
+      "assets/images/pantai-way-jambu.jpg",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80",
       "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=400&q=80"
     ],
@@ -51,21 +51,364 @@ const DESTINATIONS = [
     category: "Wisata Bahari & Keluarga",
     description: "Pantai berpasir putih keemasan yang tenang, cocok untuk wisata kuliner.",
     longDescription: "Pantai Biha memiliki karakteristik garis pantai yang landai dengan ombak sedang, menjadikannya destinasi wisata paling aman untuk keluarga dan anak-anak yang ingin bermain air. Di sekitar pantai, pengunjung dapat menyaksikan langsung hilir mudik perahu nelayan tradisional 'Jukung' yang membawa hasil tangkapan laut segar. Pantai ini terkenal sebagai pusat kuliner ikan bakar khas Lampung Pesisir dengan racikan bumbu tradisional sambal seruit yang menggugah selera.",
-    coverImg: "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=80",
+    coverImg: "assets/images/pantai-biha.jpg",
     thumbs: [
-      "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80"
+      "assets/images/pantai-biha.jpg",
+      "assets/images/pantai-biha.jpg",
+      "assets/images/pantai-biha.jpg"
     ],
     facilities: ["Warung Makan Seruit", "Sewa Ban Renang", "Mushola", "Spot Foto Landmark", "Pusat Oleh-oleh Kain Tapis"]
   }
 ];
 
+// DATA: 3D TOURISM MAP POINTS & GOOGLE MAPS DIRECT LINKS
+const MAP_LOCATIONS = [
+  // 1. Surfing & Ombak
+  {
+    id: 1,
+    destId: 1,
+    name: "Pantai Karang Nyimbor (Ujung Bocur)",
+    category: "surfing",
+    categoryLabel: "Surfing & Ombak",
+    lat: -5.313426,
+    lng: 103.998218,
+    icon: "fa-water",
+    pinClass: "pin-surf",
+    rating: "4.9 ★",
+    price: "Rp 15.000",
+    desc: "Pusat surfing kelas dunia Tanjung Setia dengan ombak left-hander legendaris 6-7 meter.",
+    img: "assets/images/pantai-karang-nyimbor.jpg",
+    gmapsQuery: "Pantai+Karang+Nyimbor+Tanjung+Setia",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.313426,103.998218",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.313426,103.998218"
+  },
+  {
+    id: 2,
+    destId: 2,
+    name: "Pantai Way Jambu (The Pipeline)",
+    category: "surfing",
+    categoryLabel: "Surfing Barrel",
+    lat: -5.358210,
+    lng: 104.053120,
+    icon: "fa-water",
+    pinClass: "pin-surf",
+    rating: "4.8 ★",
+    price: "Rp 10.000",
+    desc: "Spot ombak barrel cepat menantang di atas karang dangkal berhadapan Samudra Hindia.",
+    img: "assets/images/pantai-way-jambu.jpg",
+    gmapsQuery: "Pantai+Way+Jambu+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.358210,104.053120",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.358210,104.053120"
+  },
+
+  // 2. Pantai Eksotis
+  {
+    id: 3,
+    destId: null,
+    name: "Pantai Mandiri (Black Sand Beach)",
+    category: "beach",
+    categoryLabel: "Pantai Pasir Hitam",
+    lat: -5.247850,
+    lng: 103.921530,
+    icon: "fa-umbrella-beach",
+    pinClass: "pin-beach",
+    rating: "4.8 ★",
+    price: "Gratis",
+    desc: "Hamparan pasir hitam vulkanis berkilau dengan panorama matahari terbenam (sunset) terbaik di Pesisir Barat.",
+    img: "assets/images/paket-explore-krui.jpg",
+    gmapsQuery: "Pantai+Mandiri+Krui+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.247850,103.921530",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.247850,103.921530"
+  },
+  {
+    id: 4,
+    destId: null,
+    name: "Pantai Labuhan Jukung Krui",
+    category: "beach",
+    categoryLabel: "Ikon Rekreasi Pantai",
+    lat: -5.195610,
+    lng: 103.931240,
+    icon: "fa-umbrella-beach",
+    pinClass: "pin-beach",
+    rating: "4.9 ★",
+    price: "Rp 5.000",
+    desc: "Ikon wisata utama Krui dengan ruang terbuka publik, panggung budaya, dan pusat kuliner tepi laut.",
+    img: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Pantai+Labuhan+Jukung+Krui",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.195610,103.931240",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.195610,103.931240"
+  },
+  {
+    id: 5,
+    destId: null,
+    name: "Pantai Walur (Coconut Grove Beach)",
+    category: "beach",
+    categoryLabel: "Pantai Nyiur Melambai",
+    lat: -5.221500,
+    lng: 103.928000,
+    icon: "fa-umbrella-beach",
+    pinClass: "pin-beach",
+    rating: "4.7 ★",
+    price: "Rp 5.000",
+    desc: "Pantai dengan deretan pohon kelapa teduh dan hamparan rumput hijau alami yang menghadap langsung ke laut.",
+    img: "assets/images/galeri-santai-pantai.jpg",
+    gmapsQuery: "Pantai+Walur+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.221500,103.928000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.221500,103.928000"
+  },
+
+  // 3. Air Terjun & Alam Tropis
+  {
+    id: 6,
+    destId: null,
+    name: "Air Terjun Way Detun (Curug Detun)",
+    category: "nature",
+    categoryLabel: "Air Terjun Hutan Tropis",
+    lat: -5.148500,
+    lng: 103.968200,
+    icon: "fa-water",
+    pinClass: "pin-nature",
+    rating: "4.8 ★",
+    price: "Rp 10.000",
+    desc: "Air terjun alami tersembunyi di tengah rimbunnya hutan tropis perbukitan Krui dengan kolam alami yang sejuk jernih.",
+    img: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Air+Terjun+Way+Detun+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.148500,103.968200",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.148500,103.968200"
+  },
+  {
+    id: 7,
+    destId: null,
+    name: "Pantai Melasti Marang",
+    category: "beach",
+    categoryLabel: "Pantai Upacara Melasti",
+    lat: -5.348500,
+    lng: 104.036200,
+    icon: "fa-umbrella-beach",
+    pinClass: "pin-beach",
+    rating: "4.8 ★",
+    price: "Gratis",
+    desc: "Pantai berpasir putih luas di Pekon Marang yang menjadi lokasi sakral upacara keagamaan Melasti umat Hindu, dengan deburan ombak Samudra Hindia yang eksotis.",
+    img: "assets/images/galeri-santai-pantai.jpg",
+    gmapsQuery: "Pantai+Melasti+Marang+Pesisir+Selatan+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.348500,104.036200",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.348500,104.036200"
+  },
+  {
+    id: 8,
+    destId: null,
+    name: "Gua Matu (Goa Karang Samudra)",
+    category: "nature",
+    categoryLabel: "Gua Alam & Mitos",
+    lat: -5.268400,
+    lng: 103.945200,
+    icon: "fa-dungeon",
+    pinClass: "pin-nature",
+    rating: "4.6 ★",
+    price: "Rp 10.000",
+    desc: "Gua tebing karang bersejarah menghadap Samudra Hindia yang dipenuhi ribuan kelelawar dan formasi stalaktit eksotis.",
+    img: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Gua+Matu+Way+Urang+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.268400,103.945200",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.268400,103.945200"
+  },
+  {
+    id: 9,
+    destId: null,
+    name: "Repong Damar Krui (Hutan Mata Kucing)",
+    category: "nature",
+    categoryLabel: "Hutan Warisan Dunia",
+    lat: -5.165000,
+    lng: 103.952000,
+    icon: "fa-tree",
+    pinClass: "pin-nature",
+    rating: "4.9 ★",
+    price: "Wisata Edukasi",
+    desc: "Kawasan hutan pohon damar mata kucing tradisional yang diakui dunia internasional sebagai sistem agroforestri lestari terbaik.",
+    img: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Repong+Damar+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.165000,103.952000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.165000,103.952000"
+  },
+
+  // 4. Budaya & Sejarah
+  {
+    id: 10,
+    destId: null,
+    name: "Sentra Tenun Kain Tapis Pesisir",
+    category: "culture",
+    categoryLabel: "Budaya & Tenun Tapis",
+    lat: -5.191200,
+    lng: 103.941500,
+    icon: "fa-scroll",
+    pinClass: "pin-culture",
+    rating: "4.9 ★",
+    price: "Gratis Kunjungan",
+    desc: "Pusat edukasi dan pembuatan kain tradisional Tapis benang emas khas Lampung Pesisir yang ditenun secara manual.",
+    img: "assets/images/kain-tapis.jpg",
+    gmapsQuery: "Kerajinan+Tapis+Pesisir+Barat+Krui",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.191200,103.941500",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.191200,103.941500"
+  },
+  {
+    id: 11,
+    destId: null,
+    name: "Makam Mahligai Syeikh Aminullah",
+    category: "culture",
+    categoryLabel: "Sejarah & Religi",
+    lat: -5.094000,
+    lng: 103.882000,
+    icon: "fa-landmark-dome",
+    pinClass: "pin-culture",
+    rating: "4.8 ★",
+    price: "Infaq / Donasi",
+    desc: "Situs cagar budaya makam penyebar Islam tertua di pesisir barat Sumatra dengan panorama tebing laut samudra.",
+    img: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Makam+Mahligai+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.094000,103.882000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.094000,103.882000"
+  },
+
+  // 5. Landmark & Bukit Viewpoint
+  {
+    id: 12,
+    destId: null,
+    name: "Puncak Bukit Selalaw Krui",
+    category: "landmark",
+    categoryLabel: "Viewpoint 360° Teluk",
+    lat: -5.198500,
+    lng: 103.926500,
+    icon: "fa-mountain-sun",
+    pinClass: "pin-landmark",
+    rating: "4.9 ★",
+    price: "Rp 5.000",
+    desc: "Puncak bukit dengan panorama 360 derajat ke Teluk Krui, jajaran perahu nelayan, serta spot sunset paling spektakuler.",
+    img: "assets/images/paket-sunset.jpg",
+    gmapsQuery: "Puncak+Selalaw+Krui+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.198500,103.926500",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.198500,103.926500"
+  },
+  {
+    id: 13,
+    destId: null,
+    name: "Batu Tihang Landmark Karang",
+    category: "landmark",
+    categoryLabel: "Landmark Geologi",
+    lat: -5.275000,
+    lng: 103.955000,
+    icon: "fa-monument",
+    pinClass: "pin-landmark",
+    rating: "4.7 ★",
+    price: "Rp 5.000",
+    desc: "Bongkahan batu karang raksasa yang tegak menjulang setinggi 20+ meter di bibir pantai Samudra Hindia.",
+    img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Batu+Tihang+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.275000,103.955000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.275000,103.955000"
+  },
+
+  // 6. Pulau & Bahari
+  {
+    id: 14,
+    destId: null,
+    name: "Pulau Pisang (Banana Island)",
+    category: "island",
+    categoryLabel: "Pulau & Snorkeling",
+    lat: -5.115830,
+    lng: 103.852110,
+    icon: "fa-sailboat",
+    pinClass: "pin-island",
+    rating: "5.0 ★",
+    price: "Sewa Kapal",
+    desc: "Surga pulau terpencil dengan air laut sebening kristal, lumba-lumba liar, rumah panggung kuno, dan pantai pasir putih halus.",
+    img: "assets/images/paket-pulau-pisang.jpg",
+    gmapsQuery: "Pulau+Pisang+Pesisir+Barat+Lampung",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.115830,103.852110",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.115830,103.852110"
+  },
+  {
+    id: 15,
+    destId: null,
+    name: "Pulau Betuah (Pulau Selatan)",
+    category: "island",
+    categoryLabel: "Pulau Tak Berpenghuni",
+    lat: -5.451200,
+    lng: 104.128000,
+    icon: "fa-sailboat",
+    pinClass: "pin-island",
+    rating: "4.8 ★",
+    price: "Ekspedisi",
+    desc: "Pulau kecil eksotis tak berpenghuni di batas terluar Lampung Barat dengan terumbu karang alami yang masih sangat perawan.",
+    img: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Pulau+Betuah+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.451200,104.128000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.451200,104.128000"
+  },
+
+  // 7. Kuliner Tradisional
+  {
+    id: 16,
+    destId: 3,
+    name: "Pantai Biha & Sentra Seruit",
+    category: "culinary",
+    categoryLabel: "Kuliner & Bahari",
+    lat: -5.334020,
+    lng: 104.015010,
+    icon: "fa-utensils",
+    pinClass: "pin-culinary",
+    rating: "4.7 ★",
+    price: "Rp 10.000",
+    desc: "Pusat kuliner seruit ikan bakar tradisional Lampung & pantai ramah keluarga dengan jajaran perahu nelayan Jukung.",
+    img: "assets/images/pantai-biha.jpg",
+    gmapsQuery: "Pantai+Biha+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.334020,104.015010",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.334020,104.015010"
+  },
+
+  // 8. Konservasi & Taman Nasional
+  {
+    id: 17,
+    destId: null,
+    name: "Konservasi Penyu Muara Tembulih",
+    category: "conservation",
+    categoryLabel: "Konservasi Satwa",
+    lat: -5.392000,
+    lng: 104.085000,
+    icon: "fa-shield-halved",
+    pinClass: "pin-conservation",
+    rating: "4.9 ★",
+    price: "Donasi",
+    desc: "Pusat pelestarian, penetasan telur penyu belimbing dan penyu sisik, serta edukasi ekosistem laut terpadu.",
+    img: "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Konservasi+Penyu+Muara+Tembulih+Ngambur",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.392000,104.085000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.392000,104.085000"
+  },
+  {
+    id: 18,
+    destId: null,
+    name: "Taman Nasional TNBBS Resort Biha",
+    category: "conservation",
+    categoryLabel: "Taman Nasional UNESCO",
+    lat: -5.305000,
+    lng: 104.062000,
+    icon: "fa-seedling",
+    pinClass: "pin-conservation",
+    rating: "4.9 ★",
+    price: "Izin Masuk",
+    desc: "Ekowisata trekking hutan hujan tropis warisan dunia UNESCO, habitat Rafflesia arnoldii & satwa liar Sumatra.",
+    img: "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Taman+Nasional+Bukit+Barisan+Selatan+Biha",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.305000,104.062000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.305000,104.062000"
+  }
+];
+
 const PACKAGES = {
   surf: { name: "Paket Surfing Adventure", price: 2450000, desc: "Homestay premium, papan selancar, pelatih profesional & antar jemput spot" },
-  beach: { name: "Paket Explore Beach", price: 1200000, desc: "Vila, pemandu lokal, sewa motor & dokumentasi lengkap" },
+  beach: { name: "Paket Explore Krui", price: 1200000, desc: "Vila, pemandu lokal, sewa motor & dokumentasi lengkap" },
   sunset: { name: "Paket Sunset & Culture", price: 450000, desc: "Kuliner seafood, keliling desa adat & tenun Tapis" },
-  family: { name: "Paket Wisata Keluarga", price: 1850000, desc: "Vila privat, konservasi penyu & pesta BBQ" }
+  family: { name: "Paket Wisata Pulau Pisang", price: 300000, desc: "Tour Pulau Pisang, Batu Ghuri, Goa Liang, Pengrajin Tapis & BBQ Ikan Bakar" }
 };
 
 // Initial Mock Bookings for Admin Dashboard
@@ -121,14 +464,14 @@ const MOCK_BOOKINGS = [
     phone: "081388887777",
     email: "handoko@company.id",
     packageId: "family",
-    packageName: "Paket Wisata Keluarga",
+    packageName: "Paket Wisata Pulau Pisang",
     date: "2026-09-01",
     guests: 5,
-    notes: "Ramah lansia",
+    notes: "Tour pulau & hunting sunset",
     guideAddon: false,
     photoAddon: true,
     status: "pending",
-    total: 9500000
+    total: 1750000
   }
 ];
 
@@ -191,6 +534,13 @@ function initRouter() {
         if (homeLink) homeLink.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+
+      // Refresh map size if initialized
+      setTimeout(() => {
+        if (window.tourismMapInstance) {
+          window.tourismMapInstance.invalidateSize();
+        }
+      }, 250);
     } 
     else if (hash.startsWith('#detail/')) {
       const id = parseInt(hash.split('/')[1]);
@@ -207,7 +557,7 @@ function initRouter() {
     } 
     else if (hash === '#auth') {
       showView('view-auth');
-      showHeaderFooter(true);
+      showHeaderFooter(false); // Clean centered login page without navbar/footer clutter
       window.scrollTo({ top: 0 });
     } 
     else if (hash.startsWith('#admin')) {
@@ -278,8 +628,18 @@ function initHeaderBehaviors() {
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
       navMenu.classList.remove('active');
-      menuToggle.querySelector('i').className = 'fa-solid fa-bars';
+      const icon = menuToggle.querySelector('i');
+      if (icon) icon.className = 'fa-solid fa-bars';
     });
+  });
+
+  // Close mobile menu on click outside
+  document.addEventListener('click', (e) => {
+    if (header && !header.contains(e.target) && navMenu.classList.contains('active')) {
+      navMenu.classList.remove('active');
+      const icon = menuToggle.querySelector('i');
+      if (icon) icon.className = 'fa-solid fa-bars';
+    }
   });
 }
 
@@ -691,6 +1051,39 @@ function initAuthPortal() {
 
   const loginBox = document.getElementById('auth-login-box');
   const registerBox = document.getElementById('auth-register-box');
+  const fillDemoCreds = document.getElementById('fillDemoCreds');
+  const toggleLoginPwd = document.getElementById('toggleLoginPwd');
+  const loginPassword = document.getElementById('login-password');
+  const forgotPwdLink = document.getElementById('forgotPwdLink');
+
+  // Quick auto-fill demo credentials
+  if (fillDemoCreds) {
+    fillDemoCreds.addEventListener('click', () => {
+      document.getElementById('login-email').value = 'admin@tanjungsetia.com';
+      document.getElementById('login-password').value = 'admin123';
+      showToast('loginToast', 'Data akun admin berhasil diisi otomatis!', 'success');
+    });
+  }
+
+  // Toggle password visibility
+  if (toggleLoginPwd && loginPassword) {
+    toggleLoginPwd.addEventListener('click', () => {
+      const isPwd = loginPassword.type === 'password';
+      loginPassword.type = isPwd ? 'text' : 'password';
+      const icon = toggleLoginPwd.querySelector('i');
+      if (icon) {
+        icon.className = isPwd ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+      }
+    });
+  }
+
+  // Forgot password helper
+  if (forgotPwdLink) {
+    forgotPwdLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      showToast('loginToast', 'Untuk mode demo, gunakan: admin@tanjungsetia.com / admin123', 'info');
+    });
+  }
 
   goRegisterBtn.onclick = (e) => {
     e.preventDefault();
@@ -712,14 +1105,14 @@ function initAuthPortal() {
 
     if (email === 'admin@tanjungsetia.com' && pass === 'admin123') {
       isAdminLoggedIn = true;
-      showToast('loginToast', 'Login Admin berhasil! Membuka dashboard...', 'success');
+      showToast('loginToast', 'Login Admin berhasil! Mengalihkan ke dashboard...', 'success');
       
       // Delay before redirecting to dashboard
       setTimeout(() => {
         // Reset inputs
         loginForm.reset();
         window.location.hash = '#admin';
-      }, 1200);
+      }, 1000);
     } else {
       showToast('loginToast', 'Email atau kata sandi Anda salah!', 'error');
     }
@@ -880,7 +1273,7 @@ function initAdminDashboardTabs() {
       
       if (targetTab === 'dashboard') {
         document.getElementById('adminTabTitle').textContent = `Overview Dashboard`;
-        document.getElementById('adminTabSubtitle').textContent = `Statistik umum dan manajemen data Desa Wisata Tanjung Setia.`;
+        document.getElementById('adminTabSubtitle').textContent = `Statistik umum dan manajemen data Wisata Pesisir Barat.`;
         renderAdminDashboard();
       } else {
         document.getElementById('adminTabSubtitle').textContent = `Modifikasi database panel ${tabTitle.toLowerCase()} pariwisata.`;
@@ -971,6 +1364,461 @@ function initInteractiveTriggers() {
   });
 }
 
+// 12. 3D MAP & REAL-TIME GOOGLE MAPS INTEGRATION
+let tourismMapInstance = null;
+let currentLayer = 'sat';
+let is3DTiltEnabled = true;
+let mapMarkers = [];
+let userLocationMarker = null;
+
+function init3DMap() {
+  const mapContainer = document.getElementById('tourismMap');
+  if (!mapContainer || typeof L === 'undefined') return;
+
+  // Initialize Map centered on Tanjung Setia & Pesisir Barat coast
+  tourismMapInstance = L.map('tourismMap', {
+    center: [-5.2950, 103.9750],
+    zoom: 11,
+    minZoom: 9,
+    maxZoom: 18,
+    zoomControl: true,
+    attributionControl: false
+  });
+
+  window.tourismMapInstance = tourismMapInstance;
+
+  // Map Tile Layers (Satellite 3D Imagery, Topography, Dark Night)
+  const tileLayers = {
+    sat: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 18,
+      attribution: 'Tiles &copy; Esri &mdash; Earthstar Geographics'
+    }),
+    street: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap contributors'
+    }),
+    dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 18,
+      attribution: '&copy; CartoDB DarkMatter'
+    })
+  };
+
+  // Add default satellite layer
+  tileLayers.sat.addTo(tourismMapInstance);
+
+  // Render Markers and Sidebar Cards
+  renderMapPoints('all');
+
+  // Layer Switching Handlers
+  const btnSat = document.getElementById('btnLayerSat');
+  const btnStreet = document.getElementById('btnLayerStreet');
+  const btnDark = document.getElementById('btnLayerDark');
+
+  const switchLayer = (type) => {
+    [btnSat, btnStreet, btnDark].forEach(b => b && b.classList.remove('active'));
+    Object.values(tileLayers).forEach(layer => {
+      if (tourismMapInstance.hasLayer(layer)) tourismMapInstance.removeLayer(layer);
+    });
+
+    if (type === 'sat') {
+      tileLayers.sat.addTo(tourismMapInstance);
+      if (btnSat) btnSat.classList.add('active');
+    } else if (type === 'street') {
+      tileLayers.street.addTo(tourismMapInstance);
+      if (btnStreet) btnStreet.classList.add('active');
+    } else if (type === 'dark') {
+      tileLayers.dark.addTo(tourismMapInstance);
+      if (btnDark) btnDark.classList.add('active');
+    }
+    currentLayer = type;
+  };
+
+  if (btnSat) btnSat.onclick = () => switchLayer('sat');
+  if (btnStreet) btnStreet.onclick = () => switchLayer('street');
+  if (btnDark) btnDark.onclick = () => switchLayer('dark');
+
+  // Toggle 3D Tilt Mode
+  const btnToggle3D = document.getElementById('btnToggle3D');
+  const mapWrapper = document.getElementById('mapViewportWrapper');
+  const tiltStatusText = document.getElementById('tiltStatusText');
+
+  if (btnToggle3D && mapWrapper) {
+    btnToggle3D.onclick = () => {
+      is3DTiltEnabled = !is3DTiltEnabled;
+      if (is3DTiltEnabled) {
+        mapWrapper.classList.add('is-3d-tilt');
+        btnToggle3D.classList.add('active');
+        if (tiltStatusText) tiltStatusText.innerText = 'Tilt 3D: ON';
+      } else {
+        mapWrapper.classList.remove('is-3d-tilt');
+        btnToggle3D.classList.remove('active');
+        if (tiltStatusText) tiltStatusText.innerText = 'Tilt 3D: OFF';
+      }
+      setTimeout(() => tourismMapInstance.invalidateSize(), 300);
+    };
+  }
+
+  // Category Filter Buttons
+  const filterBtns = document.querySelectorAll('.map-filter-btn');
+  filterBtns.forEach(btn => {
+    btn.onclick = () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.getAttribute('data-category');
+      renderMapPoints(cat);
+    };
+  });
+
+  // Search input filter in sidebar
+  const searchInput = document.getElementById('mapSearchInput');
+  if (searchInput) {
+    searchInput.oninput = (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      filterSpotsBySearch(q);
+    };
+  }
+
+  // Reset Map View
+  const btnReset = document.getElementById('btnResetMap');
+  if (btnReset) {
+    btnReset.onclick = () => {
+      tourismMapInstance.flyTo([-5.2950, 103.9750], 11, { duration: 1.2 });
+      filterBtns.forEach(b => b.classList.remove('active'));
+      const allBtn = document.querySelector('.map-filter-btn[data-category="all"]');
+      if (allBtn) allBtn.classList.add('active');
+      renderMapPoints('all');
+    };
+  }
+
+  // "Lokasi Saya" Geolocation Button
+  const btnMyLoc = document.getElementById('btnMyLocation');
+  if (btnMyLoc) {
+    btnMyLoc.onclick = () => {
+      if (!navigator.geolocation) {
+        alert('Geolocation tidak didukung oleh browser Anda.');
+        return;
+      }
+
+      btnMyLoc.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Mencari...</span>';
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const userLat = pos.coords.latitude;
+          const userLng = pos.coords.longitude;
+
+          btnMyLoc.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> <span>Lokasi Saya</span>';
+
+          if (userLocationMarker) {
+            tourismMapInstance.removeLayer(userLocationMarker);
+          }
+
+          const userIcon = L.divIcon({
+            className: 'user-geo-pin-wrapper',
+            html: '<div class="user-geo-pin"></div>',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+          });
+
+          userLocationMarker = L.marker([userLat, userLng], { icon: userIcon })
+            .addTo(tourismMapInstance)
+            .bindPopup(`
+              <div style="padding: 10px; font-weight: 600; text-align: center;">
+                <div style="color: #3B82F6; font-size: 1rem; margin-bottom: 4px;"><i class="fa-solid fa-person-walking"></i> Posisi Anda Saat Ini</div>
+                <div style="font-size: 0.75rem; color: #64748B; margin-bottom: 8px;">Lat: ${userLat.toFixed(4)}, Lng: ${userLng.toFixed(4)}</div>
+                <a href="https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=-5.313426,103.998218" target="_blank" class="btn-gmaps-direct" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; text-decoration: none;">
+                  <i class="fa-solid fa-diamond-turn-right"></i> Rute ke Pesisir Barat
+                </a>
+              </div>
+            `)
+            .openPopup();
+
+          tourismMapInstance.flyTo([userLat, userLng], 14, { duration: 1.5 });
+
+          // Update main footer button with direct route from user location
+          const mainGmapsBtn = document.getElementById('openMainGmapsBtn');
+          if (mainGmapsBtn) {
+            mainGmapsBtn.href = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=-5.313426,103.998218`;
+            mainGmapsBtn.innerHTML = '<i class="fa-solid fa-diamond-turn-right"></i> Petunjuk Rute GPS dari Lokasi Anda';
+          }
+        },
+        (err) => {
+          btnMyLoc.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> <span>Lokasi Saya</span>';
+          alert('Tidak dapat mendeteksi lokasi: ' + err.message + '. Silakan izinkan akses lokasi di browser.');
+        },
+        { enableHighAccuracy: true, timeout: 8000 }
+      );
+    };
+  }
+
+  // Update Coordinates HUD on mousemove
+  tourismMapInstance.on('mousemove', (e) => {
+    const hud = document.getElementById('mapCoordsHud');
+    if (hud) {
+      hud.innerHTML = `<i class="fa-solid fa-satellite-dish"></i> GPS: ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`;
+    }
+  });
+}
+
+function updateMapCategoryCounts() {
+  const counts = { all: MAP_LOCATIONS.length };
+  MAP_LOCATIONS.forEach(loc => {
+    counts[loc.category] = (counts[loc.category] || 0) + 1;
+  });
+  Object.keys(counts).forEach(cat => {
+    const el = document.getElementById(`count-${cat}`);
+    if (el) el.innerText = counts[cat];
+  });
+}
+
+function renderMapPoints(categoryFilter = 'all') {
+  if (!tourismMapInstance) return;
+
+  updateMapCategoryCounts();
+
+  // Clear existing markers
+  mapMarkers.forEach(m => tourismMapInstance.removeLayer(m));
+  mapMarkers = [];
+
+  const filtered = categoryFilter === 'all' 
+    ? MAP_LOCATIONS 
+    : MAP_LOCATIONS.filter(item => item.category === categoryFilter);
+
+  // Update spot count badge
+  const countBadge = document.getElementById('spotCountBadge');
+  if (countBadge) {
+    countBadge.innerText = `${filtered.length} Titik Wisata Ditemukan`;
+  }
+
+  // Render Sidebar List
+  const listEl = document.getElementById('mapSpotsList');
+  if (listEl) {
+    if (filtered.length === 0) {
+      listEl.innerHTML = `
+        <div style="text-align: center; padding: 2rem 1rem; color: var(--color-text-light);">
+          <i class="fa-solid fa-map-location-dot" style="font-size: 2rem; margin-bottom: 0.5rem; color: #CBD5E1;"></i>
+          <p style="font-size: 0.85rem;">Tidak ada spot wisata pada kategori ini.</p>
+        </div>
+      `;
+    } else {
+      listEl.innerHTML = filtered.map(spot => `
+        <div class="spot-item-card" data-id="${spot.id}" id="spot-card-${spot.id}">
+          <div class="spot-thumb">
+            <img src="${spot.img}" alt="${spot.name}" loading="lazy">
+          </div>
+          <div class="spot-info">
+            <span class="spot-item-tag"><i class="fa-solid ${spot.icon}"></i> ${spot.categoryLabel}</span>
+            <h5 class="spot-item-title" title="${spot.name}">${spot.name}</h5>
+            <div class="spot-item-sub">
+              <span><i class="fa-solid fa-star" style="color:#F59E0B;"></i> ${spot.rating}</span>
+              <a href="${spot.gmapsDirUrl}" target="_blank" rel="noopener noreferrer" class="spot-gmaps-link" onclick="event.stopPropagation();">
+                <i class="fa-solid fa-diamond-turn-right"></i> Maps
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Add markers to map
+  filtered.forEach(spot => {
+    const pinIcon = L.divIcon({
+      className: 'custom-3d-pin-wrap',
+      html: `
+        <div class="custom-3d-pin ${spot.pinClass}">
+          <i class="fa-solid ${spot.icon}"></i>
+        </div>
+        <div class="pin-radar-ring"></div>
+      `,
+      iconSize: [42, 42],
+      iconAnchor: [21, 38],
+      popupAnchor: [0, -38]
+    });
+
+    const popupHtml = `
+      <div class="map-popup-card">
+        <div class="popup-img-wrapper">
+          <img src="${spot.img}" alt="${spot.name}">
+          <span class="popup-category-badge"><i class="fa-solid ${spot.icon}"></i> ${spot.categoryLabel}</span>
+        </div>
+        <div class="popup-body">
+          <h4 class="popup-title">${spot.name}</h4>
+          <div class="popup-coords"><i class="fa-solid fa-location-dot" style="color:var(--color-sunset-orange);"></i> ${spot.lat.toFixed(4)}, ${spot.lng.toFixed(4)} • <strong>${spot.rating}</strong></div>
+          <p class="popup-desc">${spot.desc}</p>
+          <div class="popup-actions">
+            <a href="${spot.gmapsDirUrl}" target="_blank" rel="noopener noreferrer" class="btn-gmaps-direct">
+              <i class="fa-solid fa-diamond-turn-right"></i> Petunjuk Arah Real-time
+            </a>
+            <div class="popup-sub-actions">
+              <a href="${spot.gmapsSearchUrl}" target="_blank" rel="noopener noreferrer" class="btn-popup-secondary">
+                <i class="fa-brands fa-google"></i> Google Maps
+              </a>
+              ${spot.destId ? `<button class="btn-popup-secondary view-detail-trigger" data-id="${spot.destId}"><i class="fa-solid fa-circle-info"></i> Info Detail</button>` : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const marker = L.marker([spot.lat, spot.lng], { icon: pinIcon })
+      .addTo(tourismMapInstance)
+      .bindPopup(popupHtml, {
+        className: 'custom-map-popup',
+        maxWidth: 300
+      });
+
+    marker.spotData = spot;
+    mapMarkers.push(marker);
+
+    marker.on('click', () => {
+      highlightSpotCard(spot.id);
+      const hud = document.getElementById('mapCoordsHud');
+      if (hud) hud.innerHTML = `<i class="fa-solid fa-satellite-dish"></i> GPS: ${spot.lat.toFixed(4)}, ${spot.lng.toFixed(4)}`;
+    });
+  });
+
+  // Attach click listener to sidebar spot cards
+  document.querySelectorAll('.spot-item-card').forEach(card => {
+    card.onclick = () => {
+      const id = parseInt(card.getAttribute('data-id'));
+      const targetSpot = MAP_LOCATIONS.find(s => s.id === id);
+      if (targetSpot) {
+        highlightSpotCard(id);
+        tourismMapInstance.flyTo([targetSpot.lat, targetSpot.lng], 15, {
+          duration: 1.2,
+          easeLinearity: 0.25
+        });
+        const targetMarker = mapMarkers.find(m => m.spotData && m.spotData.id === id);
+        if (targetMarker) {
+          setTimeout(() => targetMarker.openPopup(), 400);
+        }
+      }
+    };
+  });
+}
+
+function highlightSpotCard(spotId) {
+  document.querySelectorAll('.spot-item-card').forEach(c => c.classList.remove('active'));
+  const targetCard = document.getElementById(`spot-card-${spotId}`);
+  if (targetCard) {
+    targetCard.classList.add('active');
+    targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function filterSpotsBySearch(query) {
+  if (!query) {
+    renderMapPoints('all');
+    return;
+  }
+  const filtered = MAP_LOCATIONS.filter(s => 
+    s.name.toLowerCase().includes(query) || 
+    s.categoryLabel.toLowerCase().includes(query) ||
+    s.desc.toLowerCase().includes(query)
+  );
+
+  const countBadge = document.getElementById('spotCountBadge');
+  if (countBadge) {
+    countBadge.innerText = `${filtered.length} Titik Ditemukan`;
+  }
+
+  // Re-render sidebar & markers
+  mapMarkers.forEach(m => tourismMapInstance.removeLayer(m));
+  mapMarkers = [];
+
+  const listEl = document.getElementById('mapSpotsList');
+  if (listEl) {
+    if (filtered.length === 0) {
+      listEl.innerHTML = `
+        <div style="text-align: center; padding: 2rem 1rem; color: var(--color-text-light);">
+          <i class="fa-solid fa-magnifying-glass" style="font-size: 2rem; margin-bottom: 0.5rem; color: #CBD5E1;"></i>
+          <p style="font-size: 0.85rem;">Tidak ada spot cocok dengan kata "${query}".</p>
+        </div>
+      `;
+    } else {
+      listEl.innerHTML = filtered.map(spot => `
+        <div class="spot-item-card" data-id="${spot.id}" id="spot-card-${spot.id}">
+          <div class="spot-thumb">
+            <img src="${spot.img}" alt="${spot.name}" loading="lazy">
+          </div>
+          <div class="spot-info">
+            <span class="spot-item-tag"><i class="fa-solid ${spot.icon}"></i> ${spot.categoryLabel}</span>
+            <h5 class="spot-item-title" title="${spot.name}">${spot.name}</h5>
+            <div class="spot-item-sub">
+              <span><i class="fa-solid fa-star" style="color:#F59E0B;"></i> ${spot.rating}</span>
+              <a href="${spot.gmapsDirUrl}" target="_blank" rel="noopener noreferrer" class="spot-gmaps-link" onclick="event.stopPropagation();">
+                <i class="fa-solid fa-diamond-turn-right"></i> Maps
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  filtered.forEach(spot => {
+    const pinIcon = L.divIcon({
+      className: 'custom-3d-pin-wrap',
+      html: `
+        <div class="custom-3d-pin ${spot.pinClass}">
+          <i class="fa-solid ${spot.icon}"></i>
+        </div>
+        <div class="pin-radar-ring"></div>
+      `,
+      iconSize: [42, 42],
+      iconAnchor: [21, 38],
+      popupAnchor: [0, -38]
+    });
+
+    const popupHtml = `
+      <div class="map-popup-card">
+        <div class="popup-img-wrapper">
+          <img src="${spot.img}" alt="${spot.name}">
+          <span class="popup-category-badge"><i class="fa-solid ${spot.icon}"></i> ${spot.categoryLabel}</span>
+        </div>
+        <div class="popup-body">
+          <h4 class="popup-title">${spot.name}</h4>
+          <div class="popup-coords"><i class="fa-solid fa-location-dot" style="color:var(--color-sunset-orange);"></i> ${spot.lat.toFixed(4)}, ${spot.lng.toFixed(4)} • <strong>${spot.rating}</strong></div>
+          <p class="popup-desc">${spot.desc}</p>
+          <div class="popup-actions">
+            <a href="${spot.gmapsDirUrl}" target="_blank" rel="noopener noreferrer" class="btn-gmaps-direct">
+              <i class="fa-solid fa-diamond-turn-right"></i> Petunjuk Arah Real-time
+            </a>
+            <div class="popup-sub-actions">
+              <a href="${spot.gmapsSearchUrl}" target="_blank" rel="noopener noreferrer" class="btn-popup-secondary">
+                <i class="fa-brands fa-google"></i> Google Maps
+              </a>
+              ${spot.destId ? `<button class="btn-popup-secondary view-detail-trigger" data-id="${spot.destId}"><i class="fa-solid fa-circle-info"></i> Info Detail</button>` : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const marker = L.marker([spot.lat, spot.lng], { icon: pinIcon })
+      .addTo(tourismMapInstance)
+      .bindPopup(popupHtml, { className: 'custom-map-popup', maxWidth: 300 });
+
+    marker.spotData = spot;
+    mapMarkers.push(marker);
+
+    marker.on('click', () => highlightSpotCard(spot.id));
+  });
+
+  document.querySelectorAll('.spot-item-card').forEach(card => {
+    card.onclick = () => {
+      const id = parseInt(card.getAttribute('data-id'));
+      const targetSpot = MAP_LOCATIONS.find(s => s.id === id);
+      if (targetSpot) {
+        highlightSpotCard(id);
+        tourismMapInstance.flyTo([targetSpot.lat, targetSpot.lng], 15, { duration: 1.2 });
+        const targetMarker = mapMarkers.find(m => m.spotData && m.spotData.id === id);
+        if (targetMarker) setTimeout(() => targetMarker.openPopup(), 400);
+      }
+    };
+  });
+}
+
 // 11. INITIALIZATION ON DOM CONTENT LOADED
 document.addEventListener('DOMContentLoaded', () => {
   initRouter();
@@ -979,4 +1827,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initAuthPortal();
   initAdminDashboardTabs();
   initInteractiveTriggers();
+  init3DMap();
 });
