@@ -1282,19 +1282,27 @@
          VIEW 5: ADMIN DASHBOARD
          ------------------------------------------------------------------------ -->
     <div id="view-admin" class="spa-view hidden">
+      <!-- Admin Mobile Sidebar Backdrop -->
+      <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+
       <section class="admin-layout">
         
         <!-- Left Sidebar -->
-        <aside class="admin-sidebar">
-          <div class="admin-sidebar-logo">
-            <div class="logo">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
-                <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-              </svg>
-              <span>TS ADMIN</span>
+        <aside class="admin-sidebar" id="adminSidebar">
+          <div class="admin-sidebar-header">
+            <div class="admin-sidebar-logo">
+              <div class="logo">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8 3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                  <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>TS ADMIN</span>
+              </div>
             </div>
+            <button class="admin-sidebar-close" id="adminSidebarClose" aria-label="Tutup Menu Admin">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
           </div>
           
           <nav style="flex-grow: 1;">
@@ -1339,9 +1347,14 @@
           
           <!-- Topbar -->
           <div class="admin-topbar">
-            <div class="admin-title-area">
-              <h2 id="adminTabTitle">Overview Dashboard</h2>
-              <p id="adminTabSubtitle">Statistik umum dan manajemen data Wisata Pesisir Barat.</p>
+            <div class="admin-topbar-left">
+              <button class="admin-menu-toggle" id="adminMenuToggle" aria-label="Buka Menu Admin" title="Menu Navigasi">
+                <i class="fa-solid fa-bars"></i>
+              </button>
+              <div class="admin-title-area">
+                <h2 id="adminTabTitle">Overview Dashboard</h2>
+                <p id="adminTabSubtitle">Statistik umum dan manajemen data Wisata Pesisir Barat.</p>
+              </div>
             </div>
             
             <div class="admin-user-profile">
@@ -1693,6 +1706,91 @@
       </div>
     </div>
   </footer>
+
+  <!-- ==========================================================================
+       AI TRAVEL ASSISTANT WIDGET (PARI AI)
+       ========================================================================== -->
+  <!-- Floating Trigger Button -->
+  <div class="ai-assistant-trigger-wrapper" id="aiAssistantTriggerWrapper">
+    <button class="ai-assistant-trigger" id="aiAssistantTrigger" aria-label="Buka Asisten Wisata AI" title="Tanya Pari AI - Rekomendasi Wisata">
+      <div class="ai-trigger-icon">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div class="ai-trigger-text">
+        <span class="ai-trigger-title">Tanya Pari AI</span>
+        <span class="ai-trigger-sub">Asisten Wisata</span>
+      </div>
+      <span class="ai-trigger-pulse"></span>
+    </button>
+  </div>
+
+  <!-- Chat Window Modal -->
+  <div class="ai-chat-modal" id="aiChatModal" aria-hidden="true">
+    <!-- Header -->
+    <div class="ai-chat-header">
+      <div class="ai-header-profile">
+        <div class="ai-avatar-box">
+          <i class="fa-solid fa-robot"></i>
+          <span class="ai-online-indicator"></span>
+        </div>
+        <div class="ai-profile-meta">
+          <h4>Pari AI • Pemandu Cerdas</h4>
+          <span class="ai-profile-status">Siap bantu cari destinasi impianmu ✨</span>
+        </div>
+      </div>
+      <div class="ai-header-controls">
+        <button class="ai-btn-icon" id="aiChatResetBtn" title="Mulai percakapan baru" aria-label="Reset chat">
+          <i class="fa-solid fa-rotate-left"></i>
+        </button>
+        <button class="ai-btn-icon" id="aiChatCloseBtn" title="Tutup asisten AI" aria-label="Tutup chat">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Messages List -->
+    <div class="ai-chat-body" id="aiChatBody">
+      <div class="ai-chat-messages" id="aiChatMessages">
+        <!-- Initial Welcome Message from Pari AI -->
+        <div class="ai-msg-row ai-msg-bot">
+          <div class="ai-msg-avatar">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div class="ai-msg-bubble">
+            <p>Halo Traveler! 👋 Saya <strong>Pari AI</strong>, pemandu wisata pintar Pesisir Barat.</p>
+            <p>Mau liburan seru seperti apa? Ceritakan preferensimu (misal: <em>ingin berselancar pemula</em>, <em>wisata santai keluarga</em>, <em>kuliner khas</em>, atau <em>budget hemat</em>), atau klik pertanyaan cepat di bawah:</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Suggestion Chips -->
+      <div class="ai-quick-chips" id="aiQuickChips">
+        <button class="ai-chip-btn" data-query="Spot surfing terbaik untuk pemula di mana ya?">
+          🏄 Surfing Pemula
+        </button>
+        <button class="ai-chip-btn" data-query="Rekomendasi pantai yang ramah anak dan keluarga?">
+          👨‍👩‍👧 Pantai Keluarga
+        </button>
+        <button class="ai-chip-btn" data-query="Bagaimana cara ke Pulau Pisang dan lihat lumba-lumba?">
+          🐬 Pulau Pisang
+        </button>
+        <button class="ai-chip-btn" data-query="Apa saja kuliner khas dan oleh-oleh Pesisir Barat?">
+          🍲 Kuliner & Seruit
+        </button>
+        <button class="ai-chip-btn" data-query="Berapa biaya sewa pemandu lokal dan sewa papan surfing?">
+          💰 Pemandu & Biaya
+        </button>
+      </div>
+    </div>
+
+    <!-- Input Footer -->
+    <form class="ai-chat-footer" id="aiChatForm">
+      <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Ketik pertanyaan atau cari destinasi..." autocomplete="off" maxlength="250">
+      <button type="submit" class="ai-chat-send-btn" id="aiChatSendBtn" aria-label="Kirim pesan">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </form>
+  </div>
 
   <!-- Leaflet Map JS Library -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>

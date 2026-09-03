@@ -1253,6 +1253,34 @@ function updateBookingStatus(bookingCode, status) {
 function initAdminDashboardTabs() {
   const sidebarNavItems = document.querySelectorAll('.admin-nav-item');
   const tabContents = document.querySelectorAll('.admin-tab-content');
+  const adminSidebar = document.getElementById('adminSidebar');
+  const adminMenuToggle = document.getElementById('adminMenuToggle');
+  const adminSidebarClose = document.getElementById('adminSidebarClose');
+  const adminSidebarBackdrop = document.getElementById('adminSidebarBackdrop');
+
+  function openAdminSidebar() {
+    if (adminSidebar) adminSidebar.classList.add('active');
+    if (adminSidebarBackdrop) adminSidebarBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAdminSidebar() {
+    if (adminSidebar) adminSidebar.classList.remove('active');
+    if (adminSidebarBackdrop) adminSidebarBackdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (adminMenuToggle) {
+    adminMenuToggle.addEventListener('click', openAdminSidebar);
+  }
+
+  if (adminSidebarClose) {
+    adminSidebarClose.addEventListener('click', closeAdminSidebar);
+  }
+
+  if (adminSidebarBackdrop) {
+    adminSidebarBackdrop.addEventListener('click', closeAdminSidebar);
+  }
 
   sidebarNavItems.forEach(item => {
     item.addEventListener('click', (e) => {
@@ -1265,32 +1293,45 @@ function initAdminDashboardTabs() {
 
       // Toggle tab contents visibility
       tabContents.forEach(content => content.classList.add('hidden'));
-      document.getElementById(`admin-tab-${targetTab}`).classList.remove('hidden');
+      const targetContent = document.getElementById(`admin-tab-${targetTab}`);
+      if (targetContent) targetContent.classList.remove('hidden');
 
       // Update Top Title header content
       const tabTitle = item.querySelector('a').textContent.trim();
-      document.getElementById('adminTabTitle').textContent = `Kelola ${tabTitle}`;
-      
+      const titleEl = document.getElementById('adminTabTitle');
+      const subtitleEl = document.getElementById('adminTabSubtitle');
+
       if (targetTab === 'dashboard') {
-        document.getElementById('adminTabTitle').textContent = `Overview Dashboard`;
-        document.getElementById('adminTabSubtitle').textContent = `Statistik umum dan manajemen data Wisata Pesisir Barat.`;
+        if (titleEl) titleEl.textContent = `Overview Dashboard`;
+        if (subtitleEl) subtitleEl.textContent = `Statistik umum dan manajemen data Wisata Pesisir Barat.`;
         renderAdminDashboard();
       } else {
-        document.getElementById('adminTabSubtitle').textContent = `Modifikasi database panel ${tabTitle.toLowerCase()} pariwisata.`;
+        if (titleEl) titleEl.textContent = `Kelola ${tabTitle}`;
+        if (subtitleEl) subtitleEl.textContent = `Modifikasi database panel ${tabTitle.toLowerCase()} pariwisata.`;
       }
+
+      // Close mobile drawer on selection
+      closeAdminSidebar();
     });
   });
 
   // Shortcut redirections inside tables
-  document.getElementById('adminGoToPemesananTab').onclick = () => {
-    const tabLink = document.querySelector('.admin-nav-item[data-tab="pemesanan"]');
-    if (tabLink) tabLink.click();
-  };
+  const goToPemesanan = document.getElementById('adminGoToPemesananTab');
+  if (goToPemesanan) {
+    goToPemesanan.onclick = () => {
+      const tabLink = document.querySelector('.admin-nav-item[data-tab="pemesanan"]');
+      if (tabLink) tabLink.click();
+    };
+  }
 
-  document.getElementById('adminLogoutBtn').onclick = () => {
-    isAdminLoggedIn = false;
-    window.location.hash = '#home';
-  };
+  const logoutBtn = document.getElementById('adminLogoutBtn');
+  if (logoutBtn) {
+    logoutBtn.onclick = () => {
+      closeAdminSidebar();
+      isAdminLoggedIn = false;
+      window.location.hash = '#home';
+    };
+  }
 }
 
 // 9. HELPER UI UTILITIES
@@ -1870,5 +1911,342 @@ document.addEventListener('DOMContentLoaded', () => {
   initAdminDashboardTabs();
   initInteractiveTriggers();
   init3DMap();
+  initAIAssistant();
 });
+
+// ==========================================================================
+// 13. PARI AI - ASISTEN WISATA PINTAR PESISIR BARAT
+// ==========================================================================
+function initAIAssistant() {
+  const trigger = document.getElementById('aiAssistantTrigger');
+  const modal = document.getElementById('aiChatModal');
+  const closeBtn = document.getElementById('aiChatCloseBtn');
+  const resetBtn = document.getElementById('aiChatResetBtn');
+  const chatForm = document.getElementById('aiChatForm');
+  const chatInput = document.getElementById('aiChatInput');
+  const messagesContainer = document.getElementById('aiChatMessages');
+  const chatBody = document.getElementById('aiChatBody');
+  const chips = document.querySelectorAll('.ai-chip-btn');
+
+  if (!trigger || !modal || !chatForm) return;
+
+  // Toggle chat modal
+  trigger.addEventListener('click', () => {
+    modal.classList.toggle('active');
+    if (modal.classList.contains('active')) {
+      if (chatInput) setTimeout(() => chatInput.focus(), 300);
+      scrollToBottom();
+    }
+  });
+
+  // Close chat modal
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+  }
+
+  // Reset chat
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      messagesContainer.innerHTML = `
+        <div class="ai-msg-row ai-msg-bot">
+          <div class="ai-msg-avatar">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div class="ai-msg-bubble">
+            <p>Halo Traveler! 👋 Saya <strong>Pari AI</strong>, pemandu wisata pintar Pesisir Barat.</p>
+            <p>Mau liburan seru seperti apa? Ceritakan preferensimu (misal: <em>ingin berselancar pemula</em>, <em>wisata santai keluarga</em>, <em>kuliner khas</em>, atau <em>budget hemat</em>), atau klik pertanyaan cepat di bawah:</p>
+          </div>
+        </div>
+      `;
+      scrollToBottom();
+    });
+  }
+
+  // Handle chips click
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const query = chip.dataset.query;
+      if (query) {
+        handleUserMessage(query);
+      }
+    });
+  });
+
+  // Handle form submission
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const query = chatInput.value.trim();
+    if (!query) return;
+    chatInput.value = '';
+    handleUserMessage(query);
+  });
+
+  // Function to process user message
+  function handleUserMessage(queryText) {
+    appendUserMessage(queryText);
+    showTypingIndicator();
+
+    setTimeout(() => {
+      removeTypingIndicator();
+      const botResponse = generateAIResponse(queryText);
+      appendBotMessage(botResponse.text, botResponse.cardHtml);
+    }, 700 + Math.random() * 400);
+  }
+
+  function appendUserMessage(text) {
+    const userRow = document.createElement('div');
+    userRow.className = 'ai-msg-row ai-msg-user';
+    userRow.innerHTML = `
+      <div class="ai-msg-bubble">
+        <p>${escapeHtml(text)}</p>
+      </div>
+    `;
+    messagesContainer.appendChild(userRow);
+    scrollToBottom();
+  }
+
+  function appendBotMessage(text, cardHtml = '') {
+    const botRow = document.createElement('div');
+    botRow.className = 'ai-msg-row ai-msg-bot';
+    botRow.innerHTML = `
+      <div class="ai-msg-avatar">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div class="ai-msg-bubble">
+        ${text}
+        ${cardHtml}
+      </div>
+    `;
+    messagesContainer.appendChild(botRow);
+
+    // Wire up detail & booking buttons inside card
+    botRow.querySelectorAll('.ai-detail-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const destId = parseInt(btn.dataset.id, 10);
+        if (typeof renderDestinationDetail === 'function') {
+          renderDestinationDetail(destId);
+        }
+        window.location.hash = '#detail';
+        modal.classList.remove('active');
+      });
+    });
+
+    botRow.querySelectorAll('.ai-booking-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        window.location.hash = '#booking';
+        modal.classList.remove('active');
+      });
+    });
+
+    scrollToBottom();
+  }
+
+  function showTypingIndicator() {
+    const typingRow = document.createElement('div');
+    typingRow.id = 'aiTypingIndicator';
+    typingRow.className = 'ai-msg-row ai-msg-bot';
+    typingRow.innerHTML = `
+      <div class="ai-msg-avatar">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div class="ai-msg-bubble">
+        <div class="ai-typing-indicator">
+          <span class="ai-typing-dot"></span>
+          <span class="ai-typing-dot"></span>
+          <span class="ai-typing-dot"></span>
+        </div>
+      </div>
+    `;
+    messagesContainer.appendChild(typingRow);
+    scrollToBottom();
+  }
+
+  function removeTypingIndicator() {
+    const indicator = document.getElementById('aiTypingIndicator');
+    if (indicator) indicator.remove();
+  }
+
+  function scrollToBottom() {
+    if (chatBody) {
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+
+  // AI Knowledge & Intent Matching Engine
+  function generateAIResponse(query) {
+    const q = query.toLowerCase();
+
+    // 1. Surfing Pemula / Belajar
+    if (q.includes('pemula') || q.includes('belajar surfing') || q.includes('baru mulai') || q.includes('beginner')) {
+      return {
+        text: `<p>Bagi peselancar pemula atau yang baru ingin belajar, saya sangat merekomendasikan <strong>Pantai Mandiri</strong>!</p>
+               <p>Pantai ini bertipe <em>beach break</em> dengan dasar pasir lembut (tanpa karang tajam), ombaknya relatif bersahabat, dan sangat cocok untuk latihan dasar bersama instruktur lokal berlisensi.</p>
+               <p>Ingin coba ombak legendaris untuk pemula? Anda juga bisa memesan jasa instruktur berpengalaman kami.</p>`,
+        cardHtml: `
+          <div class="ai-rec-card">
+            <img src="assets/images/pantai-way-jambu.jpg" alt="Pantai Mandiri & Krui" class="ai-rec-thumb">
+            <div class="ai-rec-info">
+              <h5 class="ai-rec-title">Paket Surfing Adventure & Coaching</h5>
+              <div class="ai-rec-meta">
+                <span><i class="fa-solid fa-user-check"></i> Instruktur Berlisensi</span>
+                <span class="ai-rec-price">Rp 650.000 / pax</span>
+              </div>
+              <div class="ai-rec-actions">
+                <button class="btn btn-outline btn-sm ai-detail-trigger" data-id="1">Info Detail</button>
+                <button class="btn btn-primary btn-sm ai-booking-trigger">Pesan Sekarang</button>
+              </div>
+            </div>
+          </div>
+        `
+      };
+    }
+
+    // 2. Surfing Pro / Ombak Besar / Barel
+    if (q.includes('karang nyimbor') || q.includes('ujung bocur') || q.includes('pipeline') || q.includes('ombak besar') || q.includes('barrel') || q.includes('wsl') || q.includes('pro')) {
+      const dest = DESTINATIONS.find(d => d.id === 1) || DESTINATIONS[0];
+      return {
+        text: `<p>Untuk peselancar tingkat menengah hingga profesional, <strong>Pantai Karang Nyimbor (Ujung Bocur)</strong> dan <strong>Pantai Way Jambu (The Pipeline)</strong> adalah surganya!</p>
+               <p>Karang Nyimbor menyuguhkan gulungan ombak kidal (<em>long left-hander</em>) hingga 6-7 meter yang menjadi venue kejuaraan dunia WSL Krui Pro. Sedangkan Way Jambu terkenal dengan ombak barrel cepat di atas karang dangkal.</p>`,
+        cardHtml: `
+          <div class="ai-rec-card">
+            <img src="${dest.coverImg}" alt="${dest.name}" class="ai-rec-thumb">
+            <div class="ai-rec-info">
+              <h5 class="ai-rec-title">${dest.name}</h5>
+              <div class="ai-rec-meta">
+                <span><i class="fa-solid fa-location-dot"></i> Pesisir Selatan</span>
+                <span class="ai-rec-price">Rp ${dest.price.toLocaleString('id-ID')} / org</span>
+              </div>
+              <div class="ai-rec-actions">
+                <button class="btn btn-outline btn-sm ai-detail-trigger" data-id="${dest.id}">Lihat Detail</button>
+                <button class="btn btn-primary btn-sm ai-booking-trigger">Pesan Tiket</button>
+              </div>
+            </div>
+          </div>
+        `
+      };
+    }
+
+    // 3. Wisata Keluarga / Anak-anak / Santai
+    if (q.includes('keluarga') || q.includes('anak') || q.includes('family') || q.includes('santai') || q.includes('biha')) {
+      const dest = DESTINATIONS.find(d => d.id === 3) || DESTINATIONS[2];
+      return {
+        text: `<p>Jika berlibur bersama keluarga dan anak-anak, pilihan paling tepat adalah <strong>Pantai Biha & Pesisir</strong>!</p>
+               <p>Garis pantainya landai, ombaknya bersahabat untuk bermain air, dan anak-anak bisa melihat langsung kapal jukung nelayan tradisional. Di sini juga merupakan pusat kuliner seafood dan ikan bakar khas seruit yang lezat.</p>`,
+        cardHtml: `
+          <div class="ai-rec-card">
+            <img src="${dest.coverImg}" alt="${dest.name}" class="ai-rec-thumb">
+            <div class="ai-rec-info">
+              <h5 class="ai-rec-title">${dest.name}</h5>
+              <div class="ai-rec-meta">
+                <span><i class="fa-solid fa-heart"></i> Ramah Keluarga</span>
+                <span class="ai-rec-price">Rp ${dest.price.toLocaleString('id-ID')} / org</span>
+              </div>
+              <div class="ai-rec-actions">
+                <button class="btn btn-outline btn-sm ai-detail-trigger" data-id="${dest.id}">Lihat Detail</button>
+                <button class="btn btn-primary btn-sm ai-booking-trigger">Booking Sekarang</button>
+              </div>
+            </div>
+          </div>
+        `
+      };
+    }
+
+    // 4. Pulau Pisang & Lumba-lumba / Snorkeling
+    if (q.includes('pulau pisang') || q.includes('lumba') || q.includes('snorkeling') || q.includes('tembakak')) {
+      return {
+        text: `<p><strong>Pulau Pisang</strong> adalah mutiara tersembunyi Pesisir Barat! 🏝️</p>
+               <p><strong>Cara Menuju ke Sana:</strong> Naik perahu jukung tradisional dari dermaga Tembakak (sekitar 15-20 menit penyeberangan).</p>
+               <p><strong>Daya Tarik:</strong><br>
+               🐬 Kawanan lumba-lumba liar yang sering melompat menyapa di pagi hari.<br>
+               🤿 Terumbu karang jernih untuk snorkeling.<br>
+               🏛️ Pemandangan rumah panggung tradisional dan pengrajin kain Tapis Lampung.</p>`,
+        cardHtml: `
+          <div class="ai-rec-card">
+            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=400&q=80" alt="Pulau Pisang" class="ai-rec-thumb">
+            <div class="ai-rec-info">
+              <h5 class="ai-rec-title">Paket Wisata Pulau Pisang & Snorkeling</h5>
+              <div class="ai-rec-meta">
+                <span><i class="fa-solid fa-ship"></i> Termasuk Perahu PP</span>
+                <span class="ai-rec-price">Rp 550.000 / pax</span>
+              </div>
+              <div class="ai-rec-actions">
+                <button class="btn btn-primary btn-sm ai-booking-trigger" style="width:100%;">Pesan Paket Ini</button>
+              </div>
+            </div>
+          </div>
+        `
+      };
+    }
+
+    // 5. Kuliner / Seruit / Tapis / Oleh-oleh
+    if (q.includes('kuliner') || q.includes('makan') || q.includes('seruit') || q.includes('tapis') || q.includes('oleh-oleh') || q.includes('souvenir') || q.includes('ikan bakar')) {
+      return {
+        text: `<p>Kuliner dan budaya di Pesisir Barat sangat memikat lidah dan hati:</p>
+               <p>🍲 <strong>Sambal Seruit:</strong> Hidangan ikan bakar segar laut (Tenggiri, Rampang, atau Kerapu) dicampur sambal terasi khas, lalapan segar, dan kuah tempoyak (olahan durian fermentasi).</p>
+               <p>🧵 <strong>Kain Tenun Tapis:</strong> Kerajinan tenun benang emas khas Lampung yang dibuat secara turun-temurun oleh ibu-ibu pengrajin di Pulau Pisang dan Pesisir Selatan.</p>
+               <p>Warung seruit terbaik bisa Anda jumpai di sekitar Pantai Biha dan sepanjang pusat Kota Krui!</p>`
+      };
+    }
+
+    // 6. Biaya / Harga / Pemandu / Budget
+    if (q.includes('biaya') || q.includes('harga') || q.includes('budget') || q.includes('pemandu') || q.includes('tarif') || q.includes('sewa')) {
+      return {
+        text: `<p>Estimasi biaya berlibur ke Pesisir Barat sangat ramah di kantong:</p>
+               <p>🎟️ <strong>Tiket Masuk Pantai:</strong> Rata-rata Rp 10.000 - Rp 15.000 / orang.<br>
+               🧭 <strong>Jasa Pemandu Lokal:</strong> Mulai Rp 200.000 - Rp 350.000 / hari (tergantung rute & jumlah grup).<br>
+               🏄 <strong>Sewa Papan Surfing:</strong> Rp 100.000 - Rp 150.000 / hari.<br>
+               🏡 <strong>Penginapan:</strong> Surf Camp / Homestay (Rp 200rb - 350rb/mlm), Resort tepi pantai (Rp 550rb - 900rb/mlm).</p>
+               <p>Anda bisa memesan tiket dan pemandu lokal berlisensi langsung melalui portal kami!</p>`,
+        cardHtml: `
+          <div class="ai-rec-card" style="padding:0.75rem; text-align:center;">
+            <button class="btn btn-primary btn-block ai-booking-trigger">
+              <i class="fa-solid fa-calendar-check"></i> Pesan Tiket & Pemandu Sekarang
+            </button>
+          </div>
+        `
+      };
+    }
+
+    // 7. Rute & Transportasi
+    if (q.includes('rute') || q.includes('jalan') || q.includes('transportasi') || q.includes('ke sana') || q.includes('pesawat') || q.includes('bandara') || q.includes('lokasi')) {
+      return {
+        text: `<p><strong>Akses Menuju Pesisir Barat (Krui):</strong></p>
+               <p>🚗 <strong>Jalur Darat (Mobil/Travel):</strong> Dari Bandar Lampung via rute Lintas Barat (Kemiling - Pringsewu - Kota Agung - Bengkunat - Tanjung Setia - Krui) memakan waktu sekitar 5 - 6 jam dengan jalan aspal mulus pemandangan perbukitan TNBBS.</p>
+               <p>✈️ <strong>Jalur Udara:</strong> Tersedia penerbangan perintis rute Bandara Radin Inten II (TKG) menuju <strong>Bandara M. Taufiq Kiemas Krui (TFY)</strong>.</p>`
+      };
+    }
+
+    // 8. Kapan waktu terbaik / Musim surfing
+    if (q.includes('kapan') || q.includes('musim') || q.includes('bulan') || q.includes('waktu terbaik') || q.includes('cuaca')) {
+      return {
+        text: `<p><strong>Waktu Terbaik Mengunjungi Pesisir Barat:</strong></p>
+               <p>🌊 <strong>Musim Surfing Puncak (Peak Season):</strong> Bulan <strong>Mei hingga Oktober</strong>. Angin offshore berhembus stabil dan ombak Samudra Hindia mencapai puncaknya (3 hingga 7 meter).</p>
+               <p>🏖️ <strong>Musim Wisata Santai & Keluarga:</strong> Sepanjang tahun, khususnya bulan <strong>Maret - November</strong> untuk cuaca cerah tropis dan air laut yang jernih untuk snorkeling.</p>`
+      };
+    }
+
+    // Default Fallback Response
+    return {
+      text: `<p>Pesisir Barat punya beragam pesona menakjubkan! Tiga destinasi utama yang wajib Anda kunjungi:</p>
+             <p>1. <strong>Pantai Karang Nyimbor</strong> - Ombak surfing kidal legendaris kelas dunia.<br>
+             2. <strong>Pantai Way Jambu</strong> - Ombak barel menantang dengan panorama deretan pohon kelapa.<br>
+             3. <strong>Pantai Biha</strong> - Pantai tenang berpasir putih, cocok untuk wisata keluarga & kuliner seruit.</p>
+             <p>Ingin rekomendasi spesifik? Coba tanyakan: <em>"pantai untuk pemula"</em>, <em>"cara ke pulau pisang"</em>, atau <em>"biaya pemandu wisata"</em>.</p>`,
+      cardHtml: `
+        <div class="ai-rec-card" style="padding:0.75rem; text-align:center;">
+          <a href="#destinasi" class="btn btn-secondary btn-block" onclick="document.getElementById('aiChatModal').classList.remove('active');">
+            <i class="fa-solid fa-compass"></i> Jelajahi Semua Destinasi
+          </a>
+        </div>
+      `
+    };
+  }
+}
+
 
