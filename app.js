@@ -1,32 +1,36 @@
 /* ==========================================================================
-   DESA WISATA TANJUNG SETIA - PORTAL LOGIC & INTERACTIONS
-   SPA Router, Booking Wizard, Admin Dashboard, Auth Simulation
+   EXPLORE PESISIR BARAT - PORTAL LOGIC & INTERACTIONS
+   SPA Router, Booking Wizard, Admin Dashboard, Interactive 3D Map, Pari AI
    ========================================================================== */
 
 // 1. DATA STORES
 const DESTINATIONS = [
   {
     id: 1,
-    name: "Pantai Karang Nyimbor",
-    location: "Pesisir Selatan, Lampung",
+    name: "Pantai Karang Nyimbor (Ujung Bocur)",
+    location: "Pesisir Selatan, Pesisir Barat, Lampung",
+    lat: -5.313426,
+    lng: 103.998218,
     price: 15000,
     rating: "4.9 / 5.0 (Rating Peselancar)",
     hours: "Buka 24 Jam",
     category: "Pantai & Surfing Kelas Dunia",
     description: "Surga peselancar dunia dengan gulungan ombak legendaris Ujung Bocur.",
-    longDescription: "Pantai Karang Nyimbor adalah pusat utama kegiatan surfing internasional di Tanjung Setia. Pantai ini memiliki salah satu ombak kidal (left-hander) terpanjang dan paling konsisten di dunia yang dikenal sebagai 'Ujung Bocur Wave'. Gulungan ombaknya bisa mencapai ketinggian 6 hingga 7 meter di musim puncak (Mei - Oktober). Selain untuk berselancar, pantai ini menawarkan panorama karang laut eksotis, deretan gazebo tradisional untuk bersantai, serta pasir putih keemasan yang menawan saat senja tiba.",
+    longDescription: "Pantai Karang Nyimbor adalah pusat utama kegiatan surfing internasional di Pesisir Barat. Pantai ini memiliki salah satu ombak kidal (left-hander) terpanjang dan paling konsisten di dunia yang dikenal sebagai 'Ujung Bocur Wave'. Gulungan ombaknya bisa mencapai ketinggian 6 hingga 7 meter di musim puncak (Mei - Oktober). Selain untuk berselancar, pantai ini menawarkan panorama karang laut eksotis, deretan gazebo tradisional untuk bersantai, serta pasir putih keemasan yang menawan saat senja tiba.",
     coverImg: "assets/images/pantai-karang-nyimbor.jpg",
     thumbs: [
       "assets/images/pantai-karang-nyimbor.jpg",
       "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=400&q=80",
       "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=400&q=80"
     ],
-    facilities: ["Parkir Luas & Aman", "Toilet & Shower", "Surf Camp & Resorts", "Penyewaan Board", "Warung Kuliner Seafood"]
+    facilities: ["Parkir Luas & Aman", "Toilet & Shower Bersih", "Surf Camp & Resorts", "Penyewaan Board", "Warung Kuliner Seafood"]
   },
   {
     id: 2,
-    name: "Pantai Way Jambu",
-    location: "Way Jambu, Lampung Barat",
+    name: "Pantai Way Jambu (The Pipeline)",
+    location: "Way Jambu, Pesisir Selatan, Pesisir Barat, Lampung",
+    lat: -5.358210,
+    lng: 104.053120,
     price: 10000,
     rating: "4.8 / 5.0 (Sangat Asri)",
     hours: "06:00 - 18:30 WIB",
@@ -43,21 +47,143 @@ const DESTINATIONS = [
   },
   {
     id: 3,
-    name: "Pantai Biha & Pesisir",
-    location: "Biha, Lampung Barat",
+    name: "Pantai Mandiri (Black Sand Beach)",
+    location: "Mandiri Sejati, Krui Selatan, Pesisir Barat, Lampung",
+    lat: -5.247850,
+    lng: 103.921530,
+    price: 5000,
+    rating: "4.8 / 5.0 (Sunset Favorit)",
+    hours: "05:30 - 19:00 WIB",
+    category: "Pantai Pasir Hitam Vulkanik",
+    description: "Hamparan pasir hitam berkilau dengan pemandangan matahari terbenam magis.",
+    longDescription: "Pantai Mandiri terkenal dengan bentangan pasir hitam vulkanis halus yang berkilau saat terkena sinar matahari sore. Garis pantainya yang sangat panjang dan luas menjadikannya tempat ideal untuk berjalan santai, berkuda tepi pantai, menikmati senja berlatar ombak Samudra Hindia, serta hunting foto lanskap sinematik.",
+    coverImg: "assets/images/paket-explore-krui.jpg",
+    thumbs: [
+      "assets/images/paket-explore-krui.jpg",
+      "assets/images/galeri-santai-pantai.jpg",
+      "assets/images/paket-sunset.jpg"
+    ],
+    facilities: ["Spot Foto Sunset", "Kedai Kopi Tepi Pantai", "Parkir Mobil & Motor", "Mushola", "Gazebo Santai"]
+  },
+  {
+    id: 4,
+    name: "Pantai Labuhan Jukung Krui",
+    location: "Kampung Jawa, Pesisir Tengah, Krui, Pesisir Barat, Lampung",
+    lat: -5.195610,
+    lng: 103.931240,
+    price: 5000,
+    rating: "4.9 / 5.0 (Ikon Wisata Kota)",
+    hours: "Buka 24 Jam",
+    category: "Pusat Rekreasi & Budaya",
+    description: "Ikon pariwisata utama Krui dengan panggung kesenian dan kuliner pesisir.",
+    longDescription: "Pantai Labuhan Jukung adalah jantung wisata kota Krui. Pantai ini memiliki taman terbuka hijau, panggung pertunjukan budaya, dan deretan kios kuliner khas Lampung Pesisir. Ombak di sini juga ramah bagi peselancar pemula hingga menengah, sementara tepi pantainya sangat aman untuk rekreasi santai bersama keluarga.",
+    coverImg: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=800&q=80",
+    thumbs: [
+      "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=400&q=80",
+      "assets/images/galeri-santai-pantai.jpg",
+      "assets/images/paket-explore-krui.jpg"
+    ],
+    facilities: ["Taman Terbuka Publik", "Panggung Kesenian Budaya", "Sentra Kuliner Ikan Bakar", "Pusat Informasi Wisata", "Toilet & Parkir Luas"]
+  },
+  {
+    id: 6,
+    name: "Air Terjun Way Detun (Curug Detun)",
+    location: "Karya Penggawa, Pesisir Barat, Lampung",
+    lat: -5.148500,
+    lng: 103.968200,
     price: 10000,
-    rating: "4.7 / 5.0 (Ramah Keluarga)",
+    rating: "4.8 / 5.0 (Wisata Hutan)",
+    hours: "07:30 - 17:00 WIB",
+    category: "Ekowisata Hutan Tropis",
+    description: "Air terjun alami di balik rimbunnya hutan hujan tropis Krui.",
+    longDescription: "Air Terjun Way Detun menyajikan kesegaran air pegunungan yang jernih dengan kolam alami berwarna toska di bawahnya. Dikelilingi tebing bebatuan alami dan pohon-pohon rindang, tempat ini menjadi lokasi favorit untuk melepaskan penat setelah menjelajahi ombak pantai.",
+    coverImg: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80",
+    thumbs: [
+      "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=400&q=80",
+      "assets/images/paket-explore-krui.jpg",
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=400&q=80"
+    ],
+    facilities: ["Jalur Trekking Alami", "Saung Istirahat", "Pemandu Lokal Trekking", "Warung Makanan Ringan", "Spot Foto Alami"]
+  },
+  {
+    id: 10,
+    name: "Sentra Tenun Kain Tapis Pesisir",
+    location: "Krui, Pesisir Barat, Lampung",
+    lat: -5.191200,
+    lng: 103.941500,
+    price: 0,
+    rating: "4.9 / 5.0 (Warisan Budaya)",
+    hours: "08:00 - 17:00 WIB",
+    category: "Pelestarian Budaya & Kriya (SDG 11.4)",
+    description: "Pusat tenun benang emas tradisional khas Saibatin Pesisir Barat.",
+    longDescription: "Sentra Tenun Tapis Pesisir Barat merupakan wadah pemberdayaan para pengrajin wanita lokal dalam melestarikan kriya tenun tradisional Lampung bermotif pucuk rebung, kapal, dan sulam benang emas. Wisatawan dapat belajar langsung proses menenun tradisional dan membeli cendera mata otentik.",
+    coverImg: "assets/images/kain-tapis.jpg",
+    thumbs: [
+      "assets/images/kain-tapis.jpg",
+      "assets/images/sunset-culture.jpg",
+      "assets/images/paket-sunset.jpg"
+    ],
+    facilities: ["Galeri Kerajinan Tapis", "Workshop Belajar Menenun", "Toko Cendera Mata", "Pemandu Edukasi Budaya", "Toilet Bersih"]
+  },
+  {
+    id: 14,
+    name: "Pulau Pisang (Banana Island)",
+    location: "Kecamatan Pulau Pisang, Pesisir Barat, Lampung",
+    lat: -5.115830,
+    lng: 103.852110,
+    price: 25000,
+    rating: "5.0 / 5.0 (Permata Tersembunyi)",
+    hours: "Buka Setiap Hari (Penyeberangan 07:00 - 15:00)",
+    category: "Wisata Pulau & Bahari Eksotis",
+    description: "Surga pulau terpencil dengan air kristal, lumba-lumba liar & rumah bersejarah.",
+    longDescription: "Pulau Pisang adalah permata bahari paling memikat di Pesisir Barat Lampung. Terletak di Samudra Hindia lepas pantai Krui, pulau ini menawarkan air laut sebening kaca, terumbu karang hidup, pantai pasir putih halus, kawanan lumba-lumba yang kerap menyapa perahu pengunjung, serta deretan rumah panggung klasik peninggalan era kolonial.",
+    coverImg: "assets/images/paket-pulau-pisang.jpg",
+    thumbs: [
+      "assets/images/paket-pulau-pisang.jpg",
+      "assets/images/galeri-santai-pantai.jpg",
+      "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=400&q=80"
+    ],
+    facilities: ["Dermaga Perahu Nelayan", "Homestay Rumah Kayu Tradisional", "Sewa Alat Snorkeling", "Pemandu Keliling Pulau", "Kuliner Ikan Segar"]
+  },
+  {
+    id: 16,
+    name: "Pantai Biha & Pesisir",
+    location: "Biha, Pesisir Selatan, Pesisir Barat, Lampung",
+    lat: -5.334020,
+    lng: 104.015010,
+    price: 10000,
+    rating: "4.7 / 5.0 (Ramah Keluarga & Kuliner)",
     hours: "06:00 - 20:00 WIB",
-    category: "Wisata Bahari & Keluarga",
-    description: "Pantai berpasir putih keemasan yang tenang, cocok untuk wisata kuliner.",
+    category: "Wisata Bahari & Sentra Seruit",
+    description: "Pantai berpasir putih keemasan yang tenang, pusat kuliner ikan bakar seruit.",
     longDescription: "Pantai Biha memiliki karakteristik garis pantai yang landai dengan ombak sedang, menjadikannya destinasi wisata paling aman untuk keluarga dan anak-anak yang ingin bermain air. Di sekitar pantai, pengunjung dapat menyaksikan langsung hilir mudik perahu nelayan tradisional 'Jukung' yang membawa hasil tangkapan laut segar. Pantai ini terkenal sebagai pusat kuliner ikan bakar khas Lampung Pesisir dengan racikan bumbu tradisional sambal seruit yang menggugah selera.",
     coverImg: "assets/images/pantai-biha.jpg",
     thumbs: [
       "assets/images/pantai-biha.jpg",
-      "assets/images/pantai-biha.jpg",
+      "assets/images/galeri-santai-pantai.jpg",
+      "assets/images/sunset-culture.jpg"
+    ],
+    facilities: ["Warung Makan Seruit Segar", "Sewa Ban Renang Anak", "Mushola", "Spot Foto Perahu Jukung", "Pusat Oleh-oleh Kain Tapis"]
+  },
+  {
+    id: 17,
+    name: "Konservasi Penyu Muara Tembulih",
+    location: "Pekon Muara Tembulih, Ngambur, Pesisir Barat, Lampung",
+    lat: -5.392000,
+    lng: 104.085000,
+    price: 10000,
+    rating: "4.9 / 5.0 (Konservasi Laut SDG 14)",
+    hours: "08:00 - 18:00 WIB",
+    category: "Konservasi Satwa Liar Bahari",
+    description: "Pusat pelestarian dan penangkaran penyu belimbing & penyu sisik langka.",
+    longDescription: "Kawasan Konservasi Penyu Muara Tembulih didedikasikan untuk melindungi populasi penyu laut langka (penyu belimbing, penyu sisik, dan lekang) dari ancaman kepunahan. Pengunjung dapat belajar siklus hidup penyu, melihat sarang telur semi-alami, dan mengikuti program pelepasan tukik (anak penyu) ke Samudra Hindia.",
+    coverImg: "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=800&q=80",
+    thumbs: [
+      "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=400&q=80",
+      "assets/images/galeri-santai-pantai.jpg",
       "assets/images/pantai-biha.jpg"
     ],
-    facilities: ["Warung Makan Seruit", "Sewa Ban Renang", "Mushola", "Spot Foto Landmark", "Pusat Oleh-oleh Kain Tapis"]
+    facilities: ["Pusat Edukasi & Penetasan Tukik", "Kolam Karantina Penyu", "Pemandu Konservasi", "Area Pelepasan Tukik", "Toilet & Gazebo"]
   }
 ];
 
@@ -414,7 +540,7 @@ const PACKAGES = {
 // Initial Mock Bookings for Admin Dashboard
 const MOCK_BOOKINGS = [
   {
-    code: "TS-2608-001",
+    code: "EPB-2026-0001",
     name: "John Doe",
     phone: "081288889999",
     email: "john@example.com",
@@ -429,7 +555,7 @@ const MOCK_BOOKINGS = [
     total: 5250000
   },
   {
-    code: "TS-2608-002",
+    code: "EPB-2026-0002",
     name: "Siti Aminah",
     phone: "085611112222",
     email: "siti.aminah@gmail.com",
@@ -444,7 +570,7 @@ const MOCK_BOOKINGS = [
     total: 2050000
   },
   {
-    code: "TS-2608-003",
+    code: "EPB-2026-0003",
     name: "David Miller",
     phone: "+61400222111",
     email: "david.m@surf.com.au",
@@ -459,7 +585,7 @@ const MOCK_BOOKINGS = [
     total: 3050000
   },
   {
-    code: "TS-2608-004",
+    code: "EPB-2026-0004",
     name: "Keluarga Handoko",
     phone: "081388887777",
     email: "handoko@company.id",
@@ -475,8 +601,9 @@ const MOCK_BOOKINGS = [
   }
 ];
 
-// Initialize localStorage if empty
-if (!localStorage.getItem('bookings')) {
+// Initialize localStorage if empty or still containing old TS- codes
+const storedBookings = localStorage.getItem('bookings');
+if (!storedBookings || storedBookings.includes('TS-')) {
   localStorage.setItem('bookings', JSON.stringify(MOCK_BOOKINGS));
 }
 
@@ -645,20 +772,45 @@ function initHeaderBehaviors() {
 
 // 5. DETAIL DESTINASI WISATA VIEW RENDERING
 function renderDestinationDetail(id) {
-  const dest = DESTINATIONS.find(d => d.id === id);
+  let dest = DESTINATIONS.find(d => d.id === id);
   if (!dest) {
-    window.location.hash = '#home';
-    return;
+    const spot = MAP_LOCATIONS.find(m => m.id === id || m.destId === id);
+    if (spot) {
+      dest = {
+        id: spot.id,
+        name: spot.name,
+        location: "Pesisir Barat, Lampung",
+        lat: spot.lat,
+        lng: spot.lng,
+        price: spot.price.includes('Rp') ? (parseInt(spot.price.replace(/[^0-9]/g, '')) || 10000) : 0,
+        rating: `${spot.rating} / 5.0 (Rating Pengunjung)`,
+        hours: "06:00 - 18:30 WIB",
+        category: spot.categoryLabel,
+        description: spot.desc,
+        longDescription: `${spot.desc} Destinasi ${spot.name} merupakan salah satu daya tarik wisata unggulan di Kabupaten Pesisir Barat yang menyuguhkan keindahan alam eksotis, kelestarian ekosistem pesisir, serta kearifan budaya masyarakat lokal yang ramah.`,
+        coverImg: spot.img,
+        thumbs: [spot.img, "assets/images/galeri-santai-pantai.jpg", "assets/images/pantai-karang-nyimbor.jpg"],
+        facilities: ["Akses Jalan Aspal", "Spot Foto Eksotis", "Pemandu Lokal Berlisensi", "Area Parkir Wisatawan", "Fasilitas Kebersihan"]
+      };
+    } else {
+      dest = DESTINATIONS[0]; // Fallback aman ke destinasi pertama
+    }
   }
 
   // Populate data
   document.getElementById('detailTitle').textContent = dest.name;
-  document.getElementById('detailPrice').innerHTML = `Rp ${dest.price.toLocaleString('id-ID')} <span>/ org</span>`;
+  document.getElementById('detailPrice').innerHTML = dest.price > 0 ? `Rp ${dest.price.toLocaleString('id-ID')} <span>/ org</span>` : `Gratis <span>/ Kunjungan</span>`;
   document.getElementById('detailLocation').textContent = dest.location;
   document.getElementById('detailRating').textContent = dest.rating;
   document.getElementById('detailHours').textContent = `Operasional: ${dest.hours}`;
-  document.getElementById('detailHeroImg').src = dest.coverImg;
-  document.getElementById('detailHeroImg').alt = dest.name;
+  
+  const heroImg = document.getElementById('detailHeroImg');
+  if (heroImg) {
+    heroImg.src = dest.coverImg || 'assets/images/pantai-karang-nyimbor.jpg';
+    heroImg.alt = dest.name;
+    heroImg.onerror = () => { heroImg.src = 'assets/images/pantai-karang-nyimbor.jpg'; };
+  }
+
   document.getElementById('detailLongDesc').textContent = dest.longDescription;
   document.getElementById('detailCategory').textContent = dest.category;
 
@@ -680,23 +832,40 @@ function renderDestinationDetail(id) {
     thumb.className = 'detail-gallery-thumb';
     thumb.innerHTML = `<img src="${t}" alt="Gallery ${dest.name} ${index + 1}">`;
     thumb.addEventListener('click', () => {
-      document.getElementById('detailHeroImg').src = t;
+      if (heroImg) heroImg.src = t;
     });
     thumbsBox.appendChild(thumb);
   });
+
+  // Dynamic Google Maps Embed per destination (replaces static Tanjung Setia)
+  const mapIframe = document.getElementById('detailMapIframe');
+  if (mapIframe) {
+    const lat = dest.lat || -5.313426;
+    const lng = dest.lng || 103.998218;
+    mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&hl=id&z=14&output=embed`;
+    mapIframe.title = `Peta Lokasi ${dest.name}`;
+  }
 
   // Related Packages list
   const relatedBox = document.getElementById('detailRelatedPackages');
   relatedBox.innerHTML = '';
   
-  // Inject package recommendation
-  const targetPackageKey = id === 1 ? 'surf' : (id === 2 ? 'beach' : 'family');
+  // Inject package recommendation based on category
+  let targetPackageKey = 'beach';
+  if (dest.category.toLowerCase().includes('surf') || (dest.id === 1 || dest.id === 2)) {
+    targetPackageKey = 'surf';
+  } else if (dest.category.toLowerCase().includes('pulau') || dest.id === 14) {
+    targetPackageKey = 'family';
+  } else if (dest.category.toLowerCase().includes('budaya') || dest.category.toLowerCase().includes('kuliner') || dest.id === 10) {
+    targetPackageKey = 'sunset';
+  }
+
   const pkgData = PACKAGES[targetPackageKey];
   
   const pkgCard = document.createElement('div');
   pkgCard.className = 'package-card popular';
   pkgCard.innerHTML = `
-    <span class="popular-ribbon"><i class="fa-solid fa-thumbs-up"></i> Rekomendasi Destinasi</span>
+    <span class="popular-ribbon"><i class="fa-solid fa-thumbs-up"></i> Rekomendasi Terkait</span>
     <div class="package-img-container">
       <img src="${dest.coverImg}" alt="${pkgData.name}" class="package-img">
     </div>
@@ -717,14 +886,20 @@ function renderDestinationDetail(id) {
   relatedBox.appendChild(pkgCard);
 
   // Set sidebar button action to open booking with current package
-  document.getElementById('detailBookNowBtn').onclick = () => {
-    selectPackageAndGo(targetPackageKey);
-  };
+  const detailBookNowBtn = document.getElementById('detailBookNowBtn');
+  if (detailBookNowBtn) {
+    detailBookNowBtn.onclick = () => {
+      selectPackageAndGo(targetPackageKey);
+    };
+  }
 
   // Bind new package triggers
-  pkgCard.querySelector('.select-package-booking').onclick = () => {
-    selectPackageAndGo(targetPackageKey);
-  };
+  const pkgBtn = pkgCard.querySelector('.select-package-booking');
+  if (pkgBtn) {
+    pkgBtn.onclick = () => {
+      selectPackageAndGo(targetPackageKey);
+    };
+  }
 }
 
 // Helper to select package and navigate to booking
@@ -765,10 +940,18 @@ function initBookingWizard() {
   if (radio) {
     radio.checked = true;
     document.querySelectorAll('.service-select-card').forEach(c => c.classList.remove('selected'));
-    radio.closest('.service-select-card').classList.add('selected');
+    const parentCard = radio.closest('.service-select-card');
+    if (parentCard) parentCard.classList.add('selected');
   }
 
+  // Sync checkboxes in step 1 with state
+  const chkGuide = document.getElementById('chk-guide');
+  const chkPhoto = document.getElementById('chk-photo');
+  if (chkGuide) chkGuide.checked = bookingState.guideAddon;
+  if (chkPhoto) chkPhoto.checked = bookingState.photoAddon;
+
   calculateTotalPayment();
+  renderReviewStep();
 }
 
 function initBookingWizardEvents() {
@@ -783,37 +966,71 @@ function initBookingWizardEvents() {
   serviceCards.forEach(card => {
     card.addEventListener('click', () => {
       const radio = card.querySelector('input[type="radio"]');
-      radio.checked = true;
+      if (radio) radio.checked = true;
       serviceCards.forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
       
-      const val = radio.value;
-      bookingState.packageId = val;
-      bookingState.packageName = PACKAGES[val].name;
-      bookingState.packagePrice = PACKAGES[val].price;
+      const val = card.getAttribute('data-value') || (radio ? radio.value : 'surf');
+      if (PACKAGES[val]) {
+        bookingState.packageId = val;
+        bookingState.packageName = PACKAGES[val].name;
+        bookingState.packagePrice = PACKAGES[val].price;
+      }
 
       calculateTotalPayment();
+      renderReviewStep();
     });
   });
 
-  // Checkbox add-ons listeners
-  chkGuide.addEventListener('change', () => {
-    bookingState.guideAddon = chkGuide.checked;
-    calculateTotalPayment();
+  // Radio button change listener directly
+  document.querySelectorAll('input[name="booking-service"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const val = radio.value;
+      if (PACKAGES[val]) {
+        bookingState.packageId = val;
+        bookingState.packageName = PACKAGES[val].name;
+        bookingState.packagePrice = PACKAGES[val].price;
+        serviceCards.forEach(c => {
+          c.classList.toggle('selected', c.getAttribute('data-value') === val);
+        });
+        calculateTotalPayment();
+        renderReviewStep();
+      }
+    });
   });
 
-  chkPhoto.addEventListener('change', () => {
-    bookingState.photoAddon = chkPhoto.checked;
-    calculateTotalPayment();
-  });
+  // Checkbox add-ons listeners (real-time update on change and click)
+  if (chkGuide) {
+    const handleGuideToggle = () => {
+      bookingState.guideAddon = chkGuide.checked;
+      calculateTotalPayment();
+      renderReviewStep();
+    };
+    chkGuide.addEventListener('change', handleGuideToggle);
+  }
 
-  // Guest count input listener
-  numGuests.addEventListener('input', () => {
-    let val = parseInt(numGuests.value) || 1;
-    if (val < 1) val = 1;
-    bookingState.guests = val;
-    calculateTotalPayment();
-  });
+  if (chkPhoto) {
+    const handlePhotoToggle = () => {
+      bookingState.photoAddon = chkPhoto.checked;
+      calculateTotalPayment();
+      renderReviewStep();
+    };
+    chkPhoto.addEventListener('change', handlePhotoToggle);
+  }
+
+  // Guest count input listener (input, change, and keyup for instant calculation)
+  if (numGuests) {
+    const handleGuestChange = () => {
+      let val = parseInt(numGuests.value) || 1;
+      if (val < 1) val = 1;
+      bookingState.guests = val;
+      calculateTotalPayment();
+      renderReviewStep();
+    };
+    numGuests.addEventListener('input', handleGuestChange);
+    numGuests.addEventListener('change', handleGuestChange);
+    numGuests.addEventListener('keyup', handleGuestChange);
+  }
 
   // Step buttons navigation
   btnNext.addEventListener('click', () => {
@@ -840,34 +1057,51 @@ function initBookingWizardEvents() {
 }
 
 function calculateTotalPayment() {
-  let packageSubtotal = bookingState.packagePrice * bookingState.guests;
+  const packageSubtotal = bookingState.packagePrice * bookingState.guests;
   let addonsTotal = 0;
 
-  // Add-ons pricing
+  // Add-ons pricing: Jasa Pemandu +Rp350.000/hari, Dokumentasi Drone +Rp250.000 flat
+  const guideRow = document.getElementById('sum-addon-guide-row');
+  const guideVal = document.getElementById('sum-addon-guide');
   if (bookingState.guideAddon) {
-    addonsTotal += 350000 * bookingState.guests; // Guide per person basis
-    document.getElementById('sum-addon-guide-row').style.display = 'flex';
-    document.getElementById('sum-addon-guide').textContent = `Rp ${(350000 * bookingState.guests).toLocaleString('id-ID')}`;
+    addonsTotal += 350000;
+    if (guideRow) guideRow.style.display = 'flex';
+    if (guideVal) guideVal.textContent = 'Rp 350.000';
   } else {
-    document.getElementById('sum-addon-guide-row').style.display = 'none';
+    if (guideRow) guideRow.style.display = 'none';
   }
 
+  const photoRow = document.getElementById('sum-addon-photo-row');
+  const photoVal = document.getElementById('sum-addon-photo');
   if (bookingState.photoAddon) {
-    addonsTotal += 250000; // Flat fee
-    document.getElementById('sum-addon-photo-row').style.display = 'flex';
-    document.getElementById('sum-addon-photo').textContent = `Rp 250.000`;
+    addonsTotal += 250000;
+    if (photoRow) photoRow.style.display = 'flex';
+    if (photoVal) photoVal.textContent = 'Rp 250.000';
   } else {
-    document.getElementById('sum-addon-photo-row').style.display = 'none';
+    if (photoRow) photoRow.style.display = 'none';
   }
 
+  // Total estimasi = (harga paket x jumlah wisatawan) + add-on terpilih
   bookingState.totalPrice = packageSubtotal + addonsTotal;
 
-  // Render to Order Summary
-  document.getElementById('sum-pkg-name').textContent = bookingState.packageName;
-  document.getElementById('sum-pkg-price').textContent = `Rp ${bookingState.packagePrice.toLocaleString('id-ID')}`;
-  document.getElementById('sum-guests').textContent = `${bookingState.guests} Orang`;
-  document.getElementById('sum-pkg-subtotal').textContent = `Rp ${packageSubtotal.toLocaleString('id-ID')}`;
-  document.getElementById('sum-total').textContent = `Rp ${bookingState.totalPrice.toLocaleString('id-ID')}`;
+  // Render to Order Summary Sidebar
+  const sumPkgName = document.getElementById('sum-pkg-name');
+  const sumPkgPrice = document.getElementById('sum-pkg-price');
+  const sumGuests = document.getElementById('sum-guests');
+  const sumPkgSubtotal = document.getElementById('sum-pkg-subtotal');
+  const sumTotal = document.getElementById('sum-total');
+
+  if (sumPkgName) sumPkgName.textContent = bookingState.packageName;
+  if (sumPkgPrice) sumPkgPrice.textContent = `Rp ${bookingState.packagePrice.toLocaleString('id-ID')}`;
+  if (sumGuests) sumGuests.textContent = `${bookingState.guests} Orang`;
+  if (sumPkgSubtotal) sumPkgSubtotal.textContent = `Rp ${packageSubtotal.toLocaleString('id-ID')}`;
+  if (sumTotal) sumTotal.textContent = `Rp ${bookingState.totalPrice.toLocaleString('id-ID')}`;
+
+  // Sync to Step 3 Confirmation Box if element exists
+  const confTotal = document.getElementById('conf-total-price');
+  if (confTotal) {
+    confTotal.textContent = `Rp ${bookingState.totalPrice.toLocaleString('id-ID')}`;
+  }
 }
 
 function validateStep2() {
@@ -877,6 +1111,7 @@ function validateStep2() {
   const phoneInput = document.getElementById('book-phone');
   const emailInput = document.getElementById('book-email');
   const dateInput = document.getElementById('book-date');
+  const guestsInput = document.getElementById('book-guests');
 
   // Reset states
   document.querySelectorAll('.form-error-msg').forEach(el => el.classList.add('hidden'));
@@ -920,45 +1155,87 @@ function validateStep2() {
     bookingState.date = dateInput.value;
   }
 
+  // Validate and read Guests Count
+  let guestsVal = parseInt(guestsInput.value) || 1;
+  if (guestsVal < 1) {
+    const errGuests = document.getElementById('err-guests');
+    if (errGuests) errGuests.classList.remove('hidden');
+    guestsInput.classList.add('error-state');
+    isValid = false;
+  } else {
+    bookingState.guests = guestsVal;
+  }
+
   bookingState.notes = document.getElementById('book-notes').value.trim();
+
+  // Recalculate and refresh confirmation details
+  calculateTotalPayment();
+  renderReviewStep();
 
   return isValid;
 }
 
 function renderReviewStep() {
-  document.getElementById('conf-package').textContent = bookingState.packageName;
-  document.getElementById('conf-base-price').textContent = `Rp ${bookingState.packagePrice.toLocaleString('id-ID')} / pax`;
+  const confPackage = document.getElementById('conf-package');
+  const confBasePrice = document.getElementById('conf-base-price');
+  if (confPackage) confPackage.textContent = bookingState.packageName;
+  if (confBasePrice) confBasePrice.textContent = `Rp ${bookingState.packagePrice.toLocaleString('id-ID')} / pax`;
 
   // Render addons summaries
   const addonsBox = document.getElementById('conf-addons-list');
-  addonsBox.innerHTML = '';
-  let activeAddons = [];
-  if (bookingState.guideAddon) {
-    activeAddons.push(`Jasa Pemandu Surfing Eksklusif (+ Rp ${(350000 * bookingState.guests).toLocaleString('id-ID')} untuk ${bookingState.guests} tamu)`);
-  }
-  if (bookingState.photoAddon) {
-    activeAddons.push(`Dokumentasi Video Drone Sinematik (+ Rp 250.000)`);
-  }
+  if (addonsBox) {
+    let activeAddons = [];
+    if (bookingState.guideAddon) {
+      activeAddons.push('Jasa Pemandu Eksklusif (+ Rp 350.000/hari)');
+    }
+    if (bookingState.photoAddon) {
+      activeAddons.push('Dokumentasi Drone & Video (+ Rp 250.000)');
+    }
 
-  if (activeAddons.length > 0) {
-    addonsBox.innerHTML = activeAddons.map(a => `• ${a}`).join('<br>');
-  } else {
-    addonsBox.textContent = 'Tidak ada layanan tambahan terpilih';
+    if (activeAddons.length > 0) {
+      addonsBox.innerHTML = activeAddons.map(a => `• ${a}`).join('<br>');
+    } else {
+      addonsBox.textContent = 'Tidak ada layanan tambahan terpilih';
+    }
   }
 
   // Personal data
-  document.getElementById('conf-name').textContent = bookingState.name;
-  document.getElementById('conf-phone').textContent = bookingState.phone;
-  document.getElementById('conf-email').textContent = bookingState.email;
+  const confName = document.getElementById('conf-name');
+  const confPhone = document.getElementById('conf-phone');
+  const confEmail = document.getElementById('conf-email');
+  const confDate = document.getElementById('conf-date');
+  const confGuests = document.getElementById('conf-guests');
+  const confNotes = document.getElementById('conf-notes');
+  const confTotal = document.getElementById('conf-total-price');
+
+  if (confName) confName.textContent = bookingState.name || '-';
+  if (confPhone) confPhone.textContent = bookingState.phone || '-';
+  if (confEmail) confEmail.textContent = bookingState.email || '-';
   
-  // Format Date for Indonesian locale
-  const formattedDate = new Date(bookingState.date).toLocaleDateString('id-ID', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  });
-  document.getElementById('conf-date').textContent = formattedDate;
-  document.getElementById('conf-guests').textContent = `${bookingState.guests} Orang`;
-  
-  document.getElementById('conf-notes').textContent = bookingState.notes ? `"${bookingState.notes}"` : 'Tidak ada catatan tambahan';
+  // Safe Date Formatting for Indonesian locale (prevent Invalid Date)
+  if (confDate) {
+    if (bookingState.date) {
+      try {
+        const parts = bookingState.date.split('-');
+        if (parts.length === 3) {
+          const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+          confDate.textContent = d.toLocaleDateString('id-ID', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+          });
+        } else {
+          confDate.textContent = bookingState.date;
+        }
+      } catch (e) {
+        confDate.textContent = bookingState.date;
+      }
+    } else {
+      confDate.textContent = 'Belum ditentukan';
+    }
+  }
+
+  if (confGuests) confGuests.textContent = `${bookingState.guests} Orang`;
+  if (confNotes) confNotes.textContent = bookingState.notes ? `"${bookingState.notes}"` : 'Tidak ada catatan tambahan';
+  if (confTotal) confTotal.textContent = `Rp ${bookingState.totalPrice.toLocaleString('id-ID')}`;
 }
 
 function updateBookingWizardUI() {
@@ -1005,12 +1282,11 @@ function updateBookingWizardUI() {
 }
 
 function submitBookingReservation() {
-  // Generate random booking code
+  // Generate random booking code format EPB-2026-XXXX
   const randNum = Math.floor(1000 + Math.random() * 9000);
   const dateObj = new Date();
   const year = dateObj.getFullYear();
-  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-  const code = `TS-${year}${month}-${randNum}`;
+  const code = `EPB-${year}-${randNum}`;
 
   // Assemble full booking record
   const bookingRecord = {
@@ -1042,6 +1318,7 @@ function submitBookingReservation() {
   document.getElementById('bookingSuccessCode').textContent = code;
 }
 
+
 // 7. AUTHENTICATION & LOGIN PROCESSOR
 function initAuthPortal() {
   const goRegisterBtn = document.getElementById('authGoRegister');
@@ -1051,19 +1328,9 @@ function initAuthPortal() {
 
   const loginBox = document.getElementById('auth-login-box');
   const registerBox = document.getElementById('auth-register-box');
-  const fillDemoCreds = document.getElementById('fillDemoCreds');
   const toggleLoginPwd = document.getElementById('toggleLoginPwd');
   const loginPassword = document.getElementById('login-password');
   const forgotPwdLink = document.getElementById('forgotPwdLink');
-
-  // Quick auto-fill demo credentials
-  if (fillDemoCreds) {
-    fillDemoCreds.addEventListener('click', () => {
-      document.getElementById('login-email').value = 'admin@tanjungsetia.com';
-      document.getElementById('login-password').value = 'admin123';
-      showToast('loginToast', 'Data akun admin berhasil diisi otomatis!', 'success');
-    });
-  }
 
   // Toggle password visibility
   if (toggleLoginPwd && loginPassword) {
@@ -1081,7 +1348,7 @@ function initAuthPortal() {
   if (forgotPwdLink) {
     forgotPwdLink.addEventListener('click', (e) => {
       e.preventDefault();
-      showToast('loginToast', 'Untuk mode demo, gunakan: admin@tanjungsetia.com / admin123', 'info');
+      showToast('loginToast', 'Kredensial akun pengelola tercantum pada dokumen proposal dan panduan sistem (README).', 'info');
     });
   }
 
@@ -1097,22 +1364,22 @@ function initAuthPortal() {
     loginBox.classList.remove('hidden');
   };
 
-  // Login handler
+  // Login handler with official Explore Pesisir Barat branding
   loginForm.onsubmit = (e) => {
     e.preventDefault();
-    const email = document.getElementById('login-email').value.trim();
+    const email = document.getElementById('login-email').value.trim().toLowerCase();
     const pass = document.getElementById('login-password').value;
 
-    if (email === 'admin@tanjungsetia.com' && pass === 'admin123') {
+    const validEmails = ['admin@explorepesisirbarat.com', 'admin@tanjungsetia.com'];
+    if (validEmails.includes(email) && pass === 'admin123') {
       isAdminLoggedIn = true;
       showToast('loginToast', 'Login Admin berhasil! Mengalihkan ke dashboard...', 'success');
       
       // Delay before redirecting to dashboard
       setTimeout(() => {
-        // Reset inputs
         loginForm.reset();
         window.location.hash = '#admin';
-      }, 1000);
+      }, 900);
     } else {
       showToast('loginToast', 'Email atau kata sandi Anda salah!', 'error');
     }
@@ -1141,7 +1408,7 @@ function renderAdminDashboard() {
   
   // Calculate today's bookings
   const todayStr = new Date().toISOString().split('T')[0];
-  const todayBookingsCount = bookings.filter(b => b.date === todayStr || b.code.startsWith(`TS-${todayStr.replace(/-/g, '').slice(0,6)}`)).length;
+  const todayBookingsCount = bookings.filter(b => b.date === todayStr || (b.code && b.code.startsWith(`EPB-${todayStr.replace(/-/g, '').slice(0,4)}`))).length;
 
   // Calculate confirmed earnings revenue
   const totalRevenue = bookings
@@ -1412,18 +1679,33 @@ let is3DTiltEnabled = false;
 let mapMarkers = [];
 let userLocationMarker = null;
 
+// Helper to detect WebGL availability
+function isWebGLAvailable() {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+  } catch (e) {
+    return false;
+  }
+}
+
 function init3DMap() {
   const mapContainer = document.getElementById('tourismMap');
   if (!mapContainer || typeof L === 'undefined') return;
 
-  // Initialize Map centered on Tanjung Setia & Pesisir Barat coast
+  const hasWebGL = isWebGLAvailable();
+  const isMobile = window.innerWidth <= 768;
+
+  // Initialize Map centered on Pesisir Barat coastal region
   tourismMapInstance = L.map('tourismMap', {
     center: [-5.2950, 103.9750],
-    zoom: 11,
+    zoom: isMobile ? 10 : 11,
     minZoom: 9,
     maxZoom: 18,
     zoomControl: false,
-    attributionControl: false
+    attributionControl: false,
+    tapTolerance: 15,
+    scrollWheelZoom: !isMobile // Prevent accidental page scroll trapping on touch devices
   });
 
   // Add Zoom Control to Top Right so it doesn't collide with Top Left HUD
@@ -1447,8 +1729,16 @@ function init3DMap() {
     })
   };
 
-  // Add default satellite layer
+  // Add default satellite layer (or street if WebGL is unavailable on low-end device)
   tileLayers.sat.addTo(tourismMapInstance);
+
+  // If WebGL is not available, show soft fallback indicator
+  if (!hasWebGL) {
+    const fallbackBanner = document.createElement('div');
+    fallbackBanner.className = 'map-webgl-fallback';
+    fallbackBanner.innerHTML = `<i class="fa-solid fa-circle-info"></i> Mode Kompatibilitas 2D Aktif`;
+    mapContainer.parentElement.appendChild(fallbackBanner);
+  }
 
   // Render Markers and Sidebar Cards
   renderMapPoints('all');
@@ -1485,6 +1775,14 @@ function init3DMap() {
   const btnToggle3D = document.getElementById('btnToggle3D');
   const mapWrapper = document.getElementById('mapViewportWrapper');
   const tiltStatusText = document.getElementById('tiltStatusText');
+
+  // Disable 3D tilt by default on mobile devices to prevent GPU lag
+  if (isMobile && mapWrapper) {
+    mapWrapper.classList.remove('is-3d-tilt');
+    is3DTiltEnabled = false;
+    if (tiltStatusText) tiltStatusText.innerText = 'Tilt 3D: OFF';
+    if (btnToggle3D) btnToggle3D.classList.remove('active');
+  }
 
   if (btnToggle3D && mapWrapper) {
     btnToggle3D.onclick = () => {
@@ -1619,6 +1917,10 @@ function updateMapCategoryCounts() {
     const el = document.getElementById(`count-${cat}`);
     if (el) el.innerText = counts[cat];
   });
+  const countBadge = document.getElementById('spotCountBadge');
+  if (countBadge) {
+    countBadge.innerText = `${MAP_LOCATIONS.length} Titik Wisata Ditemukan`;
+  }
 }
 
 function renderMapPoints(categoryFilter = 'all') {
@@ -1901,6 +2203,63 @@ function initSplashScreen() {
   }, 1950);
 }
 
+// 11.5. INFO MODALS CONTROLLER (FAQs, Terms, Privacy)
+function initInfoModals() {
+  const modalTriggers = document.querySelectorAll('.open-modal-trigger');
+  
+  const openModal = (modalId) => {
+    const targetModal = document.getElementById(modalId);
+    if (targetModal) {
+      targetModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  const closeModal = (modalEl) => {
+    if (modalEl) {
+      modalEl.classList.remove('active');
+      // Restore body overflow if no other info modal is open
+      if (!document.querySelector('.info-modal-backdrop.active')) {
+        document.body.style.overflow = '';
+      }
+    }
+  };
+
+  modalTriggers.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const modalId = btn.getAttribute('data-modal');
+      if (modalId) openModal(modalId);
+    });
+  });
+
+  // Close triggers inside modals
+  document.querySelectorAll('.info-modal-backdrop').forEach(backdrop => {
+    const closeBtn = backdrop.querySelector('.info-modal-close-btn');
+    const footerCloseBtn = backdrop.querySelector('.info-modal-footer-close');
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => closeModal(backdrop));
+    }
+    if (footerCloseBtn) {
+      footerCloseBtn.addEventListener('click', () => closeModal(backdrop));
+    }
+
+    // Close when clicking directly on backdrop
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeModal(backdrop);
+    });
+  });
+
+  // Close on Escape key press
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const activeModal = document.querySelector('.info-modal-backdrop.active');
+      if (activeModal) closeModal(activeModal);
+    }
+  });
+}
+
 // 12. INITIALIZATION ON DOM CONTENT LOADED
 document.addEventListener('DOMContentLoaded', () => {
   initSplashScreen();
@@ -1911,6 +2270,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initAdminDashboardTabs();
   initInteractiveTriggers();
   init3DMap();
+  updateMapCategoryCounts();
+  initInfoModals();
   initAIAssistant();
 });
 

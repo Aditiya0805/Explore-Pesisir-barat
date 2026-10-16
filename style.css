@@ -5228,3 +5228,153 @@ textarea.form-control {
     border-radius: 20px 20px 0 0;
   }
 }
+
+/* Info Modals (Kebijakan, Syarat, FAQ) */
+.info-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 59, 76, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.info-modal-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+.info-modal-card {
+  background: #fff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+  overflow: hidden;
+  transform: translateY(30px) scale(0.96);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.info-modal-backdrop.active .info-modal-card {
+  transform: translateY(0) scale(1);
+}
+.info-modal-header {
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, var(--color-deep-navy) 0%, var(--color-ocean-blue) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.info-modal-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.info-modal-close-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.info-modal-close-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+.info-modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+  line-height: 1.7;
+  font-size: 0.9rem;
+  color: var(--color-text-dark);
+}
+.info-modal-body h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-deep-navy);
+  margin-top: 1.25rem;
+  margin-bottom: 0.4rem;
+}
+.info-modal-body p {
+  margin-bottom: 0.6rem;
+}
+.info-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: flex-end;
+}
+.faq-item {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+.faq-item summary {
+  padding: 0.85rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--color-bg-surface, #f8fafc);
+  user-select: none;
+  list-style: none;
+  transition: background 0.2s;
+}
+.faq-item summary:hover {
+  background: #e8f4fd;
+}
+.faq-item[open] summary {
+  background: #ddf0fa;
+  color: var(--color-ocean-blue);
+}
+.faq-item p {
+  padding: 0.75rem 1rem;
+  margin: 0;
+  background: #fff;
+  border-top: 1px solid var(--color-border);
+}
+.map-webgl-fallback {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(7, 59, 76, 0.85);
+  color: #fff;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 500;
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  .info-modal-card {
+    border-radius: 16px 16px 0 0;
+    max-height: 90vh;
+    margin-top: auto;
+  }
+  .info-modal-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+}
+

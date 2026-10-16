@@ -1,0 +1,2613 @@
+/* ==========================================================================
+   EXPLORE PESISIR BARAT - PORTAL LOGIC & INTERACTIONS
+   SPA Router, Booking Wizard, Admin Dashboard, Interactive 3D Map, Pari AI
+   ========================================================================== */
+
+// 1. DATA STORES
+const DESTINATIONS = [
+  {
+    id: 1,
+    name: "Pantai Karang Nyimbor (Ujung Bocur)",
+    location: "Pesisir Selatan, Pesisir Barat, Lampung",
+    lat: -5.313426,
+    lng: 103.998218,
+    price: 15000,
+    rating: "4.9 / 5.0 (Rating Peselancar)",
+    hours: "Buka 24 Jam",
+    category: "Pantai & Surfing Kelas Dunia",
+    description: "Surga peselancar dunia dengan gulungan ombak legendaris Ujung Bocur.",
+    longDescription: "Pantai Karang Nyimbor adalah pusat utama kegiatan surfing internasional di Pesisir Barat. Pantai ini memiliki salah satu ombak kidal (left-hander) terpanjang dan paling konsisten di dunia yang dikenal sebagai 'Ujung Bocur Wave'. Gulungan ombaknya bisa mencapai ketinggian 6 hingga 7 meter di musim puncak (Mei - Oktober). Selain untuk berselancar, pantai ini menawarkan panorama karang laut eksotis, deretan gazebo tradisional untuk bersantai, serta pasir putih keemasan yang menawan saat senja tiba.",
+    coverImg: "assets/images/pantai-karang-nyimbor.jpg",
+    thumbs: [
+      "assets/images/pantai-karang-nyimbor.jpg",
+      "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=400&q=80"
+    ],
+    facilities: ["Parkir Luas & Aman", "Toilet & Shower Bersih", "Surf Camp & Resorts", "Penyewaan Board", "Warung Kuliner Seafood"]
+  },
+  {
+    id: 2,
+    name: "Pantai Way Jambu (The Pipeline)",
+    location: "Way Jambu, Pesisir Selatan, Pesisir Barat, Lampung",
+    lat: -5.358210,
+    lng: 104.053120,
+    price: 10000,
+    rating: "4.8 / 5.0 (Sangat Asri)",
+    hours: "06:00 - 18:30 WIB",
+    category: "Pantai & Konservasi Alam",
+    description: "Dikenal sebagai 'The Pipeline' Lampung dengan ombak barrel yang menantang.",
+    longDescription: "Pantai Way Jambu menyuguhkan pemandangan pantai tropis klasik dengan deretan pohon kelapa rimbun yang berjejer di sepanjang tepian pasir pantai. Ombak di Way Jambu bertipe barel cepat dan tajam di atas batu karang dangkal, menjadikannya destinasi favorit bagi peselancar profesional tingkat lanjut. Bagi non-peselancar, Way Jambu menawarkan suasana damai yang jauh dari keramaian kota, kebersihan yang sangat terjaga, serta pemandangan sunset berlatar ombak besar yang memecah karang.",
+    coverImg: "assets/images/pantai-way-jambu.jpg",
+    thumbs: [
+      "assets/images/pantai-way-jambu.jpg",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=400&q=80"
+    ],
+    facilities: ["Area Camping Ground", "Toilet Bersih", "Gazebo Teduh", "Toko Asesoris Pantai", "Pemandu Lokal Berlisensi"]
+  },
+  {
+    id: 3,
+    name: "Pantai Mandiri (Black Sand Beach)",
+    location: "Mandiri Sejati, Krui Selatan, Pesisir Barat, Lampung",
+    lat: -5.247850,
+    lng: 103.921530,
+    price: 5000,
+    rating: "4.8 / 5.0 (Sunset Favorit)",
+    hours: "05:30 - 19:00 WIB",
+    category: "Pantai Pasir Hitam Vulkanik",
+    description: "Hamparan pasir hitam berkilau dengan pemandangan matahari terbenam magis.",
+    longDescription: "Pantai Mandiri terkenal dengan bentangan pasir hitam vulkanis halus yang berkilau saat terkena sinar matahari sore. Garis pantainya yang sangat panjang dan luas menjadikannya tempat ideal untuk berjalan santai, berkuda tepi pantai, menikmati senja berlatar ombak Samudra Hindia, serta hunting foto lanskap sinematik.",
+    coverImg: "assets/images/paket-explore-krui.jpg",
+    thumbs: [
+      "assets/images/paket-explore-krui.jpg",
+      "assets/images/galeri-santai-pantai.jpg",
+      "assets/images/paket-sunset.jpg"
+    ],
+    facilities: ["Spot Foto Sunset", "Kedai Kopi Tepi Pantai", "Parkir Mobil & Motor", "Mushola", "Gazebo Santai"]
+  },
+  {
+    id: 4,
+    name: "Pantai Labuhan Jukung Krui",
+    location: "Kampung Jawa, Pesisir Tengah, Krui, Pesisir Barat, Lampung",
+    lat: -5.195610,
+    lng: 103.931240,
+    price: 5000,
+    rating: "4.9 / 5.0 (Ikon Wisata Kota)",
+    hours: "Buka 24 Jam",
+    category: "Pusat Rekreasi & Budaya",
+    description: "Ikon pariwisata utama Krui dengan panggung kesenian dan kuliner pesisir.",
+    longDescription: "Pantai Labuhan Jukung adalah jantung wisata kota Krui. Pantai ini memiliki taman terbuka hijau, panggung pertunjukan budaya, dan deretan kios kuliner khas Lampung Pesisir. Ombak di sini juga ramah bagi peselancar pemula hingga menengah, sementara tepi pantainya sangat aman untuk rekreasi santai bersama keluarga.",
+    coverImg: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=800&q=80",
+    thumbs: [
+      "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=400&q=80",
+      "assets/images/galeri-santai-pantai.jpg",
+      "assets/images/paket-explore-krui.jpg"
+    ],
+    facilities: ["Taman Terbuka Publik", "Panggung Kesenian Budaya", "Sentra Kuliner Ikan Bakar", "Pusat Informasi Wisata", "Toilet & Parkir Luas"]
+  },
+  {
+    id: 6,
+    name: "Air Terjun Way Detun (Curug Detun)",
+    location: "Karya Penggawa, Pesisir Barat, Lampung",
+    lat: -5.148500,
+    lng: 103.968200,
+    price: 10000,
+    rating: "4.8 / 5.0 (Wisata Hutan)",
+    hours: "07:30 - 17:00 WIB",
+    category: "Ekowisata Hutan Tropis",
+    description: "Air terjun alami di balik rimbunnya hutan hujan tropis Krui.",
+    longDescription: "Air Terjun Way Detun menyajikan kesegaran air pegunungan yang jernih dengan kolam alami berwarna toska di bawahnya. Dikelilingi tebing bebatuan alami dan pohon-pohon rindang, tempat ini menjadi lokasi favorit untuk melepaskan penat setelah menjelajahi ombak pantai.",
+    coverImg: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80",
+    thumbs: [
+      "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=400&q=80",
+      "assets/images/paket-explore-krui.jpg",
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=400&q=80"
+    ],
+    facilities: ["Jalur Trekking Alami", "Saung Istirahat", "Pemandu Lokal Trekking", "Warung Makanan Ringan", "Spot Foto Alami"]
+  },
+  {
+    id: 10,
+    name: "Sentra Tenun Kain Tapis Pesisir",
+    location: "Krui, Pesisir Barat, Lampung",
+    lat: -5.191200,
+    lng: 103.941500,
+    price: 0,
+    rating: "4.9 / 5.0 (Warisan Budaya)",
+    hours: "08:00 - 17:00 WIB",
+    category: "Pelestarian Budaya & Kriya (SDG 11.4)",
+    description: "Pusat tenun benang emas tradisional khas Saibatin Pesisir Barat.",
+    longDescription: "Sentra Tenun Tapis Pesisir Barat merupakan wadah pemberdayaan para pengrajin wanita lokal dalam melestarikan kriya tenun tradisional Lampung bermotif pucuk rebung, kapal, dan sulam benang emas. Wisatawan dapat belajar langsung proses menenun tradisional dan membeli cendera mata otentik.",
+    coverImg: "assets/images/kain-tapis.jpg",
+    thumbs: [
+      "assets/images/kain-tapis.jpg",
+      "assets/images/sunset-culture.jpg",
+      "assets/images/paket-sunset.jpg"
+    ],
+    facilities: ["Galeri Kerajinan Tapis", "Workshop Belajar Menenun", "Toko Cendera Mata", "Pemandu Edukasi Budaya", "Toilet Bersih"]
+  },
+  {
+    id: 14,
+    name: "Pulau Pisang (Banana Island)",
+    location: "Kecamatan Pulau Pisang, Pesisir Barat, Lampung",
+    lat: -5.115830,
+    lng: 103.852110,
+    price: 25000,
+    rating: "5.0 / 5.0 (Permata Tersembunyi)",
+    hours: "Buka Setiap Hari (Penyeberangan 07:00 - 15:00)",
+    category: "Wisata Pulau & Bahari Eksotis",
+    description: "Surga pulau terpencil dengan air kristal, lumba-lumba liar & rumah bersejarah.",
+    longDescription: "Pulau Pisang adalah permata bahari paling memikat di Pesisir Barat Lampung. Terletak di Samudra Hindia lepas pantai Krui, pulau ini menawarkan air laut sebening kaca, terumbu karang hidup, pantai pasir putih halus, kawanan lumba-lumba yang kerap menyapa perahu pengunjung, serta deretan rumah panggung klasik peninggalan era kolonial.",
+    coverImg: "assets/images/paket-pulau-pisang.jpg",
+    thumbs: [
+      "assets/images/paket-pulau-pisang.jpg",
+      "assets/images/galeri-santai-pantai.jpg",
+      "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=400&q=80"
+    ],
+    facilities: ["Dermaga Perahu Nelayan", "Homestay Rumah Kayu Tradisional", "Sewa Alat Snorkeling", "Pemandu Keliling Pulau", "Kuliner Ikan Segar"]
+  },
+  {
+    id: 16,
+    name: "Pantai Biha & Pesisir",
+    location: "Biha, Pesisir Selatan, Pesisir Barat, Lampung",
+    lat: -5.334020,
+    lng: 104.015010,
+    price: 10000,
+    rating: "4.7 / 5.0 (Ramah Keluarga & Kuliner)",
+    hours: "06:00 - 20:00 WIB",
+    category: "Wisata Bahari & Sentra Seruit",
+    description: "Pantai berpasir putih keemasan yang tenang, pusat kuliner ikan bakar seruit.",
+    longDescription: "Pantai Biha memiliki karakteristik garis pantai yang landai dengan ombak sedang, menjadikannya destinasi wisata paling aman untuk keluarga dan anak-anak yang ingin bermain air. Di sekitar pantai, pengunjung dapat menyaksikan langsung hilir mudik perahu nelayan tradisional 'Jukung' yang membawa hasil tangkapan laut segar. Pantai ini terkenal sebagai pusat kuliner ikan bakar khas Lampung Pesisir dengan racikan bumbu tradisional sambal seruit yang menggugah selera.",
+    coverImg: "assets/images/pantai-biha.jpg",
+    thumbs: [
+      "assets/images/pantai-biha.jpg",
+      "assets/images/galeri-santai-pantai.jpg",
+      "assets/images/sunset-culture.jpg"
+    ],
+    facilities: ["Warung Makan Seruit Segar", "Sewa Ban Renang Anak", "Mushola", "Spot Foto Perahu Jukung", "Pusat Oleh-oleh Kain Tapis"]
+  },
+  {
+    id: 17,
+    name: "Konservasi Penyu Muara Tembulih",
+    location: "Pekon Muara Tembulih, Ngambur, Pesisir Barat, Lampung",
+    lat: -5.392000,
+    lng: 104.085000,
+    price: 10000,
+    rating: "4.9 / 5.0 (Konservasi Laut SDG 14)",
+    hours: "08:00 - 18:00 WIB",
+    category: "Konservasi Satwa Liar Bahari",
+    description: "Pusat pelestarian dan penangkaran penyu belimbing & penyu sisik langka.",
+    longDescription: "Kawasan Konservasi Penyu Muara Tembulih didedikasikan untuk melindungi populasi penyu laut langka (penyu belimbing, penyu sisik, dan lekang) dari ancaman kepunahan. Pengunjung dapat belajar siklus hidup penyu, melihat sarang telur semi-alami, dan mengikuti program pelepasan tukik (anak penyu) ke Samudra Hindia.",
+    coverImg: "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=800&q=80",
+    thumbs: [
+      "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=400&q=80",
+      "assets/images/galeri-santai-pantai.jpg",
+      "assets/images/pantai-biha.jpg"
+    ],
+    facilities: ["Pusat Edukasi & Penetasan Tukik", "Kolam Karantina Penyu", "Pemandu Konservasi", "Area Pelepasan Tukik", "Toilet & Gazebo"]
+  }
+];
+
+// DATA: 3D TOURISM MAP POINTS & GOOGLE MAPS DIRECT LINKS
+const MAP_LOCATIONS = [
+  // 1. Surfing & Ombak
+  {
+    id: 1,
+    destId: 1,
+    name: "Pantai Karang Nyimbor (Ujung Bocur)",
+    category: "surfing",
+    categoryLabel: "Surfing & Ombak",
+    lat: -5.313426,
+    lng: 103.998218,
+    icon: "fa-water",
+    pinClass: "pin-surf",
+    rating: "4.9 ★",
+    price: "Rp 15.000",
+    desc: "Pusat surfing kelas dunia Tanjung Setia dengan ombak left-hander legendaris 6-7 meter.",
+    img: "assets/images/pantai-karang-nyimbor.jpg",
+    gmapsQuery: "Pantai+Karang+Nyimbor+Tanjung+Setia",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.313426,103.998218",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.313426,103.998218"
+  },
+  {
+    id: 2,
+    destId: 2,
+    name: "Pantai Way Jambu (The Pipeline)",
+    category: "surfing",
+    categoryLabel: "Surfing Barrel",
+    lat: -5.358210,
+    lng: 104.053120,
+    icon: "fa-water",
+    pinClass: "pin-surf",
+    rating: "4.8 ★",
+    price: "Rp 10.000",
+    desc: "Spot ombak barrel cepat menantang di atas karang dangkal berhadapan Samudra Hindia.",
+    img: "assets/images/pantai-way-jambu.jpg",
+    gmapsQuery: "Pantai+Way+Jambu+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.358210,104.053120",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.358210,104.053120"
+  },
+
+  // 2. Pantai Eksotis
+  {
+    id: 3,
+    destId: null,
+    name: "Pantai Mandiri (Black Sand Beach)",
+    category: "beach",
+    categoryLabel: "Pantai Pasir Hitam",
+    lat: -5.247850,
+    lng: 103.921530,
+    icon: "fa-umbrella-beach",
+    pinClass: "pin-beach",
+    rating: "4.8 ★",
+    price: "Gratis",
+    desc: "Hamparan pasir hitam vulkanis berkilau dengan panorama matahari terbenam (sunset) terbaik di Pesisir Barat.",
+    img: "assets/images/paket-explore-krui.jpg",
+    gmapsQuery: "Pantai+Mandiri+Krui+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.247850,103.921530",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.247850,103.921530"
+  },
+  {
+    id: 4,
+    destId: null,
+    name: "Pantai Labuhan Jukung Krui",
+    category: "beach",
+    categoryLabel: "Ikon Rekreasi Pantai",
+    lat: -5.195610,
+    lng: 103.931240,
+    icon: "fa-umbrella-beach",
+    pinClass: "pin-beach",
+    rating: "4.9 ★",
+    price: "Rp 5.000",
+    desc: "Ikon wisata utama Krui dengan ruang terbuka publik, panggung budaya, dan pusat kuliner tepi laut.",
+    img: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Pantai+Labuhan+Jukung+Krui",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.195610,103.931240",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.195610,103.931240"
+  },
+  {
+    id: 5,
+    destId: null,
+    name: "Pantai Walur (Coconut Grove Beach)",
+    category: "beach",
+    categoryLabel: "Pantai Nyiur Melambai",
+    lat: -5.221500,
+    lng: 103.928000,
+    icon: "fa-umbrella-beach",
+    pinClass: "pin-beach",
+    rating: "4.7 ★",
+    price: "Rp 5.000",
+    desc: "Pantai dengan deretan pohon kelapa teduh dan hamparan rumput hijau alami yang menghadap langsung ke laut.",
+    img: "assets/images/galeri-santai-pantai.jpg",
+    gmapsQuery: "Pantai+Walur+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.221500,103.928000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.221500,103.928000"
+  },
+
+  // 3. Air Terjun & Alam Tropis
+  {
+    id: 6,
+    destId: null,
+    name: "Air Terjun Way Detun (Curug Detun)",
+    category: "nature",
+    categoryLabel: "Air Terjun Hutan Tropis",
+    lat: -5.148500,
+    lng: 103.968200,
+    icon: "fa-water",
+    pinClass: "pin-nature",
+    rating: "4.8 ★",
+    price: "Rp 10.000",
+    desc: "Air terjun alami tersembunyi di tengah rimbunnya hutan tropis perbukitan Krui dengan kolam alami yang sejuk jernih.",
+    img: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Air+Terjun+Way+Detun+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.148500,103.968200",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.148500,103.968200"
+  },
+  {
+    id: 7,
+    destId: null,
+    name: "Pantai Melasti Marang",
+    category: "beach",
+    categoryLabel: "Pantai Upacara Melasti",
+    lat: -5.348500,
+    lng: 104.036200,
+    icon: "fa-umbrella-beach",
+    pinClass: "pin-beach",
+    rating: "4.8 ★",
+    price: "Gratis",
+    desc: "Pantai berpasir putih luas di Pekon Marang yang menjadi lokasi sakral upacara keagamaan Melasti umat Hindu, dengan deburan ombak Samudra Hindia yang eksotis.",
+    img: "assets/images/galeri-santai-pantai.jpg",
+    gmapsQuery: "Pantai+Melasti+Marang+Pesisir+Selatan+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.348500,104.036200",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.348500,104.036200"
+  },
+  {
+    id: 8,
+    destId: null,
+    name: "Gua Matu (Goa Karang Samudra)",
+    category: "nature",
+    categoryLabel: "Gua Alam & Mitos",
+    lat: -5.268400,
+    lng: 103.945200,
+    icon: "fa-dungeon",
+    pinClass: "pin-nature",
+    rating: "4.6 ★",
+    price: "Rp 10.000",
+    desc: "Gua tebing karang bersejarah menghadap Samudra Hindia yang dipenuhi ribuan kelelawar dan formasi stalaktit eksotis.",
+    img: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Gua+Matu+Way+Urang+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.268400,103.945200",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.268400,103.945200"
+  },
+  {
+    id: 9,
+    destId: null,
+    name: "Repong Damar Krui (Hutan Mata Kucing)",
+    category: "nature",
+    categoryLabel: "Hutan Warisan Dunia",
+    lat: -5.165000,
+    lng: 103.952000,
+    icon: "fa-tree",
+    pinClass: "pin-nature",
+    rating: "4.9 ★",
+    price: "Wisata Edukasi",
+    desc: "Kawasan hutan pohon damar mata kucing tradisional yang diakui dunia internasional sebagai sistem agroforestri lestari terbaik.",
+    img: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Repong+Damar+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.165000,103.952000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.165000,103.952000"
+  },
+
+  // 4. Budaya & Sejarah
+  {
+    id: 10,
+    destId: null,
+    name: "Sentra Tenun Kain Tapis Pesisir",
+    category: "culture",
+    categoryLabel: "Budaya & Tenun Tapis",
+    lat: -5.191200,
+    lng: 103.941500,
+    icon: "fa-scroll",
+    pinClass: "pin-culture",
+    rating: "4.9 ★",
+    price: "Gratis Kunjungan",
+    desc: "Pusat edukasi dan pembuatan kain tradisional Tapis benang emas khas Lampung Pesisir yang ditenun secara manual.",
+    img: "assets/images/kain-tapis.jpg",
+    gmapsQuery: "Kerajinan+Tapis+Pesisir+Barat+Krui",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.191200,103.941500",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.191200,103.941500"
+  },
+  {
+    id: 11,
+    destId: null,
+    name: "Makam Mahligai Syeikh Aminullah",
+    category: "culture",
+    categoryLabel: "Sejarah & Religi",
+    lat: -5.094000,
+    lng: 103.882000,
+    icon: "fa-landmark-dome",
+    pinClass: "pin-culture",
+    rating: "4.8 ★",
+    price: "Infaq / Donasi",
+    desc: "Situs cagar budaya makam penyebar Islam tertua di pesisir barat Sumatra dengan panorama tebing laut samudra.",
+    img: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Makam+Mahligai+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.094000,103.882000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.094000,103.882000"
+  },
+
+  // 5. Landmark & Bukit Viewpoint
+  {
+    id: 12,
+    destId: null,
+    name: "Puncak Bukit Selalaw Krui",
+    category: "landmark",
+    categoryLabel: "Viewpoint 360° Teluk",
+    lat: -5.198500,
+    lng: 103.926500,
+    icon: "fa-mountain-sun",
+    pinClass: "pin-landmark",
+    rating: "4.9 ★",
+    price: "Rp 5.000",
+    desc: "Puncak bukit dengan panorama 360 derajat ke Teluk Krui, jajaran perahu nelayan, serta spot sunset paling spektakuler.",
+    img: "assets/images/paket-sunset.jpg",
+    gmapsQuery: "Puncak+Selalaw+Krui+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.198500,103.926500",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.198500,103.926500"
+  },
+  {
+    id: 13,
+    destId: null,
+    name: "Batu Tihang Landmark Karang",
+    category: "landmark",
+    categoryLabel: "Landmark Geologi",
+    lat: -5.275000,
+    lng: 103.955000,
+    icon: "fa-monument",
+    pinClass: "pin-landmark",
+    rating: "4.7 ★",
+    price: "Rp 5.000",
+    desc: "Bongkahan batu karang raksasa yang tegak menjulang setinggi 20+ meter di bibir pantai Samudra Hindia.",
+    img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Batu+Tihang+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.275000,103.955000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.275000,103.955000"
+  },
+
+  // 6. Pulau & Bahari
+  {
+    id: 14,
+    destId: null,
+    name: "Pulau Pisang (Banana Island)",
+    category: "island",
+    categoryLabel: "Pulau & Snorkeling",
+    lat: -5.115830,
+    lng: 103.852110,
+    icon: "fa-sailboat",
+    pinClass: "pin-island",
+    rating: "5.0 ★",
+    price: "Sewa Kapal",
+    desc: "Surga pulau terpencil dengan air laut sebening kristal, lumba-lumba liar, rumah panggung kuno, dan pantai pasir putih halus.",
+    img: "assets/images/paket-pulau-pisang.jpg",
+    gmapsQuery: "Pulau+Pisang+Pesisir+Barat+Lampung",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.115830,103.852110",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.115830,103.852110"
+  },
+  {
+    id: 15,
+    destId: null,
+    name: "Pulau Betuah (Pulau Selatan)",
+    category: "island",
+    categoryLabel: "Pulau Tak Berpenghuni",
+    lat: -5.451200,
+    lng: 104.128000,
+    icon: "fa-sailboat",
+    pinClass: "pin-island",
+    rating: "4.8 ★",
+    price: "Ekspedisi",
+    desc: "Pulau kecil eksotis tak berpenghuni di batas terluar Lampung Barat dengan terumbu karang alami yang masih sangat perawan.",
+    img: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Pulau+Betuah+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.451200,104.128000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.451200,104.128000"
+  },
+
+  // 7. Kuliner Tradisional
+  {
+    id: 16,
+    destId: 3,
+    name: "Pantai Biha & Sentra Seruit",
+    category: "culinary",
+    categoryLabel: "Kuliner & Bahari",
+    lat: -5.334020,
+    lng: 104.015010,
+    icon: "fa-utensils",
+    pinClass: "pin-culinary",
+    rating: "4.7 ★",
+    price: "Rp 10.000",
+    desc: "Pusat kuliner seruit ikan bakar tradisional Lampung & pantai ramah keluarga dengan jajaran perahu nelayan Jukung.",
+    img: "assets/images/pantai-biha.jpg",
+    gmapsQuery: "Pantai+Biha+Pesisir+Barat",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.334020,104.015010",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.334020,104.015010"
+  },
+
+  // 8. Konservasi & Taman Nasional
+  {
+    id: 17,
+    destId: null,
+    name: "Konservasi Penyu Muara Tembulih",
+    category: "conservation",
+    categoryLabel: "Konservasi Satwa",
+    lat: -5.392000,
+    lng: 104.085000,
+    icon: "fa-shield-halved",
+    pinClass: "pin-conservation",
+    rating: "4.9 ★",
+    price: "Donasi",
+    desc: "Pusat pelestarian, penetasan telur penyu belimbing dan penyu sisik, serta edukasi ekosistem laut terpadu.",
+    img: "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Konservasi+Penyu+Muara+Tembulih+Ngambur",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.392000,104.085000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.392000,104.085000"
+  },
+  {
+    id: 18,
+    destId: null,
+    name: "Taman Nasional TNBBS Resort Biha",
+    category: "conservation",
+    categoryLabel: "Taman Nasional UNESCO",
+    lat: -5.305000,
+    lng: 104.062000,
+    icon: "fa-seedling",
+    pinClass: "pin-conservation",
+    rating: "4.9 ★",
+    price: "Izin Masuk",
+    desc: "Ekowisata trekking hutan hujan tropis warisan dunia UNESCO, habitat Rafflesia arnoldii & satwa liar Sumatra.",
+    img: "https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=600&q=80",
+    gmapsQuery: "Taman+Nasional+Bukit+Barisan+Selatan+Biha",
+    gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.305000,104.062000",
+    gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.305000,104.062000"
+  }
+];
+
+const PACKAGES = {
+  surf: { name: "Paket Surfing Adventure", price: 2450000, desc: "Homestay premium, papan selancar, pelatih profesional & antar jemput spot" },
+  beach: { name: "Paket Explore Krui", price: 1200000, desc: "Vila, pemandu lokal, sewa motor & dokumentasi lengkap" },
+  sunset: { name: "Paket Sunset & Culture", price: 450000, desc: "Kuliner seafood, keliling desa adat & tenun Tapis" },
+  family: { name: "Paket Wisata Pulau Pisang", price: 300000, desc: "Tour Pulau Pisang, Batu Ghuri, Goa Liang, Pengrajin Tapis & BBQ Ikan Bakar" }
+};
+
+// Initial Mock Bookings for Admin Dashboard
+const MOCK_BOOKINGS = [
+  {
+    code: "EPB-2026-0001",
+    name: "John Doe",
+    phone: "081288889999",
+    email: "john@example.com",
+    packageId: "surf",
+    packageName: "Paket Surfing Adventure",
+    date: "2026-08-15",
+    guests: 2,
+    notes: "Request intermediate surf board",
+    guideAddon: true,
+    photoAddon: false,
+    status: "confirmed",
+    total: 5250000
+  },
+  {
+    code: "EPB-2026-0002",
+    name: "Siti Aminah",
+    phone: "085611112222",
+    email: "siti.aminah@gmail.com",
+    packageId: "sunset",
+    packageName: "Paket Sunset & Culture",
+    date: "2026-08-12",
+    guests: 4,
+    notes: "Alergi makanan seafood diganti ayam bakar",
+    guideAddon: false,
+    photoAddon: true,
+    status: "pending",
+    total: 2050000
+  },
+  {
+    code: "EPB-2026-0003",
+    name: "David Miller",
+    phone: "+61400222111",
+    email: "david.m@surf.com.au",
+    packageId: "surf",
+    packageName: "Paket Surfing Adventure",
+    date: "2026-08-20",
+    guests: 1,
+    notes: "Airport pick up requested from Bandar Lampung",
+    guideAddon: true,
+    photoAddon: true,
+    status: "confirmed",
+    total: 3050000
+  },
+  {
+    code: "EPB-2026-0004",
+    name: "Keluarga Handoko",
+    phone: "081388887777",
+    email: "handoko@company.id",
+    packageId: "family",
+    packageName: "Paket Wisata Pulau Pisang",
+    date: "2026-09-01",
+    guests: 5,
+    notes: "Tour pulau & hunting sunset",
+    guideAddon: false,
+    photoAddon: true,
+    status: "pending",
+    total: 1750000
+  }
+];
+
+// Initialize localStorage if empty or still containing old TS- codes
+const storedBookings = localStorage.getItem('bookings');
+if (!storedBookings || storedBookings.includes('TS-')) {
+  localStorage.setItem('bookings', JSON.stringify(MOCK_BOOKINGS));
+}
+
+// 2. STATE MANAGEMENT
+let bookingState = {
+  packageId: 'surf',
+  packageName: 'Paket Surfing Adventure',
+  packagePrice: 2450000,
+  guideAddon: false,
+  photoAddon: false,
+  name: '',
+  phone: '',
+  email: '',
+  date: '',
+  guests: 1,
+  notes: '',
+  totalPrice: 2450000
+};
+
+let currentStep = 1;
+let isAdminLoggedIn = false;
+
+// 3. ROUTER / SPA CONTROLLER
+function initRouter() {
+  const handleRouting = () => {
+    const hash = window.location.hash || '#home';
+    const menuLinks = document.querySelectorAll('.nav-link');
+    
+    // Reset active nav state
+    menuLinks.forEach(link => link.classList.remove('active'));
+
+    // Handle sections routing
+    if (hash.startsWith('#home')) {
+      showView('view-home');
+      showHeaderFooter(true);
+      
+      // Scroll to specific section if sub-hash present (e.g. #home#destinasi)
+      const parts = hash.split('#');
+      if (parts.length > 2) {
+        const sectionId = parts[2];
+        const sectionEl = document.getElementById(sectionId);
+        if (sectionEl) {
+          // Delay slightly to allow SPA view transition
+          setTimeout(() => {
+            sectionEl.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+        
+        // Highlight correct navbar link
+        const activeLink = document.querySelector(`.nav-link[data-target="${sectionId}"]`);
+        if (activeLink) activeLink.classList.add('active');
+      } else {
+        // Highlight Beranda link
+        const homeLink = document.querySelector('.nav-link[data-target="home"]');
+        if (homeLink) homeLink.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Refresh map size if initialized
+      setTimeout(() => {
+        if (window.tourismMapInstance) {
+          window.tourismMapInstance.invalidateSize();
+        }
+      }, 250);
+    } 
+    else if (hash.startsWith('#detail/')) {
+      const id = parseInt(hash.split('/')[1]);
+      renderDestinationDetail(id);
+      showView('view-detail');
+      showHeaderFooter(true);
+      window.scrollTo({ top: 0 });
+    } 
+    else if (hash === '#booking') {
+      initBookingWizard();
+      showView('view-booking');
+      showHeaderFooter(true);
+      window.scrollTo({ top: 0 });
+    } 
+    else if (hash === '#auth') {
+      showView('view-auth');
+      showHeaderFooter(false); // Clean centered login page without navbar/footer clutter
+      window.scrollTo({ top: 0 });
+    } 
+    else if (hash.startsWith('#admin')) {
+      // Check login session
+      if (!isAdminLoggedIn) {
+        window.location.hash = '#auth';
+        showToast('loginToast', 'Silakan login sebagai admin terlebih dahulu!', 'error');
+        return;
+      }
+      showView('view-admin');
+      showHeaderFooter(false); // Hide default navbar/footer in Admin
+      renderAdminDashboard();
+    }
+  };
+
+  window.addEventListener('hashchange', handleRouting);
+  // Run once on load
+  handleRouting();
+}
+
+function showView(viewId) {
+  document.querySelectorAll('.spa-view').forEach(view => {
+    view.classList.add('hidden');
+  });
+  const targetView = document.getElementById(viewId);
+  if (targetView) targetView.classList.remove('hidden');
+}
+
+function showHeaderFooter(isVisible) {
+  const header = document.getElementById('header');
+  const footer = document.getElementById('footer');
+  if (isVisible) {
+    header.classList.remove('hidden');
+    footer.classList.remove('hidden');
+  } else {
+    header.classList.add('hidden');
+    footer.classList.add('hidden');
+  }
+}
+
+// 4. HEADER & NAVIGATION BEHAVIORS
+function initHeaderBehaviors() {
+  const header = document.getElementById('header');
+  const menuToggle = document.getElementById('menuToggle');
+  const navMenu = document.getElementById('navMenu');
+
+  // Sticky header on scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Mobile menu toggle
+  menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+    const icon = menuToggle.querySelector('i');
+    if (navMenu.classList.contains('active')) {
+      icon.className = 'fa-solid fa-xmark';
+    } else {
+      icon.className = 'fa-solid fa-bars';
+    }
+  });
+
+  // Close mobile menu on click nav link
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('active');
+      const icon = menuToggle.querySelector('i');
+      if (icon) icon.className = 'fa-solid fa-bars';
+    });
+  });
+
+  // Close mobile menu on click outside
+  document.addEventListener('click', (e) => {
+    if (header && !header.contains(e.target) && navMenu.classList.contains('active')) {
+      navMenu.classList.remove('active');
+      const icon = menuToggle.querySelector('i');
+      if (icon) icon.className = 'fa-solid fa-bars';
+    }
+  });
+}
+
+// 5. DETAIL DESTINASI WISATA VIEW RENDERING
+function renderDestinationDetail(id) {
+  let dest = DESTINATIONS.find(d => d.id === id);
+  if (!dest) {
+    const spot = MAP_LOCATIONS.find(m => m.id === id || m.destId === id);
+    if (spot) {
+      dest = {
+        id: spot.id,
+        name: spot.name,
+        location: "Pesisir Barat, Lampung",
+        lat: spot.lat,
+        lng: spot.lng,
+        price: spot.price.includes('Rp') ? (parseInt(spot.price.replace(/[^0-9]/g, '')) || 10000) : 0,
+        rating: `${spot.rating} / 5.0 (Rating Pengunjung)`,
+        hours: "06:00 - 18:30 WIB",
+        category: spot.categoryLabel,
+        description: spot.desc,
+        longDescription: `${spot.desc} Destinasi ${spot.name} merupakan salah satu daya tarik wisata unggulan di Kabupaten Pesisir Barat yang menyuguhkan keindahan alam eksotis, kelestarian ekosistem pesisir, serta kearifan budaya masyarakat lokal yang ramah.`,
+        coverImg: spot.img,
+        thumbs: [spot.img, "assets/images/galeri-santai-pantai.jpg", "assets/images/pantai-karang-nyimbor.jpg"],
+        facilities: ["Akses Jalan Aspal", "Spot Foto Eksotis", "Pemandu Lokal Berlisensi", "Area Parkir Wisatawan", "Fasilitas Kebersihan"]
+      };
+    } else {
+      dest = DESTINATIONS[0]; // Fallback aman ke destinasi pertama
+    }
+  }
+
+  // Populate data
+  document.getElementById('detailTitle').textContent = dest.name;
+  document.getElementById('detailPrice').innerHTML = dest.price > 0 ? `Rp ${dest.price.toLocaleString('id-ID')} <span>/ org</span>` : `Gratis <span>/ Kunjungan</span>`;
+  document.getElementById('detailLocation').textContent = dest.location;
+  document.getElementById('detailRating').textContent = dest.rating;
+  document.getElementById('detailHours').textContent = `Operasional: ${dest.hours}`;
+  
+  const heroImg = document.getElementById('detailHeroImg');
+  if (heroImg) {
+    heroImg.src = dest.coverImg || 'assets/images/pantai-karang-nyimbor.jpg';
+    heroImg.alt = dest.name;
+    heroImg.onerror = () => { heroImg.src = 'assets/images/pantai-karang-nyimbor.jpg'; };
+  }
+
+  document.getElementById('detailLongDesc').textContent = dest.longDescription;
+  document.getElementById('detailCategory').textContent = dest.category;
+
+  // Facilities
+  const facilitiesBox = document.getElementById('detailAmenities');
+  facilitiesBox.innerHTML = '';
+  dest.facilities.forEach(fac => {
+    const card = document.createElement('div');
+    card.className = 'detail-amenity-card';
+    card.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${fac}`;
+    facilitiesBox.appendChild(card);
+  });
+
+  // Gallery Thumbs
+  const thumbsBox = document.getElementById('detailGalleryThumbs');
+  thumbsBox.innerHTML = '';
+  dest.thumbs.forEach((t, index) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'detail-gallery-thumb';
+    thumb.innerHTML = `<img src="${t}" alt="Gallery ${dest.name} ${index + 1}">`;
+    thumb.addEventListener('click', () => {
+      if (heroImg) heroImg.src = t;
+    });
+    thumbsBox.appendChild(thumb);
+  });
+
+  // Dynamic Google Maps Embed per destination (replaces static Tanjung Setia)
+  const mapIframe = document.getElementById('detailMapIframe');
+  if (mapIframe) {
+    const lat = dest.lat || -5.313426;
+    const lng = dest.lng || 103.998218;
+    mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&hl=id&z=14&output=embed`;
+    mapIframe.title = `Peta Lokasi ${dest.name}`;
+  }
+
+  // Related Packages list
+  const relatedBox = document.getElementById('detailRelatedPackages');
+  relatedBox.innerHTML = '';
+  
+  // Inject package recommendation based on category
+  let targetPackageKey = 'beach';
+  if (dest.category.toLowerCase().includes('surf') || (dest.id === 1 || dest.id === 2)) {
+    targetPackageKey = 'surf';
+  } else if (dest.category.toLowerCase().includes('pulau') || dest.id === 14) {
+    targetPackageKey = 'family';
+  } else if (dest.category.toLowerCase().includes('budaya') || dest.category.toLowerCase().includes('kuliner') || dest.id === 10) {
+    targetPackageKey = 'sunset';
+  }
+
+  const pkgData = PACKAGES[targetPackageKey];
+  
+  const pkgCard = document.createElement('div');
+  pkgCard.className = 'package-card popular';
+  pkgCard.innerHTML = `
+    <span class="popular-ribbon"><i class="fa-solid fa-thumbs-up"></i> Rekomendasi Terkait</span>
+    <div class="package-img-container">
+      <img src="${dest.coverImg}" alt="${pkgData.name}" class="package-img">
+    </div>
+    <div class="package-content">
+      <h3 class="package-title">${pkgData.name}</h3>
+      <div class="package-meta-row">
+        <div class="package-meta-item"><i class="fa-solid fa-clock"></i> 3 Hari 2 Malam</div>
+        <div class="package-meta-item"><i class="fa-solid fa-user-group"></i> Min. 2 Orang</div>
+      </div>
+      <p style="font-size:0.85rem; color:var(--color-text-medium); margin-bottom:1.5rem;">Fasilitas lengkap menginap & transportasi terintegrasi dengan kunjungan ke ${dest.name}.</p>
+      <div class="package-price-box">
+        <span class="price-label">Tarif Mulai</span>
+        <div class="price">Rp ${pkgData.price.toLocaleString('id-ID')} <span>/ pax</span></div>
+      </div>
+      <button class="btn btn-primary btn-block select-package-booking" data-package="${targetPackageKey}">Pesan Paket Ini</button>
+    </div>
+  `;
+  relatedBox.appendChild(pkgCard);
+
+  // Set sidebar button action to open booking with current package
+  const detailBookNowBtn = document.getElementById('detailBookNowBtn');
+  if (detailBookNowBtn) {
+    detailBookNowBtn.onclick = () => {
+      selectPackageAndGo(targetPackageKey);
+    };
+  }
+
+  // Bind new package triggers
+  const pkgBtn = pkgCard.querySelector('.select-package-booking');
+  if (pkgBtn) {
+    pkgBtn.onclick = () => {
+      selectPackageAndGo(targetPackageKey);
+    };
+  }
+}
+
+// Helper to select package and navigate to booking
+function selectPackageAndGo(packageKey) {
+  bookingState.packageId = packageKey;
+  const pkg = PACKAGES[packageKey];
+  bookingState.packageName = pkg.name;
+  bookingState.packagePrice = pkg.price;
+  window.location.hash = '#booking';
+}
+
+// 6. BOOKING WIZARD PROCESSOR
+function initBookingWizard() {
+  currentStep = 1;
+  updateBookingWizardUI();
+
+  // Reset form checks and inputs if needed, or pull from search bar
+  const searchDest = document.getElementById('search-dest').value;
+  const searchDate = document.getElementById('search-date').value;
+  const searchGuests = parseInt(document.getElementById('search-guests').value);
+
+  if (searchDest && PACKAGES[searchDest]) {
+    bookingState.packageId = searchDest;
+    bookingState.packageName = PACKAGES[searchDest].name;
+    bookingState.packagePrice = PACKAGES[searchDest].price;
+  }
+  if (searchDate) {
+    bookingState.date = searchDate;
+    document.getElementById('book-date').value = searchDate;
+  }
+  if (searchGuests) {
+    bookingState.guests = searchGuests;
+    document.getElementById('book-guests').value = searchGuests;
+  }
+
+  // Pre-select radio button corresponding to bookingState.packageId
+  const radio = document.getElementById(`svc-${bookingState.packageId}`);
+  if (radio) {
+    radio.checked = true;
+    document.querySelectorAll('.service-select-card').forEach(c => c.classList.remove('selected'));
+    const parentCard = radio.closest('.service-select-card');
+    if (parentCard) parentCard.classList.add('selected');
+  }
+
+  // Sync checkboxes in step 1 with state
+  const chkGuide = document.getElementById('chk-guide');
+  const chkPhoto = document.getElementById('chk-photo');
+  if (chkGuide) chkGuide.checked = bookingState.guideAddon;
+  if (chkPhoto) chkPhoto.checked = bookingState.photoAddon;
+
+  calculateTotalPayment();
+  renderReviewStep();
+}
+
+function initBookingWizardEvents() {
+  const serviceCards = document.querySelectorAll('.service-select-card');
+  const chkGuide = document.getElementById('chk-guide');
+  const chkPhoto = document.getElementById('chk-photo');
+  const btnNext = document.getElementById('btn-next');
+  const btnPrev = document.getElementById('btn-prev');
+  const numGuests = document.getElementById('book-guests');
+
+  // Service Card select listener
+  serviceCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const radio = card.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
+      serviceCards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      
+      const val = card.getAttribute('data-value') || (radio ? radio.value : 'surf');
+      if (PACKAGES[val]) {
+        bookingState.packageId = val;
+        bookingState.packageName = PACKAGES[val].name;
+        bookingState.packagePrice = PACKAGES[val].price;
+      }
+
+      calculateTotalPayment();
+      renderReviewStep();
+    });
+  });
+
+  // Radio button change listener directly
+  document.querySelectorAll('input[name="booking-service"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const val = radio.value;
+      if (PACKAGES[val]) {
+        bookingState.packageId = val;
+        bookingState.packageName = PACKAGES[val].name;
+        bookingState.packagePrice = PACKAGES[val].price;
+        serviceCards.forEach(c => {
+          c.classList.toggle('selected', c.getAttribute('data-value') === val);
+        });
+        calculateTotalPayment();
+        renderReviewStep();
+      }
+    });
+  });
+
+  // Checkbox add-ons listeners (real-time update on change and click)
+  if (chkGuide) {
+    const handleGuideToggle = () => {
+      bookingState.guideAddon = chkGuide.checked;
+      calculateTotalPayment();
+      renderReviewStep();
+    };
+    chkGuide.addEventListener('change', handleGuideToggle);
+  }
+
+  if (chkPhoto) {
+    const handlePhotoToggle = () => {
+      bookingState.photoAddon = chkPhoto.checked;
+      calculateTotalPayment();
+      renderReviewStep();
+    };
+    chkPhoto.addEventListener('change', handlePhotoToggle);
+  }
+
+  // Guest count input listener (input, change, and keyup for instant calculation)
+  if (numGuests) {
+    const handleGuestChange = () => {
+      let val = parseInt(numGuests.value) || 1;
+      if (val < 1) val = 1;
+      bookingState.guests = val;
+      calculateTotalPayment();
+      renderReviewStep();
+    };
+    numGuests.addEventListener('input', handleGuestChange);
+    numGuests.addEventListener('change', handleGuestChange);
+    numGuests.addEventListener('keyup', handleGuestChange);
+  }
+
+  // Step buttons navigation
+  btnNext.addEventListener('click', () => {
+    if (currentStep === 1) {
+      currentStep = 2;
+      updateBookingWizardUI();
+    } else if (currentStep === 2) {
+      if (validateStep2()) {
+        currentStep = 3;
+        renderReviewStep();
+        updateBookingWizardUI();
+      }
+    } else if (currentStep === 3) {
+      submitBookingReservation();
+    }
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if (currentStep > 1 && currentStep < 4) {
+      currentStep--;
+      updateBookingWizardUI();
+    }
+  });
+}
+
+function calculateTotalPayment() {
+  const packageSubtotal = bookingState.packagePrice * bookingState.guests;
+  let addonsTotal = 0;
+
+  // Add-ons pricing: Jasa Pemandu +Rp350.000/hari, Dokumentasi Drone +Rp250.000 flat
+  const guideRow = document.getElementById('sum-addon-guide-row');
+  const guideVal = document.getElementById('sum-addon-guide');
+  if (bookingState.guideAddon) {
+    addonsTotal += 350000;
+    if (guideRow) guideRow.style.display = 'flex';
+    if (guideVal) guideVal.textContent = 'Rp 350.000';
+  } else {
+    if (guideRow) guideRow.style.display = 'none';
+  }
+
+  const photoRow = document.getElementById('sum-addon-photo-row');
+  const photoVal = document.getElementById('sum-addon-photo');
+  if (bookingState.photoAddon) {
+    addonsTotal += 250000;
+    if (photoRow) photoRow.style.display = 'flex';
+    if (photoVal) photoVal.textContent = 'Rp 250.000';
+  } else {
+    if (photoRow) photoRow.style.display = 'none';
+  }
+
+  // Total estimasi = (harga paket x jumlah wisatawan) + add-on terpilih
+  bookingState.totalPrice = packageSubtotal + addonsTotal;
+
+  // Render to Order Summary Sidebar
+  const sumPkgName = document.getElementById('sum-pkg-name');
+  const sumPkgPrice = document.getElementById('sum-pkg-price');
+  const sumGuests = document.getElementById('sum-guests');
+  const sumPkgSubtotal = document.getElementById('sum-pkg-subtotal');
+  const sumTotal = document.getElementById('sum-total');
+
+  if (sumPkgName) sumPkgName.textContent = bookingState.packageName;
+  if (sumPkgPrice) sumPkgPrice.textContent = `Rp ${bookingState.packagePrice.toLocaleString('id-ID')}`;
+  if (sumGuests) sumGuests.textContent = `${bookingState.guests} Orang`;
+  if (sumPkgSubtotal) sumPkgSubtotal.textContent = `Rp ${packageSubtotal.toLocaleString('id-ID')}`;
+  if (sumTotal) sumTotal.textContent = `Rp ${bookingState.totalPrice.toLocaleString('id-ID')}`;
+
+  // Sync to Step 3 Confirmation Box if element exists
+  const confTotal = document.getElementById('conf-total-price');
+  if (confTotal) {
+    confTotal.textContent = `Rp ${bookingState.totalPrice.toLocaleString('id-ID')}`;
+  }
+}
+
+function validateStep2() {
+  let isValid = true;
+
+  const nameInput = document.getElementById('book-name');
+  const phoneInput = document.getElementById('book-phone');
+  const emailInput = document.getElementById('book-email');
+  const dateInput = document.getElementById('book-date');
+  const guestsInput = document.getElementById('book-guests');
+
+  // Reset states
+  document.querySelectorAll('.form-error-msg').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.form-control').forEach(el => el.classList.remove('error-state'));
+
+  // Validate Name
+  if (!nameInput.value.trim()) {
+    document.getElementById('err-name').classList.remove('hidden');
+    nameInput.classList.add('error-state');
+    isValid = false;
+  } else {
+    bookingState.name = nameInput.value.trim();
+  }
+
+  // Validate Phone
+  const phonePattern = /^[0-9+ ]{8,15}$/;
+  if (!phonePattern.test(phoneInput.value.trim())) {
+    document.getElementById('err-phone').classList.remove('hidden');
+    phoneInput.classList.add('error-state');
+    isValid = false;
+  } else {
+    bookingState.phone = phoneInput.value.trim();
+  }
+
+  // Validate Email
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(emailInput.value.trim())) {
+    document.getElementById('err-email').classList.remove('hidden');
+    emailInput.classList.add('error-state');
+    isValid = false;
+  } else {
+    bookingState.email = emailInput.value.trim();
+  }
+
+  // Validate Date
+  if (!dateInput.value) {
+    document.getElementById('err-date').classList.remove('hidden');
+    dateInput.classList.add('error-state');
+    isValid = false;
+  } else {
+    bookingState.date = dateInput.value;
+  }
+
+  // Validate and read Guests Count
+  let guestsVal = parseInt(guestsInput.value) || 1;
+  if (guestsVal < 1) {
+    const errGuests = document.getElementById('err-guests');
+    if (errGuests) errGuests.classList.remove('hidden');
+    guestsInput.classList.add('error-state');
+    isValid = false;
+  } else {
+    bookingState.guests = guestsVal;
+  }
+
+  bookingState.notes = document.getElementById('book-notes').value.trim();
+
+  // Recalculate and refresh confirmation details
+  calculateTotalPayment();
+  renderReviewStep();
+
+  return isValid;
+}
+
+function renderReviewStep() {
+  const confPackage = document.getElementById('conf-package');
+  const confBasePrice = document.getElementById('conf-base-price');
+  if (confPackage) confPackage.textContent = bookingState.packageName;
+  if (confBasePrice) confBasePrice.textContent = `Rp ${bookingState.packagePrice.toLocaleString('id-ID')} / pax`;
+
+  // Render addons summaries
+  const addonsBox = document.getElementById('conf-addons-list');
+  if (addonsBox) {
+    let activeAddons = [];
+    if (bookingState.guideAddon) {
+      activeAddons.push('Jasa Pemandu Eksklusif (+ Rp 350.000/hari)');
+    }
+    if (bookingState.photoAddon) {
+      activeAddons.push('Dokumentasi Drone & Video (+ Rp 250.000)');
+    }
+
+    if (activeAddons.length > 0) {
+      addonsBox.innerHTML = activeAddons.map(a => `• ${a}`).join('<br>');
+    } else {
+      addonsBox.textContent = 'Tidak ada layanan tambahan terpilih';
+    }
+  }
+
+  // Personal data
+  const confName = document.getElementById('conf-name');
+  const confPhone = document.getElementById('conf-phone');
+  const confEmail = document.getElementById('conf-email');
+  const confDate = document.getElementById('conf-date');
+  const confGuests = document.getElementById('conf-guests');
+  const confNotes = document.getElementById('conf-notes');
+  const confTotal = document.getElementById('conf-total-price');
+
+  if (confName) confName.textContent = bookingState.name || '-';
+  if (confPhone) confPhone.textContent = bookingState.phone || '-';
+  if (confEmail) confEmail.textContent = bookingState.email || '-';
+  
+  // Safe Date Formatting for Indonesian locale (prevent Invalid Date)
+  if (confDate) {
+    if (bookingState.date) {
+      try {
+        const parts = bookingState.date.split('-');
+        if (parts.length === 3) {
+          const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+          confDate.textContent = d.toLocaleDateString('id-ID', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+          });
+        } else {
+          confDate.textContent = bookingState.date;
+        }
+      } catch (e) {
+        confDate.textContent = bookingState.date;
+      }
+    } else {
+      confDate.textContent = 'Belum ditentukan';
+    }
+  }
+
+  if (confGuests) confGuests.textContent = `${bookingState.guests} Orang`;
+  if (confNotes) confNotes.textContent = bookingState.notes ? `"${bookingState.notes}"` : 'Tidak ada catatan tambahan';
+  if (confTotal) confTotal.textContent = `Rp ${bookingState.totalPrice.toLocaleString('id-ID')}`;
+}
+
+function updateBookingWizardUI() {
+  // Toggle forms visibility
+  document.getElementById('booking-step-1').classList.add('hidden');
+  document.getElementById('booking-step-2').classList.add('hidden');
+  document.getElementById('booking-step-3').classList.add('hidden');
+
+  if (currentStep === 1 || currentStep === 2 || currentStep === 3) {
+    document.getElementById(`booking-step-${currentStep}`).classList.remove('hidden');
+    document.getElementById('bookingMainLayout').classList.remove('hidden');
+    document.getElementById('bookingSuccessScreen').classList.add('hidden');
+  }
+
+  // Update navigation buttons status
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  if (currentStep === 1) {
+    btnPrev.disabled = true;
+    btnNext.innerHTML = 'Lanjutkan <i class="fa-solid fa-arrow-right"></i>';
+  } else if (currentStep === 2) {
+    btnPrev.disabled = false;
+    btnNext.innerHTML = 'Lanjutkan <i class="fa-solid fa-arrow-right"></i>';
+  } else if (currentStep === 3) {
+    btnPrev.disabled = false;
+    btnNext.innerHTML = '<i class="fa-solid fa-check"></i> Konfirmasi Booking';
+  }
+
+  // Progress Bar percentage
+  const percent = ((currentStep - 1) / 3) * 100;
+  document.getElementById('bookingStepsProgress').style.width = `${percent}%`;
+
+  // Step item active classes
+  document.querySelectorAll('.booking-step-item').forEach(item => {
+    const stepNum = parseInt(item.getAttribute('data-step'));
+    item.classList.remove('active', 'completed');
+    if (stepNum === currentStep) {
+      item.classList.add('active');
+    } else if (stepNum < currentStep) {
+      item.classList.add('completed');
+    }
+  });
+}
+
+function submitBookingReservation() {
+  // Generate random booking code format EPB-2026-XXXX
+  const randNum = Math.floor(1000 + Math.random() * 9000);
+  const dateObj = new Date();
+  const year = dateObj.getFullYear();
+  const code = `EPB-${year}-${randNum}`;
+
+  // Assemble full booking record
+  const bookingRecord = {
+    code: code,
+    name: bookingState.name,
+    phone: bookingState.phone,
+    email: bookingState.email,
+    packageId: bookingState.packageId,
+    packageName: bookingState.packageName,
+    date: bookingState.date,
+    guests: bookingState.guests,
+    notes: bookingState.notes,
+    guideAddon: bookingState.guideAddon,
+    photoAddon: bookingState.photoAddon,
+    status: 'pending',
+    total: bookingState.totalPrice
+  };
+
+  // Push to localStorage
+  const currentList = JSON.parse(localStorage.getItem('bookings')) || [];
+  currentList.push(bookingRecord);
+  localStorage.setItem('bookings', JSON.stringify(currentList));
+
+  // Swap to success screen
+  currentStep = 4;
+  updateBookingWizardUI();
+  document.getElementById('bookingMainLayout').classList.add('hidden');
+  document.getElementById('bookingSuccessScreen').classList.remove('hidden');
+  document.getElementById('bookingSuccessCode').textContent = code;
+}
+
+
+// 7. AUTHENTICATION & LOGIN PROCESSOR
+function initAuthPortal() {
+  const goRegisterBtn = document.getElementById('authGoRegister');
+  const goLoginBtn = document.getElementById('authGoLogin');
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+
+  const loginBox = document.getElementById('auth-login-box');
+  const registerBox = document.getElementById('auth-register-box');
+  const toggleLoginPwd = document.getElementById('toggleLoginPwd');
+  const loginPassword = document.getElementById('login-password');
+  const forgotPwdLink = document.getElementById('forgotPwdLink');
+
+  // Toggle password visibility
+  if (toggleLoginPwd && loginPassword) {
+    toggleLoginPwd.addEventListener('click', () => {
+      const isPwd = loginPassword.type === 'password';
+      loginPassword.type = isPwd ? 'text' : 'password';
+      const icon = toggleLoginPwd.querySelector('i');
+      if (icon) {
+        icon.className = isPwd ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+      }
+    });
+  }
+
+  // Forgot password helper
+  if (forgotPwdLink) {
+    forgotPwdLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      showToast('loginToast', 'Kredensial akun pengelola tercantum pada dokumen proposal dan panduan sistem (README).', 'info');
+    });
+  }
+
+  goRegisterBtn.onclick = (e) => {
+    e.preventDefault();
+    loginBox.classList.add('hidden');
+    registerBox.classList.remove('hidden');
+  };
+
+  goLoginBtn.onclick = (e) => {
+    e.preventDefault();
+    registerBox.classList.add('hidden');
+    loginBox.classList.remove('hidden');
+  };
+
+  // Login handler with official Explore Pesisir Barat branding
+  loginForm.onsubmit = (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value.trim().toLowerCase();
+    const pass = document.getElementById('login-password').value;
+
+    const validEmails = ['admin@explorepesisirbarat.com', 'admin@tanjungsetia.com'];
+    if (validEmails.includes(email) && pass === 'admin123') {
+      isAdminLoggedIn = true;
+      showToast('loginToast', 'Login Admin berhasil! Mengalihkan ke dashboard...', 'success');
+      
+      // Delay before redirecting to dashboard
+      setTimeout(() => {
+        loginForm.reset();
+        window.location.hash = '#admin';
+      }, 900);
+    } else {
+      showToast('loginToast', 'Email atau kata sandi Anda salah!', 'error');
+    }
+  };
+
+  // Register handler
+  registerForm.onsubmit = (e) => {
+    e.preventDefault();
+    const name = document.getElementById('reg-name').value;
+    showToast('registerToast', 'Pendaftaran Akun Simulasi Berhasil!', 'success');
+    
+    setTimeout(() => {
+      registerForm.reset();
+      registerBox.classList.add('hidden');
+      loginBox.classList.remove('hidden');
+    }, 1500);
+  };
+}
+
+// 8. ADMIN DASHBOARD OPERATIONS
+function renderAdminDashboard() {
+  const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+
+  // Calculate statistics
+  const totalBookings = bookings.length;
+  
+  // Calculate today's bookings
+  const todayStr = new Date().toISOString().split('T')[0];
+  const todayBookingsCount = bookings.filter(b => b.date === todayStr || (b.code && b.code.startsWith(`EPB-${todayStr.replace(/-/g, '').slice(0,4)}`))).length;
+
+  // Calculate confirmed earnings revenue
+  const totalRevenue = bookings
+    .filter(b => b.status === 'confirmed')
+    .reduce((sum, b) => sum + b.total, 0);
+
+  // Update stat metrics
+  document.getElementById('stat-total-booking').textContent = totalBookings;
+  document.getElementById('stat-today-booking').textContent = todayBookingsCount;
+  document.getElementById('stat-total-revenue').textContent = `Rp ${totalRevenue.toLocaleString('id-ID')}`;
+  document.getElementById('adminBadgePemesanan').textContent = bookings.filter(b => b.status === 'pending').length;
+
+  // Render overview dynamic list (dashboard recent table, capped at 4)
+  const dashboardTbody = document.getElementById('adminDashboardTableBody');
+  dashboardTbody.innerHTML = '';
+  
+  const recentBookings = [...bookings].reverse().slice(0, 4);
+
+  if (recentBookings.length === 0) {
+    dashboardTbody.innerHTML = `<tr><td colspan="8" style="text-align:center;">Tidak ada data pemesanan.</td></tr>`;
+  } else {
+    recentBookings.forEach(b => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><strong style="color:var(--color-ocean-blue);">${b.code}</strong></td>
+        <td><strong>${b.name}</strong><br><span style="font-size:0.75rem; color:var(--color-text-light);">${b.email}</span></td>
+        <td>${b.packageName}</td>
+        <td>${b.date}</td>
+        <td>${b.guests} Pax</td>
+        <td><strong>Rp ${b.total.toLocaleString('id-ID')}</strong></td>
+        <td><span class="booking-status-badge ${b.status}">${b.status === 'confirmed' ? 'Disetujui' : (b.status === 'cancelled' ? 'Batal' : 'Pending')}</span></td>
+        <td>
+          <div class="admin-actions-cell">
+            ${b.status === 'pending' ? `
+              <button class="admin-action-btn approve" data-code="${b.code}" title="Setujui Pemesanan"><i class="fa-solid fa-check"></i></button>
+              <button class="admin-action-btn reject" data-code="${b.code}" title="Batalkan Pemesanan"><i class="fa-solid fa-xmark"></i></button>
+            ` : `<span style="font-size:0.8rem; color:var(--color-text-light);">-</span>`}
+          </div>
+        </td>
+      `;
+      dashboardTbody.appendChild(row);
+    });
+  }
+
+  // Render full bookings page table
+  const fullBookingsTbody = document.getElementById('adminFullBookingsTableBody');
+  fullBookingsTbody.innerHTML = '';
+
+  if (bookings.length === 0) {
+    fullBookingsTbody.innerHTML = `
+      <tr>
+        <td colspan="9">
+          <div class="table-empty-state">
+            <i class="fa-solid fa-folder-open"></i>
+            <h4>Belum Ada Reservasi</h4>
+            <p>Pemesanan dari website pariwisata akan muncul di list ini.</p>
+          </div>
+        </td>
+      </tr>`;
+  } else {
+    [...bookings].reverse().forEach(b => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td><strong style="color:var(--color-ocean-blue);">${b.code}</strong></td>
+        <td><strong>${b.name}</strong></td>
+        <td><a href="https://wa.me/${b.phone.replace(/[^0-9]/g, '')}" target="_blank" style="color:var(--color-success); font-weight:700;"><i class="fa-brands fa-whatsapp"></i> ${b.phone}</a></td>
+        <td>
+          <strong>${b.packageName}</strong><br>
+          <span style="font-size:0.75rem; color:var(--color-text-light);">Addons: ${b.guideAddon ? 'Guide' : ''} ${b.photoAddon ? 'Video' : ''} ${!b.guideAddon && !b.photoAddon ? 'Tanpa addons' : ''}</span>
+        </td>
+        <td>${b.date}</td>
+        <td>${b.guests} Pax</td>
+        <td><strong>Rp ${b.total.toLocaleString('id-ID')}</strong></td>
+        <td><span class="booking-status-badge ${b.status}">${b.status === 'confirmed' ? 'Disetujui' : (b.status === 'cancelled' ? 'Batal' : 'Pending')}</span></td>
+        <td>
+          <div class="admin-actions-cell">
+            ${b.status === 'pending' ? `
+              <button class="admin-action-btn approve" data-code="${b.code}" title="Setujui"><i class="fa-solid fa-check"></i> Setujui</button>
+              <button class="admin-action-btn reject" data-code="${b.code}" title="Batalkan"><i class="fa-solid fa-xmark"></i> Batalkan</button>
+            ` : `<span style="font-size:0.8rem; color:var(--color-text-light);">Selesai</span>`}
+          </div>
+        </td>
+      `;
+      fullBookingsTbody.appendChild(row);
+    });
+  }
+
+  // Bind operational approve / cancel actions
+  document.querySelectorAll('.admin-action-btn.approve').forEach(btn => {
+    btn.onclick = () => updateBookingStatus(btn.getAttribute('data-code'), 'confirmed');
+  });
+
+  document.querySelectorAll('.admin-action-btn.reject').forEach(btn => {
+    btn.onclick = () => updateBookingStatus(btn.getAttribute('data-code'), 'cancelled');
+  });
+}
+
+function updateBookingStatus(bookingCode, status) {
+  const currentList = JSON.parse(localStorage.getItem('bookings')) || [];
+  const item = currentList.find(b => b.code === bookingCode);
+  if (item) {
+    item.status = status;
+    localStorage.setItem('bookings', JSON.stringify(currentList));
+    // Re-render dashboard
+    renderAdminDashboard();
+  }
+}
+
+function initAdminDashboardTabs() {
+  const sidebarNavItems = document.querySelectorAll('.admin-nav-item');
+  const tabContents = document.querySelectorAll('.admin-tab-content');
+  const adminSidebar = document.getElementById('adminSidebar');
+  const adminMenuToggle = document.getElementById('adminMenuToggle');
+  const adminSidebarClose = document.getElementById('adminSidebarClose');
+  const adminSidebarBackdrop = document.getElementById('adminSidebarBackdrop');
+
+  function openAdminSidebar() {
+    if (adminSidebar) adminSidebar.classList.add('active');
+    if (adminSidebarBackdrop) adminSidebarBackdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAdminSidebar() {
+    if (adminSidebar) adminSidebar.classList.remove('active');
+    if (adminSidebarBackdrop) adminSidebarBackdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (adminMenuToggle) {
+    adminMenuToggle.addEventListener('click', openAdminSidebar);
+  }
+
+  if (adminSidebarClose) {
+    adminSidebarClose.addEventListener('click', closeAdminSidebar);
+  }
+
+  if (adminSidebarBackdrop) {
+    adminSidebarBackdrop.addEventListener('click', closeAdminSidebar);
+  }
+
+  sidebarNavItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetTab = item.getAttribute('data-tab');
+
+      // Update active nav styling
+      sidebarNavItems.forEach(nav => nav.classList.remove('active'));
+      item.classList.add('active');
+
+      // Toggle tab contents visibility
+      tabContents.forEach(content => content.classList.add('hidden'));
+      const targetContent = document.getElementById(`admin-tab-${targetTab}`);
+      if (targetContent) targetContent.classList.remove('hidden');
+
+      // Update Top Title header content
+      const tabTitle = item.querySelector('a').textContent.trim();
+      const titleEl = document.getElementById('adminTabTitle');
+      const subtitleEl = document.getElementById('adminTabSubtitle');
+
+      if (targetTab === 'dashboard') {
+        if (titleEl) titleEl.textContent = `Overview Dashboard`;
+        if (subtitleEl) subtitleEl.textContent = `Statistik umum dan manajemen data Wisata Pesisir Barat.`;
+        renderAdminDashboard();
+      } else {
+        if (titleEl) titleEl.textContent = `Kelola ${tabTitle}`;
+        if (subtitleEl) subtitleEl.textContent = `Modifikasi database panel ${tabTitle.toLowerCase()} pariwisata.`;
+      }
+
+      // Close mobile drawer on selection
+      closeAdminSidebar();
+    });
+  });
+
+  // Shortcut redirections inside tables
+  const goToPemesanan = document.getElementById('adminGoToPemesananTab');
+  if (goToPemesanan) {
+    goToPemesanan.onclick = () => {
+      const tabLink = document.querySelector('.admin-nav-item[data-tab="pemesanan"]');
+      if (tabLink) tabLink.click();
+    };
+  }
+
+  const logoutBtn = document.getElementById('adminLogoutBtn');
+  if (logoutBtn) {
+    logoutBtn.onclick = () => {
+      closeAdminSidebar();
+      isAdminLoggedIn = false;
+      window.location.hash = '#home';
+    };
+  }
+}
+
+// 9. HELPER UI UTILITIES
+function showToast(elementId, message, type = 'success') {
+  const toast = document.getElementById(elementId);
+  toast.textContent = message;
+  toast.className = `auth-toast ${type}`;
+  toast.classList.remove('hidden');
+  
+  setTimeout(() => {
+    toast.classList.add('hidden');
+  }, 3500);
+}
+
+// 10. GALLERIES & INTERACTIVE TRIGGERS
+function initInteractiveTriggers() {
+  // Main gallery filtering logic
+  const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filterVal = btn.getAttribute('data-filter');
+
+      galleryItems.forEach(item => {
+        if (filterVal === 'all' || item.getAttribute('data-category') === filterVal) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // "Lihat Semua Galeri" trigger alert
+  document.getElementById('seeAllGalleryBtn').onclick = () => {
+    alert("Galeri wisata penuh akan dimuat saat integrasi backend cloud storage tersambung!");
+  };
+
+  // Search/Reservation search bar button click
+  document.getElementById('searchBarBtn').onclick = () => {
+    const searchDest = document.getElementById('search-dest').value;
+    if (searchDest) {
+      window.location.hash = '#booking';
+    } else {
+      alert("Silakan pilih destinasi / paket yang ingin Anda telusuri terlebih dahulu.");
+    }
+  };
+
+  // View detail buttons click (landing page cards)
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('view-detail-trigger')) {
+      const id = parseInt(e.target.getAttribute('data-id'));
+      window.location.hash = `#detail/${id}`;
+    }
+
+    if (e.target.classList.contains('select-package-booking')) {
+      const key = e.target.getAttribute('data-package');
+      selectPackageAndGo(key);
+    }
+
+    if (e.target.classList.contains('book-guide-trigger')) {
+      const guideName = e.target.getAttribute('data-guide');
+      bookingState.guideAddon = true;
+      document.getElementById('chk-guide').checked = true;
+      window.location.hash = '#booking';
+    }
+  });
+}
+
+// 12. 3D MAP & REAL-TIME GOOGLE MAPS INTEGRATION
+let tourismMapInstance = null;
+let currentLayer = 'sat';
+let is3DTiltEnabled = false;
+let mapMarkers = [];
+let userLocationMarker = null;
+
+// Helper to detect WebGL availability
+function isWebGLAvailable() {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+  } catch (e) {
+    return false;
+  }
+}
+
+function init3DMap() {
+  const mapContainer = document.getElementById('tourismMap');
+  if (!mapContainer || typeof L === 'undefined') return;
+
+  const hasWebGL = isWebGLAvailable();
+  const isMobile = window.innerWidth <= 768;
+
+  // Initialize Map centered on Pesisir Barat coastal region
+  tourismMapInstance = L.map('tourismMap', {
+    center: [-5.2950, 103.9750],
+    zoom: isMobile ? 10 : 11,
+    minZoom: 9,
+    maxZoom: 18,
+    zoomControl: false,
+    attributionControl: false,
+    tapTolerance: 15,
+    scrollWheelZoom: !isMobile // Prevent accidental page scroll trapping on touch devices
+  });
+
+  // Add Zoom Control to Top Right so it doesn't collide with Top Left HUD
+  L.control.zoom({ position: 'topright' }).addTo(tourismMapInstance);
+
+  window.tourismMapInstance = tourismMapInstance;
+
+  // Map Tile Layers (Satellite 3D Imagery, Topography, Dark Night)
+  const tileLayers = {
+    sat: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 18,
+      attribution: 'Tiles &copy; Esri &mdash; Earthstar Geographics'
+    }),
+    street: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; OpenStreetMap contributors'
+    }),
+    dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 18,
+      attribution: '&copy; CartoDB DarkMatter'
+    })
+  };
+
+  // Add default satellite layer (or street if WebGL is unavailable on low-end device)
+  tileLayers.sat.addTo(tourismMapInstance);
+
+  // If WebGL is not available, show soft fallback indicator
+  if (!hasWebGL) {
+    const fallbackBanner = document.createElement('div');
+    fallbackBanner.className = 'map-webgl-fallback';
+    fallbackBanner.innerHTML = `<i class="fa-solid fa-circle-info"></i> Mode Kompatibilitas 2D Aktif`;
+    mapContainer.parentElement.appendChild(fallbackBanner);
+  }
+
+  // Render Markers and Sidebar Cards
+  renderMapPoints('all');
+
+  // Layer Switching Handlers
+  const btnSat = document.getElementById('btnLayerSat');
+  const btnStreet = document.getElementById('btnLayerStreet');
+  const btnDark = document.getElementById('btnLayerDark');
+
+  const switchLayer = (type) => {
+    [btnSat, btnStreet, btnDark].forEach(b => b && b.classList.remove('active'));
+    Object.values(tileLayers).forEach(layer => {
+      if (tourismMapInstance.hasLayer(layer)) tourismMapInstance.removeLayer(layer);
+    });
+
+    if (type === 'sat') {
+      tileLayers.sat.addTo(tourismMapInstance);
+      if (btnSat) btnSat.classList.add('active');
+    } else if (type === 'street') {
+      tileLayers.street.addTo(tourismMapInstance);
+      if (btnStreet) btnStreet.classList.add('active');
+    } else if (type === 'dark') {
+      tileLayers.dark.addTo(tourismMapInstance);
+      if (btnDark) btnDark.classList.add('active');
+    }
+    currentLayer = type;
+  };
+
+  if (btnSat) btnSat.onclick = () => switchLayer('sat');
+  if (btnStreet) btnStreet.onclick = () => switchLayer('street');
+  if (btnDark) btnDark.onclick = () => switchLayer('dark');
+
+  // Toggle 3D Tilt Mode
+  const btnToggle3D = document.getElementById('btnToggle3D');
+  const mapWrapper = document.getElementById('mapViewportWrapper');
+  const tiltStatusText = document.getElementById('tiltStatusText');
+
+  // Disable 3D tilt by default on mobile devices to prevent GPU lag
+  if (isMobile && mapWrapper) {
+    mapWrapper.classList.remove('is-3d-tilt');
+    is3DTiltEnabled = false;
+    if (tiltStatusText) tiltStatusText.innerText = 'Tilt 3D: OFF';
+    if (btnToggle3D) btnToggle3D.classList.remove('active');
+  }
+
+  if (btnToggle3D && mapWrapper) {
+    btnToggle3D.onclick = () => {
+      is3DTiltEnabled = !is3DTiltEnabled;
+      if (is3DTiltEnabled) {
+        mapWrapper.classList.add('is-3d-tilt');
+        btnToggle3D.classList.add('active');
+        if (tiltStatusText) tiltStatusText.innerText = 'Tilt 3D: ON';
+      } else {
+        mapWrapper.classList.remove('is-3d-tilt');
+        btnToggle3D.classList.remove('active');
+        if (tiltStatusText) tiltStatusText.innerText = 'Tilt 3D: OFF';
+      }
+      setTimeout(() => tourismMapInstance.invalidateSize(), 300);
+    };
+  }
+
+  // Category Filter Buttons
+  const filterBtns = document.querySelectorAll('.map-filter-btn');
+  filterBtns.forEach(btn => {
+    btn.onclick = () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.getAttribute('data-category');
+      renderMapPoints(cat);
+    };
+  });
+
+  // Search input filter in sidebar
+  const searchInput = document.getElementById('mapSearchInput');
+  if (searchInput) {
+    searchInput.oninput = (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      filterSpotsBySearch(q);
+    };
+  }
+
+  // Reset Map View
+  const btnReset = document.getElementById('btnResetMap');
+  if (btnReset) {
+    btnReset.onclick = () => {
+      tourismMapInstance.flyTo([-5.2950, 103.9750], 11, { duration: 1.2 });
+      filterBtns.forEach(b => b.classList.remove('active'));
+      const allBtn = document.querySelector('.map-filter-btn[data-category="all"]');
+      if (allBtn) allBtn.classList.add('active');
+      renderMapPoints('all');
+    };
+  }
+
+  // Handle window resize / mobile orientation change
+  window.addEventListener('resize', () => {
+    if (tourismMapInstance) {
+      tourismMapInstance.invalidateSize();
+    }
+  });
+
+  // "Lokasi Saya" Geolocation Button
+  const btnMyLoc = document.getElementById('btnMyLocation');
+  if (btnMyLoc) {
+    btnMyLoc.onclick = () => {
+      if (!navigator.geolocation) {
+        alert('Geolocation tidak didukung oleh browser Anda.');
+        return;
+      }
+
+      btnMyLoc.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Mencari...</span>';
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const userLat = pos.coords.latitude;
+          const userLng = pos.coords.longitude;
+
+          btnMyLoc.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> <span>Lokasi Saya</span>';
+
+          if (userLocationMarker) {
+            tourismMapInstance.removeLayer(userLocationMarker);
+          }
+
+          const userIcon = L.divIcon({
+            className: 'user-geo-pin-wrapper',
+            html: '<div class="user-geo-pin"></div>',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+          });
+
+          userLocationMarker = L.marker([userLat, userLng], { icon: userIcon })
+            .addTo(tourismMapInstance)
+            .bindPopup(`
+              <div style="padding: 10px; font-weight: 600; text-align: center;">
+                <div style="color: #3B82F6; font-size: 1rem; margin-bottom: 4px;"><i class="fa-solid fa-person-walking"></i> Posisi Anda Saat Ini</div>
+                <div style="font-size: 0.75rem; color: #64748B; margin-bottom: 8px;">Lat: ${userLat.toFixed(4)}, Lng: ${userLng.toFixed(4)}</div>
+                <a href="https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=-5.313426,103.998218" target="_blank" class="btn-gmaps-direct" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; text-decoration: none;">
+                  <i class="fa-solid fa-diamond-turn-right"></i> Rute ke Pesisir Barat
+                </a>
+              </div>
+            `)
+            .openPopup();
+
+          tourismMapInstance.flyTo([userLat, userLng], 14, { duration: 1.5 });
+
+          // Update main footer button with direct route from user location
+          const mainGmapsBtn = document.getElementById('openMainGmapsBtn');
+          if (mainGmapsBtn) {
+            mainGmapsBtn.href = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=-5.313426,103.998218`;
+            mainGmapsBtn.innerHTML = '<i class="fa-solid fa-diamond-turn-right"></i> Petunjuk Rute GPS dari Lokasi Anda';
+          }
+        },
+        (err) => {
+          btnMyLoc.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> <span>Lokasi Saya</span>';
+          alert('Tidak dapat mendeteksi lokasi: ' + err.message + '. Silakan izinkan akses lokasi di browser.');
+        },
+        { enableHighAccuracy: true, timeout: 8000 }
+      );
+    };
+  }
+
+  // Update Coordinates HUD on mousemove
+  tourismMapInstance.on('mousemove', (e) => {
+    const hud = document.getElementById('mapCoordsHud');
+    if (hud) {
+      hud.innerHTML = `<i class="fa-solid fa-satellite-dish"></i> GPS: ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`;
+    }
+  });
+}
+
+function updateMapCategoryCounts() {
+  const counts = { all: MAP_LOCATIONS.length };
+  MAP_LOCATIONS.forEach(loc => {
+    counts[loc.category] = (counts[loc.category] || 0) + 1;
+  });
+  Object.keys(counts).forEach(cat => {
+    const el = document.getElementById(`count-${cat}`);
+    if (el) el.innerText = counts[cat];
+  });
+  const countBadge = document.getElementById('spotCountBadge');
+  if (countBadge) {
+    countBadge.innerText = `${MAP_LOCATIONS.length} Titik Wisata Ditemukan`;
+  }
+}
+
+function renderMapPoints(categoryFilter = 'all') {
+  if (!tourismMapInstance) return;
+
+  updateMapCategoryCounts();
+
+  // Clear existing markers
+  mapMarkers.forEach(m => tourismMapInstance.removeLayer(m));
+  mapMarkers = [];
+
+  const filtered = categoryFilter === 'all' 
+    ? MAP_LOCATIONS 
+    : MAP_LOCATIONS.filter(item => item.category === categoryFilter);
+
+  // Update spot count badge
+  const countBadge = document.getElementById('spotCountBadge');
+  if (countBadge) {
+    countBadge.innerText = `${filtered.length} Titik Wisata Ditemukan`;
+  }
+
+  // Render Sidebar List
+  const listEl = document.getElementById('mapSpotsList');
+  if (listEl) {
+    if (filtered.length === 0) {
+      listEl.innerHTML = `
+        <div style="text-align: center; padding: 2rem 1rem; color: var(--color-text-light);">
+          <i class="fa-solid fa-map-location-dot" style="font-size: 2rem; margin-bottom: 0.5rem; color: #CBD5E1;"></i>
+          <p style="font-size: 0.85rem;">Tidak ada spot wisata pada kategori ini.</p>
+        </div>
+      `;
+    } else {
+      listEl.innerHTML = filtered.map(spot => `
+        <div class="spot-item-card" data-id="${spot.id}" id="spot-card-${spot.id}">
+          <div class="spot-thumb">
+            <img src="${spot.img}" alt="${spot.name}" loading="lazy">
+          </div>
+          <div class="spot-info">
+            <span class="spot-item-tag"><i class="fa-solid ${spot.icon}"></i> ${spot.categoryLabel}</span>
+            <h5 class="spot-item-title" title="${spot.name}">${spot.name}</h5>
+            <div class="spot-item-sub">
+              <span><i class="fa-solid fa-star" style="color:#F59E0B;"></i> ${spot.rating}</span>
+              <a href="${spot.gmapsDirUrl}" target="_blank" rel="noopener noreferrer" class="spot-gmaps-link" onclick="event.stopPropagation();">
+                <i class="fa-solid fa-diamond-turn-right"></i> Maps
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Add markers to map
+  filtered.forEach(spot => {
+    const pinIcon = L.divIcon({
+      className: 'custom-3d-pin-wrap',
+      html: `
+        <div class="custom-3d-pin ${spot.pinClass}">
+          <i class="fa-solid ${spot.icon}"></i>
+        </div>
+        <div class="pin-radar-ring"></div>
+      `,
+      iconSize: [42, 42],
+      iconAnchor: [21, 38],
+      popupAnchor: [0, -38]
+    });
+
+    const popupHtml = `
+      <div class="map-popup-card">
+        <div class="popup-img-wrapper">
+          <img src="${spot.img}" alt="${spot.name}">
+          <span class="popup-category-badge"><i class="fa-solid ${spot.icon}"></i> ${spot.categoryLabel}</span>
+        </div>
+        <div class="popup-body">
+          <h4 class="popup-title">${spot.name}</h4>
+          <div class="popup-coords"><i class="fa-solid fa-location-dot" style="color:var(--color-sunset-orange);"></i> ${spot.lat.toFixed(4)}, ${spot.lng.toFixed(4)} • <strong>${spot.rating}</strong></div>
+          <p class="popup-desc">${spot.desc}</p>
+          <div class="popup-actions">
+            <a href="${spot.gmapsDirUrl}" target="_blank" rel="noopener noreferrer" class="btn-gmaps-direct">
+              <i class="fa-solid fa-diamond-turn-right"></i> Petunjuk Arah Real-time
+            </a>
+            <div class="popup-sub-actions">
+              <a href="${spot.gmapsSearchUrl}" target="_blank" rel="noopener noreferrer" class="btn-popup-secondary">
+                <i class="fa-brands fa-google"></i> Google Maps
+              </a>
+              ${spot.destId ? `<button class="btn-popup-secondary view-detail-trigger" data-id="${spot.destId}"><i class="fa-solid fa-circle-info"></i> Info Detail</button>` : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const marker = L.marker([spot.lat, spot.lng], { icon: pinIcon })
+      .addTo(tourismMapInstance)
+      .bindPopup(popupHtml, {
+        className: 'custom-map-popup',
+        maxWidth: 300
+      });
+
+    marker.spotData = spot;
+    mapMarkers.push(marker);
+
+    marker.on('click', () => {
+      highlightSpotCard(spot.id);
+      const hud = document.getElementById('mapCoordsHud');
+      if (hud) hud.innerHTML = `<i class="fa-solid fa-satellite-dish"></i> GPS: ${spot.lat.toFixed(4)}, ${spot.lng.toFixed(4)}`;
+    });
+  });
+
+  // Attach click listener to sidebar spot cards
+  document.querySelectorAll('.spot-item-card').forEach(card => {
+    card.onclick = () => {
+      const id = parseInt(card.getAttribute('data-id'));
+      const targetSpot = MAP_LOCATIONS.find(s => s.id === id);
+      if (targetSpot) {
+        highlightSpotCard(id);
+        tourismMapInstance.flyTo([targetSpot.lat, targetSpot.lng], 15, {
+          duration: 1.2,
+          easeLinearity: 0.25
+        });
+        const targetMarker = mapMarkers.find(m => m.spotData && m.spotData.id === id);
+        if (targetMarker) {
+          setTimeout(() => targetMarker.openPopup(), 400);
+        }
+      }
+    };
+  });
+}
+
+function highlightSpotCard(spotId) {
+  document.querySelectorAll('.spot-item-card').forEach(c => c.classList.remove('active'));
+  const targetCard = document.getElementById(`spot-card-${spotId}`);
+  if (targetCard) {
+    targetCard.classList.add('active');
+    targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function filterSpotsBySearch(query) {
+  if (!query) {
+    renderMapPoints('all');
+    return;
+  }
+  const filtered = MAP_LOCATIONS.filter(s => 
+    s.name.toLowerCase().includes(query) || 
+    s.categoryLabel.toLowerCase().includes(query) ||
+    s.desc.toLowerCase().includes(query)
+  );
+
+  const countBadge = document.getElementById('spotCountBadge');
+  if (countBadge) {
+    countBadge.innerText = `${filtered.length} Titik Ditemukan`;
+  }
+
+  // Re-render sidebar & markers
+  mapMarkers.forEach(m => tourismMapInstance.removeLayer(m));
+  mapMarkers = [];
+
+  const listEl = document.getElementById('mapSpotsList');
+  if (listEl) {
+    if (filtered.length === 0) {
+      listEl.innerHTML = `
+        <div style="text-align: center; padding: 2rem 1rem; color: var(--color-text-light);">
+          <i class="fa-solid fa-magnifying-glass" style="font-size: 2rem; margin-bottom: 0.5rem; color: #CBD5E1;"></i>
+          <p style="font-size: 0.85rem;">Tidak ada spot cocok dengan kata "${query}".</p>
+        </div>
+      `;
+    } else {
+      listEl.innerHTML = filtered.map(spot => `
+        <div class="spot-item-card" data-id="${spot.id}" id="spot-card-${spot.id}">
+          <div class="spot-thumb">
+            <img src="${spot.img}" alt="${spot.name}" loading="lazy">
+          </div>
+          <div class="spot-info">
+            <span class="spot-item-tag"><i class="fa-solid ${spot.icon}"></i> ${spot.categoryLabel}</span>
+            <h5 class="spot-item-title" title="${spot.name}">${spot.name}</h5>
+            <div class="spot-item-sub">
+              <span><i class="fa-solid fa-star" style="color:#F59E0B;"></i> ${spot.rating}</span>
+              <a href="${spot.gmapsDirUrl}" target="_blank" rel="noopener noreferrer" class="spot-gmaps-link" onclick="event.stopPropagation();">
+                <i class="fa-solid fa-diamond-turn-right"></i> Maps
+              </a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  filtered.forEach(spot => {
+    const pinIcon = L.divIcon({
+      className: 'custom-3d-pin-wrap',
+      html: `
+        <div class="custom-3d-pin ${spot.pinClass}">
+          <i class="fa-solid ${spot.icon}"></i>
+        </div>
+        <div class="pin-radar-ring"></div>
+      `,
+      iconSize: [42, 42],
+      iconAnchor: [21, 38],
+      popupAnchor: [0, -38]
+    });
+
+    const popupHtml = `
+      <div class="map-popup-card">
+        <div class="popup-img-wrapper">
+          <img src="${spot.img}" alt="${spot.name}">
+          <span class="popup-category-badge"><i class="fa-solid ${spot.icon}"></i> ${spot.categoryLabel}</span>
+        </div>
+        <div class="popup-body">
+          <h4 class="popup-title">${spot.name}</h4>
+          <div class="popup-coords"><i class="fa-solid fa-location-dot" style="color:var(--color-sunset-orange);"></i> ${spot.lat.toFixed(4)}, ${spot.lng.toFixed(4)} • <strong>${spot.rating}</strong></div>
+          <p class="popup-desc">${spot.desc}</p>
+          <div class="popup-actions">
+            <a href="${spot.gmapsDirUrl}" target="_blank" rel="noopener noreferrer" class="btn-gmaps-direct">
+              <i class="fa-solid fa-diamond-turn-right"></i> Petunjuk Arah Real-time
+            </a>
+            <div class="popup-sub-actions">
+              <a href="${spot.gmapsSearchUrl}" target="_blank" rel="noopener noreferrer" class="btn-popup-secondary">
+                <i class="fa-brands fa-google"></i> Google Maps
+              </a>
+              ${spot.destId ? `<button class="btn-popup-secondary view-detail-trigger" data-id="${spot.destId}"><i class="fa-solid fa-circle-info"></i> Info Detail</button>` : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const marker = L.marker([spot.lat, spot.lng], { icon: pinIcon })
+      .addTo(tourismMapInstance)
+      .bindPopup(popupHtml, { className: 'custom-map-popup', maxWidth: 300 });
+
+    marker.spotData = spot;
+    mapMarkers.push(marker);
+
+    marker.on('click', () => highlightSpotCard(spot.id));
+  });
+
+  document.querySelectorAll('.spot-item-card').forEach(card => {
+    card.onclick = () => {
+      const id = parseInt(card.getAttribute('data-id'));
+      const targetSpot = MAP_LOCATIONS.find(s => s.id === id);
+      if (targetSpot) {
+        highlightSpotCard(id);
+        tourismMapInstance.flyTo([targetSpot.lat, targetSpot.lng], 15, { duration: 1.2 });
+        const targetMarker = mapMarkers.find(m => m.spotData && m.spotData.id === id);
+        if (targetMarker) setTimeout(() => targetMarker.openPopup(), 400);
+      }
+    };
+  });
+}
+
+// 11. SPLASH SCREEN PRELOADER
+function initSplashScreen() {
+  const splash = document.getElementById('splashScreen');
+  const progress = document.getElementById('splashProgress');
+  const status = document.getElementById('splashStatus');
+  if (!splash) return;
+
+  setTimeout(() => {
+    if (progress) progress.style.width = '35%';
+    if (status) status.textContent = 'Memuat data destinasi & keindahan pesisir...';
+  }, 150);
+
+  setTimeout(() => {
+    if (progress) progress.style.width = '75%';
+    if (status) status.textContent = 'Menyiapkan peta wisata 3D & koordinat GPS...';
+  }, 550);
+
+  setTimeout(() => {
+    if (progress) progress.style.width = '100%';
+    if (status) status.textContent = 'Selamat datang di Explore Pesisir Barat!';
+  }, 950);
+
+  setTimeout(() => {
+    splash.classList.add('fade-out');
+  }, 1300);
+
+  setTimeout(() => {
+    splash.style.display = 'none';
+  }, 1950);
+}
+
+// 11.5. INFO MODALS CONTROLLER (FAQs, Terms, Privacy)
+function initInfoModals() {
+  const modalTriggers = document.querySelectorAll('.open-modal-trigger');
+  
+  const openModal = (modalId) => {
+    const targetModal = document.getElementById(modalId);
+    if (targetModal) {
+      targetModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  const closeModal = (modalEl) => {
+    if (modalEl) {
+      modalEl.classList.remove('active');
+      // Restore body overflow if no other info modal is open
+      if (!document.querySelector('.info-modal-backdrop.active')) {
+        document.body.style.overflow = '';
+      }
+    }
+  };
+
+  modalTriggers.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const modalId = btn.getAttribute('data-modal');
+      if (modalId) openModal(modalId);
+    });
+  });
+
+  // Close triggers inside modals
+  document.querySelectorAll('.info-modal-backdrop').forEach(backdrop => {
+    const closeBtn = backdrop.querySelector('.info-modal-close-btn');
+    const footerCloseBtn = backdrop.querySelector('.info-modal-footer-close');
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => closeModal(backdrop));
+    }
+    if (footerCloseBtn) {
+      footerCloseBtn.addEventListener('click', () => closeModal(backdrop));
+    }
+
+    // Close when clicking directly on backdrop
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeModal(backdrop);
+    });
+  });
+
+  // Close on Escape key press
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const activeModal = document.querySelector('.info-modal-backdrop.active');
+      if (activeModal) closeModal(activeModal);
+    }
+  });
+}
+
+// 12. INITIALIZATION ON DOM CONTENT LOADED
+document.addEventListener('DOMContentLoaded', () => {
+  initSplashScreen();
+  initRouter();
+  initHeaderBehaviors();
+  initBookingWizardEvents();
+  initAuthPortal();
+  initAdminDashboardTabs();
+  initInteractiveTriggers();
+  init3DMap();
+  updateMapCategoryCounts();
+  initInfoModals();
+  initAIAssistant();
+});
+
+// ==========================================================================
+// 13. PARI AI - ASISTEN WISATA PINTAR PESISIR BARAT
+// ==========================================================================
+function initAIAssistant() {
+  const trigger = document.getElementById('aiAssistantTrigger');
+  const modal = document.getElementById('aiChatModal');
+  const closeBtn = document.getElementById('aiChatCloseBtn');
+  const resetBtn = document.getElementById('aiChatResetBtn');
+  const chatForm = document.getElementById('aiChatForm');
+  const chatInput = document.getElementById('aiChatInput');
+  const messagesContainer = document.getElementById('aiChatMessages');
+  const chatBody = document.getElementById('aiChatBody');
+  const chips = document.querySelectorAll('.ai-chip-btn');
+
+  if (!trigger || !modal || !chatForm) return;
+
+  // Toggle chat modal
+  trigger.addEventListener('click', () => {
+    modal.classList.toggle('active');
+    if (modal.classList.contains('active')) {
+      if (chatInput) setTimeout(() => chatInput.focus(), 300);
+      scrollToBottom();
+    }
+  });
+
+  // Close chat modal
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+  }
+
+  // Reset chat
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      messagesContainer.innerHTML = `
+        <div class="ai-msg-row ai-msg-bot">
+          <div class="ai-msg-avatar">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div class="ai-msg-bubble">
+            <p>Halo Traveler! 👋 Saya <strong>Pari AI</strong>, pemandu wisata pintar Pesisir Barat.</p>
+            <p>Mau liburan seru seperti apa? Ceritakan preferensimu (misal: <em>ingin berselancar pemula</em>, <em>wisata santai keluarga</em>, <em>kuliner khas</em>, atau <em>budget hemat</em>), atau klik pertanyaan cepat di bawah:</p>
+          </div>
+        </div>
+      `;
+      scrollToBottom();
+    });
+  }
+
+  // Handle chips click
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const query = chip.dataset.query;
+      if (query) {
+        handleUserMessage(query);
+      }
+    });
+  });
+
+  // Handle form submission
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const query = chatInput.value.trim();
+    if (!query) return;
+    chatInput.value = '';
+    handleUserMessage(query);
+  });
+
+  // Function to process user message
+  function handleUserMessage(queryText) {
+    appendUserMessage(queryText);
+    showTypingIndicator();
+
+    setTimeout(() => {
+      removeTypingIndicator();
+      const botResponse = generateAIResponse(queryText);
+      appendBotMessage(botResponse.text, botResponse.cardHtml);
+    }, 700 + Math.random() * 400);
+  }
+
+  function appendUserMessage(text) {
+    const userRow = document.createElement('div');
+    userRow.className = 'ai-msg-row ai-msg-user';
+    userRow.innerHTML = `
+      <div class="ai-msg-bubble">
+        <p>${escapeHtml(text)}</p>
+      </div>
+    `;
+    messagesContainer.appendChild(userRow);
+    scrollToBottom();
+  }
+
+  function appendBotMessage(text, cardHtml = '') {
+    const botRow = document.createElement('div');
+    botRow.className = 'ai-msg-row ai-msg-bot';
+    botRow.innerHTML = `
+      <div class="ai-msg-avatar">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div class="ai-msg-bubble">
+        ${text}
+        ${cardHtml}
+      </div>
+    `;
+    messagesContainer.appendChild(botRow);
+
+    // Wire up detail & booking buttons inside card
+    botRow.querySelectorAll('.ai-detail-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const destId = parseInt(btn.dataset.id, 10);
+        if (typeof renderDestinationDetail === 'function') {
+          renderDestinationDetail(destId);
+        }
+        window.location.hash = '#detail';
+        modal.classList.remove('active');
+      });
+    });
+
+    botRow.querySelectorAll('.ai-booking-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        window.location.hash = '#booking';
+        modal.classList.remove('active');
+      });
+    });
+
+    scrollToBottom();
+  }
+
+  function showTypingIndicator() {
+    const typingRow = document.createElement('div');
+    typingRow.id = 'aiTypingIndicator';
+    typingRow.className = 'ai-msg-row ai-msg-bot';
+    typingRow.innerHTML = `
+      <div class="ai-msg-avatar">
+        <i class="fa-solid fa-robot"></i>
+      </div>
+      <div class="ai-msg-bubble">
+        <div class="ai-typing-indicator">
+          <span class="ai-typing-dot"></span>
+          <span class="ai-typing-dot"></span>
+          <span class="ai-typing-dot"></span>
+        </div>
+      </div>
+    `;
+    messagesContainer.appendChild(typingRow);
+    scrollToBottom();
+  }
+
+  function removeTypingIndicator() {
+    const indicator = document.getElementById('aiTypingIndicator');
+    if (indicator) indicator.remove();
+  }
+
+  function scrollToBottom() {
+    if (chatBody) {
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+
+  // AI Knowledge & Intent Matching Engine
+  function generateAIResponse(query) {
+    const q = query.toLowerCase();
+
+    // 1. Surfing Pemula / Belajar
+    if (q.includes('pemula') || q.includes('belajar surfing') || q.includes('baru mulai') || q.includes('beginner')) {
+      return {
+        text: `<p>Bagi peselancar pemula atau yang baru ingin belajar, saya sangat merekomendasikan <strong>Pantai Mandiri</strong>!</p>
+               <p>Pantai ini bertipe <em>beach break</em> dengan dasar pasir lembut (tanpa karang tajam), ombaknya relatif bersahabat, dan sangat cocok untuk latihan dasar bersama instruktur lokal berlisensi.</p>
+               <p>Ingin coba ombak legendaris untuk pemula? Anda juga bisa memesan jasa instruktur berpengalaman kami.</p>`,
+        cardHtml: `
+          <div class="ai-rec-card">
+            <img src="assets/images/pantai-way-jambu.jpg" alt="Pantai Mandiri & Krui" class="ai-rec-thumb">
+            <div class="ai-rec-info">
+              <h5 class="ai-rec-title">Paket Surfing Adventure & Coaching</h5>
+              <div class="ai-rec-meta">
+                <span><i class="fa-solid fa-user-check"></i> Instruktur Berlisensi</span>
+                <span class="ai-rec-price">Rp 650.000 / pax</span>
+              </div>
+              <div class="ai-rec-actions">
+                <button class="btn btn-outline btn-sm ai-detail-trigger" data-id="1">Info Detail</button>
+                <button class="btn btn-primary btn-sm ai-booking-trigger">Pesan Sekarang</button>
+              </div>
+            </div>
+          </div>
+        `
+      };
+    }
+
+    // 2. Surfing Pro / Ombak Besar / Barel
+    if (q.includes('karang nyimbor') || q.includes('ujung bocur') || q.includes('pipeline') || q.includes('ombak besar') || q.includes('barrel') || q.includes('wsl') || q.includes('pro')) {
+      const dest = DESTINATIONS.find(d => d.id === 1) || DESTINATIONS[0];
+      return {
+        text: `<p>Untuk peselancar tingkat menengah hingga profesional, <strong>Pantai Karang Nyimbor (Ujung Bocur)</strong> dan <strong>Pantai Way Jambu (The Pipeline)</strong> adalah surganya!</p>
+               <p>Karang Nyimbor menyuguhkan gulungan ombak kidal (<em>long left-hander</em>) hingga 6-7 meter yang menjadi venue kejuaraan dunia WSL Krui Pro. Sedangkan Way Jambu terkenal dengan ombak barrel cepat di atas karang dangkal.</p>`,
+        cardHtml: `
+          <div class="ai-rec-card">
+            <img src="${dest.coverImg}" alt="${dest.name}" class="ai-rec-thumb">
+            <div class="ai-rec-info">
+              <h5 class="ai-rec-title">${dest.name}</h5>
+              <div class="ai-rec-meta">
+                <span><i class="fa-solid fa-location-dot"></i> Pesisir Selatan</span>
+                <span class="ai-rec-price">Rp ${dest.price.toLocaleString('id-ID')} / org</span>
+              </div>
+              <div class="ai-rec-actions">
+                <button class="btn btn-outline btn-sm ai-detail-trigger" data-id="${dest.id}">Lihat Detail</button>
+                <button class="btn btn-primary btn-sm ai-booking-trigger">Pesan Tiket</button>
+              </div>
+            </div>
+          </div>
+        `
+      };
+    }
+
+    // 3. Wisata Keluarga / Anak-anak / Santai
+    if (q.includes('keluarga') || q.includes('anak') || q.includes('family') || q.includes('santai') || q.includes('biha')) {
+      const dest = DESTINATIONS.find(d => d.id === 3) || DESTINATIONS[2];
+      return {
+        text: `<p>Jika berlibur bersama keluarga dan anak-anak, pilihan paling tepat adalah <strong>Pantai Biha & Pesisir</strong>!</p>
+               <p>Garis pantainya landai, ombaknya bersahabat untuk bermain air, dan anak-anak bisa melihat langsung kapal jukung nelayan tradisional. Di sini juga merupakan pusat kuliner seafood dan ikan bakar khas seruit yang lezat.</p>`,
+        cardHtml: `
+          <div class="ai-rec-card">
+            <img src="${dest.coverImg}" alt="${dest.name}" class="ai-rec-thumb">
+            <div class="ai-rec-info">
+              <h5 class="ai-rec-title">${dest.name}</h5>
+              <div class="ai-rec-meta">
+                <span><i class="fa-solid fa-heart"></i> Ramah Keluarga</span>
+                <span class="ai-rec-price">Rp ${dest.price.toLocaleString('id-ID')} / org</span>
+              </div>
+              <div class="ai-rec-actions">
+                <button class="btn btn-outline btn-sm ai-detail-trigger" data-id="${dest.id}">Lihat Detail</button>
+                <button class="btn btn-primary btn-sm ai-booking-trigger">Booking Sekarang</button>
+              </div>
+            </div>
+          </div>
+        `
+      };
+    }
+
+    // 4. Pulau Pisang & Lumba-lumba / Snorkeling
+    if (q.includes('pulau pisang') || q.includes('lumba') || q.includes('snorkeling') || q.includes('tembakak')) {
+      return {
+        text: `<p><strong>Pulau Pisang</strong> adalah mutiara tersembunyi Pesisir Barat! 🏝️</p>
+               <p><strong>Cara Menuju ke Sana:</strong> Naik perahu jukung tradisional dari dermaga Tembakak (sekitar 15-20 menit penyeberangan).</p>
+               <p><strong>Daya Tarik:</strong><br>
+               🐬 Kawanan lumba-lumba liar yang sering melompat menyapa di pagi hari.<br>
+               🤿 Terumbu karang jernih untuk snorkeling.<br>
+               🏛️ Pemandangan rumah panggung tradisional dan pengrajin kain Tapis Lampung.</p>`,
+        cardHtml: `
+          <div class="ai-rec-card">
+            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=400&q=80" alt="Pulau Pisang" class="ai-rec-thumb">
+            <div class="ai-rec-info">
+              <h5 class="ai-rec-title">Paket Wisata Pulau Pisang & Snorkeling</h5>
+              <div class="ai-rec-meta">
+                <span><i class="fa-solid fa-ship"></i> Termasuk Perahu PP</span>
+                <span class="ai-rec-price">Rp 550.000 / pax</span>
+              </div>
+              <div class="ai-rec-actions">
+                <button class="btn btn-primary btn-sm ai-booking-trigger" style="width:100%;">Pesan Paket Ini</button>
+              </div>
+            </div>
+          </div>
+        `
+      };
+    }
+
+    // 5. Kuliner / Seruit / Tapis / Oleh-oleh
+    if (q.includes('kuliner') || q.includes('makan') || q.includes('seruit') || q.includes('tapis') || q.includes('oleh-oleh') || q.includes('souvenir') || q.includes('ikan bakar')) {
+      return {
+        text: `<p>Kuliner dan budaya di Pesisir Barat sangat memikat lidah dan hati:</p>
+               <p>🍲 <strong>Sambal Seruit:</strong> Hidangan ikan bakar segar laut (Tenggiri, Rampang, atau Kerapu) dicampur sambal terasi khas, lalapan segar, dan kuah tempoyak (olahan durian fermentasi).</p>
+               <p>🧵 <strong>Kain Tenun Tapis:</strong> Kerajinan tenun benang emas khas Lampung yang dibuat secara turun-temurun oleh ibu-ibu pengrajin di Pulau Pisang dan Pesisir Selatan.</p>
+               <p>Warung seruit terbaik bisa Anda jumpai di sekitar Pantai Biha dan sepanjang pusat Kota Krui!</p>`
+      };
+    }
+
+    // 6. Biaya / Harga / Pemandu / Budget
+    if (q.includes('biaya') || q.includes('harga') || q.includes('budget') || q.includes('pemandu') || q.includes('tarif') || q.includes('sewa')) {
+      return {
+        text: `<p>Estimasi biaya berlibur ke Pesisir Barat sangat ramah di kantong:</p>
+               <p>🎟️ <strong>Tiket Masuk Pantai:</strong> Rata-rata Rp 10.000 - Rp 15.000 / orang.<br>
+               🧭 <strong>Jasa Pemandu Lokal:</strong> Mulai Rp 200.000 - Rp 350.000 / hari (tergantung rute & jumlah grup).<br>
+               🏄 <strong>Sewa Papan Surfing:</strong> Rp 100.000 - Rp 150.000 / hari.<br>
+               🏡 <strong>Penginapan:</strong> Surf Camp / Homestay (Rp 200rb - 350rb/mlm), Resort tepi pantai (Rp 550rb - 900rb/mlm).</p>
+               <p>Anda bisa memesan tiket dan pemandu lokal berlisensi langsung melalui portal kami!</p>`,
+        cardHtml: `
+          <div class="ai-rec-card" style="padding:0.75rem; text-align:center;">
+            <button class="btn btn-primary btn-block ai-booking-trigger">
+              <i class="fa-solid fa-calendar-check"></i> Pesan Tiket & Pemandu Sekarang
+            </button>
+          </div>
+        `
+      };
+    }
+
+    // 7. Rute & Transportasi
+    if (q.includes('rute') || q.includes('jalan') || q.includes('transportasi') || q.includes('ke sana') || q.includes('pesawat') || q.includes('bandara') || q.includes('lokasi')) {
+      return {
+        text: `<p><strong>Akses Menuju Pesisir Barat (Krui):</strong></p>
+               <p>🚗 <strong>Jalur Darat (Mobil/Travel):</strong> Dari Bandar Lampung via rute Lintas Barat (Kemiling - Pringsewu - Kota Agung - Bengkunat - Tanjung Setia - Krui) memakan waktu sekitar 5 - 6 jam dengan jalan aspal mulus pemandangan perbukitan TNBBS.</p>
+               <p>✈️ <strong>Jalur Udara:</strong> Tersedia penerbangan perintis rute Bandara Radin Inten II (TKG) menuju <strong>Bandara M. Taufiq Kiemas Krui (TFY)</strong>.</p>`
+      };
+    }
+
+    // 8. Kapan waktu terbaik / Musim surfing
+    if (q.includes('kapan') || q.includes('musim') || q.includes('bulan') || q.includes('waktu terbaik') || q.includes('cuaca')) {
+      return {
+        text: `<p><strong>Waktu Terbaik Mengunjungi Pesisir Barat:</strong></p>
+               <p>🌊 <strong>Musim Surfing Puncak (Peak Season):</strong> Bulan <strong>Mei hingga Oktober</strong>. Angin offshore berhembus stabil dan ombak Samudra Hindia mencapai puncaknya (3 hingga 7 meter).</p>
+               <p>🏖️ <strong>Musim Wisata Santai & Keluarga:</strong> Sepanjang tahun, khususnya bulan <strong>Maret - November</strong> untuk cuaca cerah tropis dan air laut yang jernih untuk snorkeling.</p>`
+      };
+    }
+
+    // Default Fallback Response
+    return {
+      text: `<p>Pesisir Barat punya beragam pesona menakjubkan! Tiga destinasi utama yang wajib Anda kunjungi:</p>
+             <p>1. <strong>Pantai Karang Nyimbor</strong> - Ombak surfing kidal legendaris kelas dunia.<br>
+             2. <strong>Pantai Way Jambu</strong> - Ombak barel menantang dengan panorama deretan pohon kelapa.<br>
+             3. <strong>Pantai Biha</strong> - Pantai tenang berpasir putih, cocok untuk wisata keluarga & kuliner seruit.</p>
+             <p>Ingin rekomendasi spesifik? Coba tanyakan: <em>"pantai untuk pemula"</em>, <em>"cara ke pulau pisang"</em>, atau <em>"biaya pemandu wisata"</em>.</p>`,
+      cardHtml: `
+        <div class="ai-rec-card" style="padding:0.75rem; text-align:center;">
+          <a href="#destinasi" class="btn btn-secondary btn-block" onclick="document.getElementById('aiChatModal').classList.remove('active');">
+            <i class="fa-solid fa-compass"></i> Jelajahi Semua Destinasi
+          </a>
+        </div>
+      `
+    };
+  }
+}
+
+
