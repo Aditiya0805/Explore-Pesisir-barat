@@ -2,9 +2,9 @@
   <section class="section-padding map-section" id="peta">
     <div class="container">
       <div class="section-header">
-        <span class="badge badge-primary"><i class="fa-solid fa-earth-asia"></i> Eksplorasi Interaktif 3D</span>
-        <h2>Peta Wisata 3D & Navigasi Real-Time</h2>
-        <p>Jelajahi titik-titik spot wisata eksotis di seluruh Pesisir Barat. Terhubung langsung dengan Google Maps untuk panduan rute akurat dan navigasi GPS secara real-time.</p>
+        <span class="badge badge-primary"><i class="fa-solid fa-earth-asia"></i> {{ langStore.t('map.badge') }}</span>
+        <h2>{{ langStore.t('map.title') }}</h2>
+        <p>{{ langStore.t('map.subtitle') }}</p>
       </div>
 
       <div class="map-container-card">
@@ -30,28 +30,28 @@
                 class="map-control-btn"
                 :class="{ active: currentLayer === 'sat' }"
                 id="btnLayerSat"
-                title="Tampilan Satelit Real"
+                :title="langStore.isEn ? 'Real Satellite View' : 'Tampilan Satelit Real'"
                 @click="switchLayer('sat')"
               >
-                <i class="fa-solid fa-satellite"></i> <span>Satelit</span>
+                <i class="fa-solid fa-satellite"></i> <span>{{ langStore.t('map.layerSat') }}</span>
               </button>
               <button
                 class="map-control-btn"
                 :class="{ active: currentLayer === 'street' }"
                 id="btnLayerStreet"
-                title="Tampilan Peta Topografi"
+                :title="langStore.isEn ? 'Topography Map View' : 'Tampilan Peta Topografi'"
                 @click="switchLayer('street')"
               >
-                <i class="fa-solid fa-map"></i> <span>Topografi</span>
+                <i class="fa-solid fa-map"></i> <span>{{ langStore.t('map.layerStreet') }}</span>
               </button>
               <button
                 class="map-control-btn"
                 :class="{ active: currentLayer === 'dark' }"
                 id="btnLayerDark"
-                title="Mode Malam"
+                :title="langStore.isEn ? 'Night Mode' : 'Mode Malam'"
                 @click="switchLayer('dark')"
               >
-                <i class="fa-solid fa-moon"></i> <span>Malam</span>
+                <i class="fa-solid fa-moon"></i> <span>{{ langStore.t('map.layerDark') }}</span>
               </button>
             </div>
 
@@ -60,23 +60,23 @@
                 class="map-control-btn btn-tilt"
                 :class="{ active: is3DTilt }"
                 id="btnToggle3D"
-                title="Toggle Perspektif 3D Tilt"
+                :title="langStore.isEn ? 'Toggle 3D Tilt View' : 'Toggle Perspektif 3D Tilt'"
                 @click="is3DTilt = !is3DTilt"
               >
-                <i class="fa-solid fa-cube"></i> <span>{{ is3DTilt ? 'Normal' : 'Tilt 3D' }}</span>
+                <i class="fa-solid fa-cube"></i> <span>{{ is3DTilt ? langStore.t('map.tilt2d') : langStore.t('map.tilt3d') }}</span>
               </button>
               <button
                 class="map-control-btn btn-geo"
                 id="btnMyLocation"
-                title="Lacak Posisi Saya Sekarang"
+                :title="langStore.isEn ? 'Locate My Position' : 'Lacak Posisi Saya Sekarang'"
                 @click="locateMe"
               >
-                <i class="fa-solid fa-location-crosshairs"></i> <span>Lokasi Saya</span>
+                <i class="fa-solid fa-location-crosshairs"></i> <span>{{ langStore.isEn ? 'My Location' : 'Lokasi Saya' }}</span>
               </button>
               <button
                 class="map-control-btn btn-reset"
                 id="btnResetMap"
-                title="Kembali ke Tampilan Utama"
+                :title="langStore.isEn ? 'Reset to Default View' : 'Kembali ke Tampilan Utama'"
                 @click="resetView"
               >
                 <i class="fa-solid fa-arrows-rotate"></i>
@@ -104,14 +104,14 @@
 
             <!-- Floating Legend on Map -->
             <div class="map-floating-legend">
-              <span class="legend-item"><span class="legend-dot dot-surf"></span> Surfing</span>
-              <span class="legend-item"><span class="legend-dot dot-beach"></span> Pantai</span>
-              <span class="legend-item"><span class="legend-dot dot-nature"></span> Air Terjun</span>
-              <span class="legend-item"><span class="legend-dot dot-culture"></span> Budaya</span>
-              <span class="legend-item"><span class="legend-dot dot-landmark"></span> Bukit</span>
-              <span class="legend-item"><span class="legend-dot dot-island"></span> Pulau</span>
-              <span class="legend-item"><span class="legend-dot dot-culinary"></span> Kuliner</span>
-              <span class="legend-item"><span class="legend-dot dot-conservation"></span> Konservasi</span>
+              <span class="legend-item"><span class="legend-dot dot-surf"></span> {{ langStore.isEn ? 'Surfing' : 'Surfing' }}</span>
+              <span class="legend-item"><span class="legend-dot dot-beach"></span> {{ langStore.isEn ? 'Beaches' : 'Pantai' }}</span>
+              <span class="legend-item"><span class="legend-dot dot-nature"></span> {{ langStore.isEn ? 'Waterfalls' : 'Air Terjun' }}</span>
+              <span class="legend-item"><span class="legend-dot dot-culture"></span> {{ langStore.isEn ? 'Culture' : 'Budaya' }}</span>
+              <span class="legend-item"><span class="legend-dot dot-landmark"></span> {{ langStore.isEn ? 'Hills' : 'Bukit' }}</span>
+              <span class="legend-item"><span class="legend-dot dot-island"></span> {{ langStore.isEn ? 'Islands' : 'Pulau' }}</span>
+              <span class="legend-item"><span class="legend-dot dot-culinary"></span> {{ langStore.isEn ? 'Cuisine' : 'Kuliner' }}</span>
+              <span class="legend-item"><span class="legend-dot dot-conservation"></span> {{ langStore.isEn ? 'Conservation' : 'Konservasi' }}</span>
             </div>
           </div>
 
@@ -124,12 +124,16 @@
                   type="text"
                   id="mapSearchInput"
                   v-model="searchQuery"
-                  placeholder="Cari nama spot wisata..."
+                  :placeholder="langStore.isEn ? 'Search tourist spots...' : 'Cari nama spot wisata...'"
                 >
               </div>
               <div class="sidebar-meta-row">
-                <span id="spotCountBadge" class="badge badge-accent">{{ filteredSpots.length }} Titik Wisata Ditemukan</span>
-                <span class="sidebar-hint"><i class="fa-solid fa-hand-pointer"></i> Klik spot untuk fly-to</span>
+                <span id="spotCountBadge" class="badge badge-accent">
+                  {{ filteredSpots.length }} {{ langStore.isEn ? 'Spots Found' : 'Titik Wisata Ditemukan' }}
+                </span>
+                <span class="sidebar-hint">
+                  <i class="fa-solid fa-hand-pointer"></i> {{ langStore.isEn ? 'Click spot to fly-to' : 'Klik spot untuk fly-to' }}
+                </span>
               </div>
             </div>
 
@@ -143,15 +147,15 @@
               >
                 <div class="spot-thumbnail-box">
                   <img :src="spot.img || '/assets/images/paket-explore-krui.jpg'" :alt="spot.name" class="spot-thumbnail" loading="lazy">
-                  <span class="spot-category-tag">{{ spot.category_label || spot.categoryLabel || spot.category }}</span>
+                  <span class="spot-category-tag">{{ getSpotCategoryLabel(spot) }}</span>
                 </div>
                 <div class="spot-item-details">
                   <h4 class="spot-item-title">{{ spot.name }}</h4>
                   <div class="spot-item-meta">
                     <span class="spot-rating"><i class="fa-solid fa-star"></i> {{ spot.rating }}</span>
-                    <span class="spot-price"><i class="fa-solid fa-ticket"></i> {{ spot.price }}</span>
+                    <span class="spot-price"><i class="fa-solid fa-ticket"></i> {{ getSpotPriceLabel(spot) }}</span>
                   </div>
-                  <p class="spot-item-desc">{{ spot.description || spot.desc }}</p>
+                  <p class="spot-item-desc">{{ getSpotDesc(spot) }}</p>
                   <div class="spot-actions">
                     <a
                       :href="spot.gmaps_dir_url || spot.gmapsDirUrl || ('https://www.google.com/maps/dir/?api=1&destination=' + spot.lat + ',' + spot.lng)"
@@ -160,10 +164,10 @@
                       class="btn btn-secondary btn-xs"
                       @click.stop
                     >
-                      <i class="fa-solid fa-diamond-turn-right"></i> Petunjuk Arah
+                      <i class="fa-solid fa-diamond-turn-right"></i> {{ langStore.isEn ? 'Directions' : 'Petunjuk Arah' }}
                     </a>
                     <button class="btn btn-primary btn-xs" @click.stop="flyToSpot(spot)">
-                      <i class="fa-solid fa-crosshairs"></i> Lihat di Peta
+                      <i class="fa-solid fa-crosshairs"></i> {{ langStore.isEn ? 'View on Map' : 'Lihat di Peta' }}
                     </button>
                   </div>
                 </div>
@@ -179,8 +183,13 @@
               <i class="fa-brands fa-google"></i>
             </div>
             <div>
-              <h4>Terhubung Langsung dengan Google Maps (GPS Real-Time)</h4>
-              <p>Akses rute perjalanan, jarak tempuh, serta estimasi waktu lalu lintas langsung dari lokasi Anda saat ini menuju berbagai titik wisata di Pesisir Barat.</p>
+              <h4>{{ langStore.isEn ? 'Directly Synced with Google Maps (Real-Time GPS)' : 'Terhubung Langsung dengan Google Maps (GPS Real-Time)' }}</h4>
+              <p>
+                {{ langStore.isEn
+                  ? 'Access live route navigation, distance estimates, and real-time traffic updates from your current location to all top destinations in Pesisir Barat.'
+                  : 'Akses rute perjalanan, jarak tempuh, serta estimasi waktu lalu lintas langsung dari lokasi Anda saat ini menuju berbagai titik wisata di Pesisir Barat.'
+                }}
+              </p>
             </div>
           </div>
           <div class="map-footer-actions">
@@ -191,7 +200,7 @@
               class="btn btn-primary"
               id="openMainGmapsBtn"
             >
-              <i class="fa-solid fa-diamond-turn-right"></i> Petunjuk Rute ke Titik Pusat
+              <i class="fa-solid fa-diamond-turn-right"></i> {{ langStore.isEn ? 'Directions to Central Hub' : 'Petunjuk Rute ke Titik Pusat' }}
             </a>
           </div>
         </div>
@@ -201,11 +210,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import L from 'leaflet'
 import { useDataStore } from '@/stores/dataStore'
+import { useLangStore } from '@/stores/langStore'
 
 const dataStore = useDataStore()
+const langStore = useLangStore()
 
 const mapContainerRef = ref(null)
 let mapInstance = null
@@ -219,17 +230,51 @@ const searchQuery = ref('')
 const selectedSpotId = ref(null)
 const currentCoords = ref('-5.3134, 103.9982')
 
-const categories = [
-  { id: 'all', label: 'Semua Spot', icon: 'fa-solid fa-layer-group' },
-  { id: 'surfing', label: 'Surfing', icon: 'fa-solid fa-water' },
-  { id: 'beach', label: 'Pantai', icon: 'fa-solid fa-umbrella-beach' },
-  { id: 'nature', label: 'Alam & Curug', icon: 'fa-solid fa-tree' },
-  { id: 'culture', label: 'Budaya', icon: 'fa-solid fa-landmark' },
-  { id: 'landmark', label: 'Landmark', icon: 'fa-solid fa-mountain-sun' },
-  { id: 'island', label: 'Pulau', icon: 'fa-solid fa-sailboat' },
-  { id: 'culinary', label: 'Kuliner', icon: 'fa-solid fa-utensils' },
-  { id: 'conservation', label: 'Konservasi', icon: 'fa-solid fa-shield-halved' }
-]
+const categories = computed(() => [
+  { id: 'all', label: langStore.t('map.catAll'), icon: 'fa-solid fa-layer-group' },
+  { id: 'surfing', label: langStore.t('map.catSurf'), icon: 'fa-solid fa-water' },
+  { id: 'beach', label: langStore.t('map.catBeach'), icon: 'fa-solid fa-umbrella-beach' },
+  { id: 'nature', label: langStore.t('map.catNature'), icon: 'fa-solid fa-tree' },
+  { id: 'culture', label: langStore.t('map.catCulture'), icon: 'fa-solid fa-landmark' },
+  { id: 'landmark', label: langStore.isEn ? 'Landmarks' : 'Landmark', icon: 'fa-solid fa-mountain-sun' },
+  { id: 'island', label: langStore.t('map.catIsland'), icon: 'fa-solid fa-sailboat' },
+  { id: 'culinary', label: langStore.isEn ? 'Culinary' : 'Kuliner', icon: 'fa-solid fa-utensils' },
+  { id: 'conservation', label: langStore.isEn ? 'Conservation' : 'Konservasi', icon: 'fa-solid fa-shield-halved' }
+])
+
+const spotEnOverrides = {
+  1: { desc: "World-class Pesisir Barat surfing hub with legendary 6-7 meter peeling left-handers.", cat: "Surfing & Breaks" },
+  2: { desc: "Fast and hollow reef barrel break facing the open Indian Ocean swell.", cat: "Reef Barrel Surf" },
+  3: { desc: "Wide volcanic black sand beach offering magnificent sunset views over the Indian Ocean.", cat: "Black Sand Beach" },
+  4: { desc: "Signature urban beach of Krui featuring public parks, cultural stages, and fresh seafood stalls.", cat: "Recreation Hub" },
+  5: { desc: "Quiet beach shaded by tall palm trees and gentle green meadows overlooking the blue ocean.", cat: "Palm Grove Beach" },
+  6: { desc: "Hidden cascade tucked inside lush mountain rainforests with cool natural rock pools.", cat: "Rainforest Falls" },
+  10: { desc: "Traditional Saibatin gold-thread handwoven Tapis textile center.", cat: "Culture & Crafts" }
+}
+
+const getSpotDesc = (spot) => {
+  if (langStore.isEn && spotEnOverrides[spot.id]?.desc) {
+    return spotEnOverrides[spot.id].desc
+  }
+  return spot.description || spot.desc
+}
+
+const getSpotCategoryLabel = (spot) => {
+  if (langStore.isEn && spotEnOverrides[spot.id]?.cat) {
+    return spotEnOverrides[spot.id].cat
+  }
+  return spot.category_label || spot.categoryLabel || spot.category
+}
+
+const getSpotPriceLabel = (spot) => {
+  if (!spot.price || spot.price === 'Gratis' || spot.price === 'Free') {
+    return langStore.isEn ? 'Free' : 'Gratis'
+  }
+  if (langStore.isEn && typeof spot.price === 'string' && spot.price.includes('Rp')) {
+    return spot.price.replace('Rp', 'IDR')
+  }
+  return spot.price
+}
 
 const getCategoryCount = (catId) => {
   if (catId === 'all') return dataStore.mapLocations.length
@@ -280,7 +325,7 @@ const switchLayer = (type) => {
 const initMap = () => {
   if (!mapContainerRef.value || mapInstance) return
 
-  // Center on Krui / Tanjung Setia
+  // Center on Krui / Pesisir Barat
   mapInstance = L.map(mapContainerRef.value, {
     center: [-5.27, 103.95],
     zoom: 11,
@@ -333,13 +378,19 @@ const renderMarkers = () => {
 
     const gmapsUrl = spot.gmaps_dir_url || spot.gmapsDirUrl || `https://www.google.com/maps/dir/?api=1&destination=${spot.lat},${spot.lng}`
 
+    const catLabel = getSpotCategoryLabel(spot)
+    const desc = getSpotDesc(spot)
+    const priceText = getSpotPriceLabel(spot)
+    const routeBtnText = langStore.isEn ? 'Directions' : 'Arah'
+    const bookBtnText = langStore.isEn ? 'Book' : 'Pesan'
+
     const popupHtml = `
       <div class="enhanced-map-popup">
         <img src="${spot.img || '/assets/images/pantai-karang-nyimbor.jpg'}" alt="${spot.name}" class="popup-thumb" />
         
         <div class="popup-header">
           <h4>${spot.name}</h4>
-          <span class="popup-category">${spot.category_label || spot.categoryLabel || spot.category}</span>
+          <span class="popup-category">${catLabel}</span>
         </div>
         
         <div class="popup-meta">
@@ -353,18 +404,18 @@ const renderMarkers = () => {
           </div>
           <div class="meta-row">
             <i class="fa-solid fa-tag" style="color:#8b5cf6;"></i>
-            <span>${spot.price ? (spot.price === 'Gratis' ? 'Gratis' : 'Rp ' + spot.price.toLocaleString('id-ID')) : 'Hubungi'}</span>
+            <span>${priceText}</span>
           </div>
         </div>
         
-        <p class="popup-desc">${spot.description || spot.desc || 'Spot wisata menarik di Pesisir Barat'}</p>
+        <p class="popup-desc">${desc || 'Spot wisata menarik di Pesisir Barat'}</p>
         
         <div class="popup-actions">
-          <a href="${gmapsUrl}" target="_blank" class="popup-btn gmaps-btn" title="Buka di Google Maps">
-            <i class="fa-brands fa-google"></i> Arah
+          <a href="${gmapsUrl}" target="_blank" class="popup-btn gmaps-btn" title="Google Maps">
+            <i class="fa-brands fa-google"></i> ${routeBtnText}
           </a>
-          <button class="popup-btn book-btn" onclick="document.querySelector('[href=\\'/booking\\']')?.click()" title="Pesan Sekarang">
-            <i class="fa-solid fa-calendar-check"></i> Pesan
+          <button class="popup-btn book-btn" onclick="document.querySelector('[href=\\'/booking\\']')?.click()" title="Book Now">
+            <i class="fa-solid fa-calendar-check"></i> ${bookBtnText}
           </button>
         </div>
       </div>
@@ -413,15 +464,20 @@ const locateMe = () => {
         })
         L.marker([userLat, userLng], { icon: userIcon })
           .addTo(mapInstance)
-          .bindPopup('<b>Lokasi Anda</b>')
+          .bindPopup(langStore.isEn ? '<b>Your Current Location</b>' : '<b>Lokasi Anda</b>')
           .openPopup()
       },
       () => {
-        alert('Gagal mendapatkan lokasi GPS. Pastikan izin lokasi diaktifkan di browser.')
+        alert(langStore.isEn ? 'Failed to get GPS location. Please check browser permissions.' : 'Gagal mendapatkan lokasi GPS. Pastikan izin lokasi diaktifkan di browser.')
       }
     )
   }
 }
+
+// Watch language change to re-render markers with updated translations
+watch(() => langStore.currentLang, () => {
+  renderMarkers()
+})
 
 onMounted(async () => {
   await nextTick()

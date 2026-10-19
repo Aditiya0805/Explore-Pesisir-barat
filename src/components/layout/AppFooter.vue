@@ -4,14 +4,11 @@
       <div class="footer-top">
         <div class="footer-brand">
           <router-link to="/" class="logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8 3.2-1.8 5.5-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
-              <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-            </svg>
-            <span>EXPLORE PESISIR BARAT</span>
+            <img class="brand-logo brand-logo--sm" src="/assets/images/logo-icon.svg" alt="Pesibar Wave" width="34" height="34" />
+            <span>Pesibar <span class="logo-accent">Wave</span></span>
           </router-link>
-          <p>Temukan pengalaman liburan tropis terbaik, petualangan ombak samudra, eksotisme pulau, dan kearifan budaya lokal di Pesisir Barat, Lampung.</p>
+          <p class="footer-tagline">{{ langStore.t('footer.brandTagline') }}</p>
+          <p>{{ langStore.t('footer.tagline') }}</p>
           <div class="social-links">
             <a href="https://www.instagram.com/kruitourism_" target="_blank" rel="noopener noreferrer" class="social-link" title="Instagram">
               <i class="fa-brands fa-instagram"></i>
@@ -26,38 +23,38 @@
         </div>
 
         <div>
-          <h4 class="footer-title">Navigasi</h4>
+          <h4 class="footer-title">{{ langStore.t('footer.navTitle') }}</h4>
           <ul class="footer-links">
-            <li><router-link to="/">Beranda</router-link></li>
-            <li><router-link to="/#destinasi">Destinasi</router-link></li>
-            <li><router-link to="/#peta">Peta Wisata 3D</router-link></li>
-            <li><router-link to="/#paket">Paket Wisata</router-link></li>
-            <li><router-link to="/#pemandu">Jasa Pemandu</router-link></li>
+            <li><router-link to="/">{{ langStore.t('nav.home') }}</router-link></li>
+            <li><router-link to="/#destinasi">{{ langStore.t('nav.destinations') }}</router-link></li>
+            <li><router-link to="/#peta">{{ langStore.t('nav.map3d') }}</router-link></li>
+            <li><router-link to="/#paket">{{ langStore.t('nav.packages') }}</router-link></li>
+            <li><router-link to="/#pemandu">{{ langStore.t('nav.guides') }}</router-link></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="footer-title">Destinasi Populer</h4>
+          <h4 class="footer-title">{{ langStore.t('footer.popularDestTitle') }}</h4>
           <ul class="footer-links">
             <li><router-link to="/detail/1">Pantai Karang Nyimbor</router-link></li>
             <li><router-link to="/detail/2">Pantai Way Jambu</router-link></li>
             <li><router-link to="/detail/16">Pantai Biha & Pesisir</router-link></li>
-            <li><router-link to="/detail/14">Pulau Pisang</router-link></li>
+            <li><router-link to="/detail/14">Pulau Pisang (Banana Island)</router-link></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="footer-title">Layanan Bantuan</h4>
+          <h4 class="footer-title">{{ langStore.t('footer.supportTitle') }}</h4>
           <ul class="footer-links">
-            <li><router-link to="/booking">Pemesanan Online</router-link></li>
-            <li><a href="#" @click.prevent="$emit('openModal', 'modal-terms')">Syarat Ketentuan</a></li>
-            <li><a href="#" @click.prevent="$emit('openModal', 'modal-privacy')">Kebijakan Privasi</a></li>
-            <li><a href="#" @click.prevent="$emit('openModal', 'modal-faq')">FAQs</a></li>
+            <li><router-link to="/booking">{{ langStore.t('footer.onlineBooking') }}</router-link></li>
+            <li><a href="#" @click.prevent="$emit('openModal', 'modal-terms')">{{ langStore.t('footer.terms') }}</a></li>
+            <li><a href="#" @click.prevent="$emit('openModal', 'modal-privacy')">{{ langStore.t('footer.privacy') }}</a></li>
+            <li><a href="#" @click.prevent="$emit('openModal', 'modal-faq')">{{ langStore.t('footer.faq') }}</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="footer-title">Hubungi Kami</h4>
+          <h4 class="footer-title">{{ langStore.t('footer.contactTitle') }}</h4>
           <ul class="footer-contact">
             <li><i class="fa-solid fa-phone"></i> <span>+62-822-8942-4809</span></li>
             <li><i class="fa-solid fa-envelope"></i> <span>Adityapratama2292@gmail.com</span></li>
@@ -66,11 +63,35 @@
         </div>
       </div>
 
+      <!-- Footer Bottom with Language Switcher Bar -->
       <div class="footer-bottom">
-        <p>&copy; 2026 Explore Pesisir Barat. Didesain oleh Aditiya Pratama.</p>
+        <p>&copy; 2026 {{ langStore.t('footer.copyright') }}</p>
+        
+        <div class="footer-center-lang">
+          <span class="footer-lang-label"><i class="fa-solid fa-globe"></i> {{ langStore.t('footer.switchLang') }}</span>
+          <div class="footer-lang-toggle">
+            <button
+              type="button"
+              class="footer-lang-btn"
+              :class="{ active: langStore.currentLang === 'id' }"
+              @click="langStore.setLang('id')"
+            >
+              🇮🇩 Indonesia
+            </button>
+            <button
+              type="button"
+              class="footer-lang-btn"
+              :class="{ active: langStore.currentLang === 'en' }"
+              @click="langStore.setLang('en')"
+            >
+              🇬🇧 English (US)
+            </button>
+          </div>
+        </div>
+
         <div class="footer-legal">
-          <a href="#" @click.prevent="$emit('openModal', 'modal-terms')">Syarat Penggunaan</a>
-          <a href="#" @click.prevent="$emit('openModal', 'modal-privacy')">Kebijakan Privasi</a>
+          <a href="#" @click.prevent="$emit('openModal', 'modal-terms')">{{ langStore.t('footer.termsOfUse') }}</a>
+          <a href="#" @click.prevent="$emit('openModal', 'modal-privacy')">{{ langStore.t('footer.privacy') }}</a>
         </div>
       </div>
     </div>
@@ -78,5 +99,66 @@
 </template>
 
 <script setup>
+import { useLangStore } from '@/stores/langStore'
+
 defineEmits(['openModal'])
+const langStore = useLangStore()
 </script>
+
+<style scoped>
+.footer-center-lang {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.5rem 0;
+}
+
+.footer-lang-label {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.footer-lang-toggle {
+  display: flex;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius-full);
+  padding: 3px;
+  gap: 3px;
+}
+
+.footer-lang-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.footer-lang-btn:hover {
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.footer-lang-btn.active {
+  background: var(--color-turquoise);
+  color: var(--color-deep-navy);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(24, 183, 176, 0.3);
+}
+
+@media (max-width: 900px) {
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}
+</style>

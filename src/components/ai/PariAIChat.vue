@@ -5,16 +5,16 @@
       <button
         class="ai-assistant-trigger"
         id="aiAssistantTrigger"
-        aria-label="Buka Asisten Wisata AI"
-        title="Tanya Pari AI - Rekomendasi Wisata"
+        :aria-label="langStore.t('ai.triggerTitle')"
+        :title="langStore.t('ai.headerTitle')"
         @click="isOpen = !isOpen"
       >
         <div class="ai-trigger-icon">
           <i class="fa-solid fa-robot"></i>
         </div>
         <div class="ai-trigger-text">
-          <span class="ai-trigger-title">Tanya Pari AI</span>
-          <span class="ai-trigger-sub">Asisten Wisata</span>
+          <span class="ai-trigger-title">{{ langStore.t('ai.triggerTitle') }}</span>
+          <span class="ai-trigger-sub">{{ langStore.t('ai.triggerSub') }}</span>
         </div>
         <span class="ai-trigger-pulse"></span>
       </button>
@@ -30,15 +30,15 @@
             <span class="ai-online-indicator"></span>
           </div>
           <div class="ai-profile-meta">
-            <h4>Pari AI • Pemandu Cerdas</h4>
-            <span class="ai-profile-status">Siap bantu cari destinasi impianmu ✨</span>
+            <h4>{{ langStore.t('ai.headerTitle') }}</h4>
+            <span class="ai-profile-status">{{ langStore.t('ai.headerStatus') }}</span>
           </div>
         </div>
         <div class="ai-header-controls">
-          <button class="ai-btn-icon" id="aiChatResetBtn" title="Mulai percakapan baru" aria-label="Reset chat" @click="resetChat">
+          <button class="ai-btn-icon" id="aiChatResetBtn" :title="langStore.t('ai.resetTitle')" :aria-label="langStore.t('ai.resetTitle')" @click="resetChat">
             <i class="fa-solid fa-rotate-left"></i>
           </button>
-          <button class="ai-btn-icon" id="aiChatCloseBtn" title="Tutup asisten AI" aria-label="Tutup chat" @click="isOpen = false">
+          <button class="ai-btn-icon" id="aiChatCloseBtn" :title="langStore.t('ai.closeTitle')" :aria-label="langStore.t('ai.closeTitle')" @click="isOpen = false">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
@@ -56,7 +56,22 @@
             <div class="ai-msg-avatar" v-if="msg.sender === 'bot'">
               <i class="fa-solid fa-robot"></i>
             </div>
-            <div class="ai-msg-bubble" v-html="msg.text"></div>
+            <div class="ai-msg-bubble">
+              <div class="ai-msg-content" v-html="msg.text"></div>
+              <div v-if="msg.actions && msg.actions.length" class="ai-msg-actions">
+                <button
+                  v-for="(action, aIndex) in msg.actions"
+                  :key="aIndex"
+                  type="button"
+                  class="ai-action-btn"
+                  :class="'ai-action-' + action.type"
+                  @click="runAction(action)"
+                >
+                  <i :class="actionIcon(action)"></i>
+                  <span>{{ action.label }}</span>
+                </button>
+              </div>
+            </div>
           </div>
 
           <div v-if="isThinking" class="ai-msg-row ai-msg-bot">
@@ -64,7 +79,7 @@
               <i class="fa-solid fa-robot"></i>
             </div>
             <div class="ai-msg-bubble">
-              <span class="typing-dots">Sedang mengetik...</span>
+              <span class="typing-dots">{{ langStore.t('ai.typing') }}</span>
             </div>
           </div>
         </div>
@@ -89,11 +104,11 @@
           class="ai-chat-input"
           id="aiChatInput"
           v-model="inputQuery"
-          placeholder="Ketik pertanyaan atau cari destinasi..."
+          :placeholder="langStore.t('ai.placeholder')"
           autocomplete="off"
           maxlength="250"
         >
-        <button type="submit" class="ai-chat-send-btn" id="aiChatSendBtn" aria-label="Kirim pesan">
+        <button type="submit" class="ai-chat-send-btn" id="aiChatSendBtn" aria-label="Send">
           <i class="fa-solid fa-paper-plane"></i>
         </button>
       </form>
@@ -102,27 +117,47 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
+import { useLangStore } from '@/stores/langStore'
+import { useDataStore } from '@/stores/dataStore'
+import { useBookingStore } from '@/stores/bookingStore'
+import { generatePariReply } from '@/lib/pariAI'
+
+const router = useRouter()
+const langStore = useLangStore()
+const dataStore = useDataStore()
+const bookingStore = useBookingStore()
 
 const isOpen = ref(false)
 const inputQuery = ref('')
 const isThinking = ref(false)
 const chatBodyRef = ref(null)
 
-const chips = [
-  { label: '🏄 Surfing Pemula', query: 'Spot surfing terbaik untuk pemula di mana ya?' },
-  { label: '👨‍👩‍👧 Pantai Keluarga', query: 'Rekomendasi pantai yang ramah anak dan keluarga?' },
-  { label: '🐬 Pulau Pisang', query: 'Bagaimana cara ke Pulau Pisang dan lihat lumba-lumba?' },
-  { label: '🍲 Kuliner & Seruit', query: 'Apa saja kuliner khas dan oleh-oleh Pesisir Barat?' },
-  { label: '💰 Pemandu & Biaya', query: 'Berapa biaya sewa pemandu lokal dan paket wisata?' }
-]
+const chips = computed(() => {
+  return [
+    { label: langStore.t('ai.chip1'), query: langStore.t('ai.chip1Query') },
+    { label: langStore.t('ai.chip2'), query: langStore.t('ai.chip2Query') },
+    { label: langStore.t('ai.chip3'), query: langStore.t('ai.chip3Query') },
+    { label: langStore.t('ai.chip4'), query: langStore.t('ai.chip4Query') },
+    { label: langStore.t('ai.chip5'), query: langStore.t('ai.chip5Query') }
+  ]
+})
 
-const initialMessage = {
+const getInitialGreeting = () => ({
   sender: 'bot',
-  text: '<p>Halo Traveler! 👋 Saya <strong>Pari AI</strong>, pemandu wisata pintar Pesisir Barat.</p><p>Mau liburan seru seperti apa? Ceritakan preferensimu (misal: <em>ingin berselancar pemula</em>, <em>wisata santai keluarga</em>, <em>kuliner khas</em>, atau <em>budget hemat</em>), atau klik pertanyaan cepat di bawah:</p>'
-}
+  text: langStore.t('ai.greeting'),
+  actions: []
+})
 
-const messages = ref([{ ...initialMessage }])
+const messages = ref([getInitialGreeting()])
+
+watch(() => langStore.currentLang, () => {
+  // If only initial message exists, update it to the current language
+  if (messages.value.length === 1 && messages.value[0].sender === 'bot') {
+    messages.value = [getInitialGreeting()]
+  }
+})
 
 const scrollToBottom = async () => {
   await nextTick()
@@ -132,48 +167,47 @@ const scrollToBottom = async () => {
 }
 
 const resetChat = () => {
-  messages.value = [{ ...initialMessage }]
+  messages.value = [getInitialGreeting()]
   scrollToBottom()
 }
 
-const generateReply = (q) => {
-  const query = q.toLowerCase()
+// Build the live data context so answers reflect real site content.
+const buildContext = () => {
+  const destinations = dataStore.destinations
+    .map(d => langStore.getLocalizedDestination(d))
+    .filter(Boolean)
 
-  if (query.includes('surfing') || query.includes('selancar') || query.includes('ombak')) {
-    return `<strong>🏄 Rekomendasi Spot Surfing:</strong><br>
-    1. <strong>Pantai Karang Nyimbor (Ujung Bocur):</strong> Ombak kidal (left-hander) kelas dunia sepanjang 200m. Cocok untuk intermediate hingga pro.<br>
-    2. <strong>Pantai Way Jambu:</strong> Ombak barrel cepat bertenaga tinggi.<br>
-    3. <strong>Pantai Labuhan Jukung:</strong> Sangat pas untuk surfer pemula karena arusnya lebih bersahabat dan banyak persewaan papan.`
+  return {
+    isEn: langStore.isEn,
+    fmt: langStore.formatCurrency,
+    packages: dataStore.packages,
+    guides: dataStore.guides,
+    destinations
   }
+}
 
-  if (query.includes('keluarga') || query.includes('anak') || query.includes('ramah')) {
-    return `<strong>👨‍👩‍👧 Rekomendasi Wisata Keluarga:</strong><br>
-    1. <strong>Pantai Biha:</strong> Garis pantai landai, ombak tenang, banyak perahu jukung nelayan, dan pusat kuliner ikan bakar.<br>
-    2. <strong>Pantai Labuhan Jukung:</strong> Taman terbuka publik luas dengan fasilitas lengkap.<br>
-    3. <strong>Konservasi Penyu Muara Tembulih:</strong> Sangat edukatif untuk anak-anak belajar melepas tukik penyu ke samudra!`
+const generateReply = (q) => generatePariReply(q, buildContext())
+
+const actionIcon = (action) => {
+  if (action.type === 'book') return 'fa-solid fa-ticket'
+  if (action.type === 'detail') return 'fa-solid fa-location-dot'
+  return 'fa-solid fa-arrow-right'
+}
+
+// Direct call-to-action handling from AI replies.
+const runAction = (action) => {
+  if (!action) return
+  if (action.type === 'book' && action.packageId) {
+    bookingStore.setPackage(action.packageId)
+    isOpen.value = false
+    router.push('/booking')
+  } else if (action.type === 'detail' && action.destinationId) {
+    isOpen.value = false
+    router.push(`/detail/${action.destinationId}`)
+  } else if (action.type === 'route' && action.route) {
+    isOpen.value = false
+    router.push(action.route)
   }
-
-  if (query.includes('pisang') || query.includes('lumba') || query.includes('pulau')) {
-    return `<strong>🐬 Eksplorasi Pulau Pisang:</strong><br>
-    Pulau terpencil dengan air laut sebening kristal dan pasir putih halus. Anda bisa menyeberang naik perahu dari dermaga Tembakak (sekitar 30-45 menit). Kawanan lumba-lumba liar sering menyapa perahu saat pagi hari (07:00 - 09:00 WIB). Jangan lewatkan rumah bersejarah peninggalan Belanda!`
-  }
-
-  if (query.includes('kuliner') || query.includes('makan') || query.includes('seruit') || query.includes('oleh')) {
-    return `<strong>🍲 Kuliner Khas Krui:</strong><br>
-    1. <strong>Seruit Lampung:</strong> Ikan bakar segar dipadu sambal terasi, tempoyak durian, dan aneka lalapan.<br>
-    2. <strong>Ikan Tuhuk (Blue Marlin):</strong> Steak atau sate ikan tuhuk khas Samudra Hindia Krui.<br>
-    3. <strong>Oleh-oleh:</strong> Kain tenun Tapis benang emas tradisional khas Saibatin!`
-  }
-
-  if (query.includes('harga') || query.includes('biaya') || query.includes('paket') || query.includes('pemandu')) {
-    return `<strong>💰 Estimasi Biaya & Paket:</strong><br>
-    - <strong>Paket Surfing Adventure:</strong> Rp 2.450.000 / pax (3H2M + homestay + coaching)<br>
-    - <strong>Paket Explore Krui:</strong> Rp 1.200.000 / pax (2H1M + vila + motor)<br>
-    - <strong>Paket Pulau Pisang:</strong> Rp 300.000 / pack<br>
-    - <strong>Jasa Pemandu Lokal:</strong> Rp 250.000 - Rp 350.000 / hari.`
-  }
-
-  return `Pesisir Barat Lampung menyimpan pesona luar biasa mulai dari ombak surfing kelas dunia di Karang Nyimbor, keindahan Pulau Pisang, hingga kearifan kain tenun Tapis. Anda bisa memilih menu <strong>Pesan Sekarang</strong> di bagian atas untuk reservasi paket wisata langsung!`
 }
 
 const sendQuery = async (queryText) => {
@@ -186,8 +220,12 @@ const sendQuery = async (queryText) => {
   isThinking.value = true
   setTimeout(() => {
     isThinking.value = false
-    const botReply = generateReply(queryText)
-    messages.value.push({ sender: 'bot', text: botReply })
+    const reply = generateReply(queryText)
+    messages.value.push({
+      sender: 'bot',
+      text: reply.text,
+      actions: reply.actions || []
+    })
     scrollToBottom()
   }, 600)
 }

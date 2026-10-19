@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Pesibar Wave">
+  <title>Pesibar Wave</title>
+  <defs>
+    <linearGradient id="pwIconGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B6E93"/>
+      <stop offset="0.55" stop-color="#087EA4"/>
+      <stop offset="1" stop-color="#18B7B0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Badge -->
+  <rect x="2" y="2" width="60" height="60" rx="17" fill="url(#pwIconGrad)"/>
+  <rect x="2" y="2" width="60" height="60" rx="17" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1.2"/>
+
+  <!-- Tapis geometric motif (gold-thread diamond cluster) -->
+  <g>
+    <path d="M32 7.6l4.9 5.9L32 19.4l-4.9-5.9z" fill="#ffffff"/>
+    <path d="M19 11.4l2.7 3.3-2.7 3.3-2.7-3.3z" fill="#ffffff" fill-opacity="0.6"/>
+    <path d="M45 11.4l2.7 3.3-2.7 3.3-2.7-3.3z" fill="#ffffff" fill-opacity="0.6"/>
+  </g>
+
+  <!-- Ocean waves -->
+  <g fill="none" stroke="#ffffff" stroke-linecap="round">
+    <path d="M9 33c4.6 0 6.9-4 11.5-4s6.9 4 11.5 4 6.9-4 11.5-4 6.9 4 11.5 4" stroke-width="3.4" stroke-opacity="0.98"/>
+    <path d="M9 42.5c4.6 0 6.9-4 11.5-4s6.9 4 11.5 4 6.9-4 11.5-4 6.9 4 11.5 4" stroke-width="3.4" stroke-opacity="0.72"/>
+    <path d="M9 52c4.6 0 6.9-4 11.5-4s6.9 4 11.5 4 6.9-4 11.5-4 6.9 4 11.5 4" stroke-width="3.4" stroke-opacity="0.45"/>
+  </g>
+</svg>

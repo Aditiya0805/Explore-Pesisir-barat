@@ -1,5 +1,5 @@
 /* ==========================================================================
-   EXPLORE PESISIR BARAT - PORTAL LOGIC & INTERACTIONS
+   PESIBAR WAVE - PORTAL LOGIC & INTERACTIONS
    SPA Router, Booking Wizard, Admin Dashboard, Interactive 3D Map, Pari AI
    ========================================================================== */
 
@@ -202,9 +202,9 @@ const MAP_LOCATIONS = [
     pinClass: "pin-surf",
     rating: "4.9 ★",
     price: "Rp 15.000",
-    desc: "Pusat surfing kelas dunia Tanjung Setia dengan ombak left-hander legendaris 6-7 meter.",
+    desc: "Pusat surfing kelas dunia Pesisir Barat dengan ombak left-hander legendaris 6-7 meter.",
     img: "assets/images/pantai-karang-nyimbor.jpg",
-    gmapsQuery: "Pantai+Karang+Nyimbor+Tanjung+Setia",
+    gmapsQuery: "Pantai+Karang+Nyimbor+Pesisir+Barat",
     gmapsDirUrl: "https://www.google.com/maps/dir/?api=1&destination=-5.313426,103.998218",
     gmapsSearchUrl: "https://www.google.com/maps/search/?api=1&query=-5.313426,103.998218"
   },
@@ -540,7 +540,7 @@ const PACKAGES = {
 // Initial Mock Bookings for Admin Dashboard
 const MOCK_BOOKINGS = [
   {
-    code: "EPB-2026-0001",
+    code: "PW-2026-0001",
     name: "John Doe",
     phone: "081288889999",
     email: "john@example.com",
@@ -555,7 +555,7 @@ const MOCK_BOOKINGS = [
     total: 5250000
   },
   {
-    code: "EPB-2026-0002",
+    code: "PW-2026-0002",
     name: "Siti Aminah",
     phone: "085611112222",
     email: "siti.aminah@gmail.com",
@@ -570,7 +570,7 @@ const MOCK_BOOKINGS = [
     total: 2050000
   },
   {
-    code: "EPB-2026-0003",
+    code: "PW-2026-0003",
     name: "David Miller",
     phone: "+61400222111",
     email: "david.m@surf.com.au",
@@ -585,7 +585,7 @@ const MOCK_BOOKINGS = [
     total: 3050000
   },
   {
-    code: "EPB-2026-0004",
+    code: "PW-2026-0004",
     name: "Keluarga Handoko",
     phone: "081388887777",
     email: "handoko@company.id",
@@ -837,7 +837,7 @@ function renderDestinationDetail(id) {
     thumbsBox.appendChild(thumb);
   });
 
-  // Dynamic Google Maps Embed per destination (replaces static Tanjung Setia)
+  // Dynamic Google Maps Embed per destination (replaces static Pesisir Barat)
   const mapIframe = document.getElementById('detailMapIframe');
   if (mapIframe) {
     const lat = dest.lat || -5.313426;
@@ -1282,11 +1282,11 @@ function updateBookingWizardUI() {
 }
 
 function submitBookingReservation() {
-  // Generate random booking code format EPB-2026-XXXX
+  // Generate random booking code format PW-2026-XXXX
   const randNum = Math.floor(1000 + Math.random() * 9000);
   const dateObj = new Date();
   const year = dateObj.getFullYear();
-  const code = `EPB-${year}-${randNum}`;
+  const code = `PW-${year}-${randNum}`;
 
   // Assemble full booking record
   const bookingRecord = {
@@ -1364,13 +1364,13 @@ function initAuthPortal() {
     loginBox.classList.remove('hidden');
   };
 
-  // Login handler with official Explore Pesisir Barat branding
+  // Login handler with official Pesibar Wave branding
   loginForm.onsubmit = (e) => {
     e.preventDefault();
     const email = document.getElementById('login-email').value.trim().toLowerCase();
     const pass = document.getElementById('login-password').value;
 
-    const validEmails = ['admin@explorepesisirbarat.com', 'admin@tanjungsetia.com'];
+    const validEmails = ['admin@pesibarwave.id'];
     if (validEmails.includes(email) && pass === 'admin123') {
       isAdminLoggedIn = true;
       showToast('loginToast', 'Login Admin berhasil! Mengalihkan ke dashboard...', 'success');
@@ -1408,7 +1408,7 @@ function renderAdminDashboard() {
   
   // Calculate today's bookings
   const todayStr = new Date().toISOString().split('T')[0];
-  const todayBookingsCount = bookings.filter(b => b.date === todayStr || (b.code && b.code.startsWith(`EPB-${todayStr.replace(/-/g, '').slice(0,4)}`))).length;
+  const todayBookingsCount = bookings.filter(b => b.date === todayStr || (b.code && b.code.startsWith(`PW-${todayStr.replace(/-/g, '').slice(0,4)}`))).length;
 
   // Calculate confirmed earnings revenue
   const totalRevenue = bookings
@@ -2191,7 +2191,7 @@ function initSplashScreen() {
 
   setTimeout(() => {
     if (progress) progress.style.width = '100%';
-    if (status) status.textContent = 'Selamat datang di Explore Pesisir Barat!';
+    if (status) status.textContent = 'Selamat datang di Pesibar Wave!';
   }, 950);
 
   setTimeout(() => {
@@ -2578,7 +2578,7 @@ function initAIAssistant() {
     if (q.includes('rute') || q.includes('jalan') || q.includes('transportasi') || q.includes('ke sana') || q.includes('pesawat') || q.includes('bandara') || q.includes('lokasi')) {
       return {
         text: `<p><strong>Akses Menuju Pesisir Barat (Krui):</strong></p>
-               <p>🚗 <strong>Jalur Darat (Mobil/Travel):</strong> Dari Bandar Lampung via rute Lintas Barat (Kemiling - Pringsewu - Kota Agung - Bengkunat - Tanjung Setia - Krui) memakan waktu sekitar 5 - 6 jam dengan jalan aspal mulus pemandangan perbukitan TNBBS.</p>
+               <p>🚗 <strong>Jalur Darat (Mobil/Travel):</strong> Dari Bandar Lampung via rute Lintas Barat (Kemiling - Pringsewu - Kota Agung - Bengkunat - Pesisir Barat - Krui) memakan waktu sekitar 5 - 6 jam dengan jalan aspal mulus pemandangan perbukitan TNBBS.</p>
                <p>✈️ <strong>Jalur Udara:</strong> Tersedia penerbangan perintis rute Bandara Radin Inten II (TKG) menuju <strong>Bandara M. Taufiq Kiemas Krui (TFY)</strong>.</p>`
       };
     }

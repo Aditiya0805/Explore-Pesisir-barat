@@ -1,0 +1,32 @@
+{
+  "name": "Pesibar Wave",
+  "short_name": "Pesibar Wave",
+  "description": "Portal wisata cerdas Pesisir Barat, Lampung: destinasi, peta 3D, paket wisata, pemandu lokal, dan booking online.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#041E2B",
+  "theme_color": "#087EA4",
+  "lang": "id",
+  "categories": ["travel", "tourism", "lifestyle"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

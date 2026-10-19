@@ -2,9 +2,9 @@
   <section class="section-padding" id="pemandu">
     <div class="container">
       <div class="section-header">
-        <span class="badge badge-primary">Pemandu Lokal Berlisensi</span>
-        <h2>Jelajahi Bersama Pemandu Lokal</h2>
-        <p>Rasakan petualangan otentik dipandu oleh pemandu lokal berlisensi yang mengenal seluk beluk seluruh penjuru Pesisir Barat luar dalam.</p>
+        <span class="badge badge-primary">{{ langStore.t('guides.badge') }}</span>
+        <h2>{{ langStore.t('guides.title') }}</h2>
+        <p>{{ langStore.t('guides.subtitle') }}</p>
       </div>
 
       <div class="guides-grid">
@@ -15,7 +15,7 @@
             <div v-else class="guide-avatar guide-avatar-icon">
               <i class="fa-solid fa-user"></i>
             </div>
-            <span class="guide-status" :title="guide.is_available ? 'Tersedia' : 'Sibuk'"></span>
+            <span class="guide-status" :title="guide.is_available ? langStore.t('guides.available') : langStore.t('guides.busy')"></span>
           </div>
 
           <h3 class="guide-name">{{ guide.name }}</h3>
@@ -28,28 +28,31 @@
             <i class="fa-solid fa-star"></i>
             <i class="fa-solid fa-star"></i>
             <span style="color:var(--color-text-light); font-size:0.8rem; font-weight:600; margin-left:4px;">
-              ({{ guide.review_count || 48 }} Ulasan)
+              ({{ guide.review_count || 48 }} {{ langStore.t('guides.reviews') }})
             </span>
           </div>
 
           <div class="guide-info-list">
             <div class="guide-info-item">
-              <span class="info-label">Pengalaman</span>
-              <span class="info-value">{{ guide.experience_years || 5 }} Tahun</span>
+              <span class="info-label">{{ langStore.t('guides.experience') }}</span>
+              <span class="info-value">{{ guide.experience_years || 5 }} {{ langStore.t('guides.years') }}</span>
             </div>
             <div class="guide-info-item">
-              <span class="info-label">Bahasa</span>
+              <span class="info-label">{{ langStore.t('guides.languages') }}</span>
               <span class="info-value">{{ guide.languages || 'ID, EN' }}</span>
             </div>
           </div>
 
           <div class="guide-price-section">
-            <span class="guide-price-label">Tarif Jasa</span>
-            <div class="guide-price">{{ formatPrice(guide.price) }} <span>{{ guide.price_unit || '/ hari' }}</span></div>
+            <span class="guide-price-label">{{ langStore.t('guides.dailyRate') }}</span>
+            <div class="guide-price">
+              {{ langStore.formatCurrency(guide.price) }}
+              <span>{{ langStore.isEn ? '/ day' : '/ hari' }}</span>
+            </div>
           </div>
 
           <button class="btn btn-secondary btn-block book-guide-trigger" @click="bookGuide(guide)">
-            Pesan Pemandu
+            {{ langStore.t('guides.bookGuide') }}
           </button>
         </div>
       </div>
@@ -61,22 +64,16 @@
 import { useRouter } from 'vue-router'
 import { useDataStore } from '@/stores/dataStore'
 import { useBookingStore } from '@/stores/bookingStore'
+import { useLangStore } from '@/stores/langStore'
 
 const router = useRouter()
 const dataStore = useDataStore()
 const bookingStore = useBookingStore()
-
-const formatPrice = (p) => {
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    maximumFractionDigits: 0
-  }).format(p || 250000)
-}
+const langStore = useLangStore()
 
 const bookGuide = (guide) => {
   bookingStore.guideAddon = true
-  bookingStore.notes = `Meminta pemandu: ${guide.name}`
+  bookingStore.notes = `${langStore.t('guides.notePrefix')} ${guide.name}`
   router.push('/booking')
 }
 </script>

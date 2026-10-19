@@ -195,9 +195,9 @@ export const MAP_LOCATIONS = [
     pin_class: "pin-surf",
     rating: "4.9 ★",
     price: "Rp 15.000",
-    description: "Pusat surfing kelas dunia Tanjung Setia dengan ombak left-hander legendaris 6-7 meter.",
+    description: "Pusat surfing kelas dunia Pesisir Barat dengan ombak left-hander legendaris 6-7 meter.",
     img: "/assets/images/pantai-karang-nyimbor.jpg",
-    gmaps_query: "Pantai+Karang+Nyimbor+Tanjung+Setia",
+    gmaps_query: "Pantai+Karang+Nyimbor+Pesisir+Barat",
     gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.313426,103.998218",
     gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.313426,103.998218"
   },
@@ -370,7 +370,7 @@ export const PACKAGES = [
     id: "surf",
     name: "Paket Surfing Adventure",
     price: 2450000,
-    description: "Homestay premium, papan selancar, pelatih profesional & antar jemput spot ombak terbaik Tanjung Setia.",
+    description: "Homestay premium, papan selancar, pelatih profesional & antar jemput spot ombak terbaik Pesisir Barat.",
     duration: "3 Hari 2 Malam",
     min_persons: "1 Orang",
     amenities: ["Surf Coaching Pro", "Sewa Board", "Homestay AC", "Makan 3x", "Dokumentasi"],
@@ -502,12 +502,13 @@ export const GALLERY = [
 export const ARTICLES = [
   {
     id: 1,
-    title: "Panduan Lengkap Surfing di Krui & Tanjung Setia untuk Pemula hingga Pro",
+    title: "Panduan Lengkap Surfing di Krui & Pesisir Barat untuk Pemula hingga Pro",
     description: "Pelajari musim ombak terbaik, lokasi penginapan, dan tips keselamatan bermain ombak di pesisir Samudra Hindia.",
     category: "Panduan Wisata",
     img_url: "/assets/images/pantai-karang-nyimbor.jpg",
     published_date: "12 Oktober 2026",
-    slug: "panduan-surfing-krui"
+    slug: "panduan-surfing-krui",
+    url: "https://thesurfatlas.com/surfing-indonesia/krui-surf/"
   },
   {
     id: 2,
@@ -516,7 +517,8 @@ export const ARTICLES = [
     category: "Destinasi",
     img_url: "/assets/images/paket-pulau-pisang.jpg",
     published_date: "5 Oktober 2026",
-    slug: "pesona-pulau-pisang"
+    slug: "pesona-pulau-pisang",
+    url: "https://www.beritasatu.com/nusantara/2957318/pesona-pulau-pisang-lampung-surga-tersembunyi-yang-wajib-dikunjungi"
   },
   {
     id: 3,
@@ -525,14 +527,15 @@ export const ARTICLES = [
     category: "Budaya",
     img_url: "/assets/images/kain-tapis.jpg",
     published_date: "28 September 2026",
-    slug: "tradisi-tenun-tapis"
+    slug: "tradisi-tenun-tapis",
+    url: "https://wawainews.id/mengenal-kain-tapis-lampung-jenis-motif-makna-filosofis-dan-sejarah-warisan-budaya/"
   }
 ];
 
 export const MOCK_BOOKINGS = [
   {
     id: 1,
-    code: "EPB-2026-0001",
+    code: "PW-2026-0001",
     name: "John Doe",
     phone: "081288889999",
     email: "john@example.com",
@@ -548,7 +551,7 @@ export const MOCK_BOOKINGS = [
   },
   {
     id: 2,
-    code: "EPB-2026-0002",
+    code: "PW-2026-0002",
     name: "Siti Aminah",
     phone: "085611112222",
     email: "siti.aminah@gmail.com",
@@ -564,7 +567,7 @@ export const MOCK_BOOKINGS = [
   },
   {
     id: 3,
-    code: "EPB-2026-0003",
+    code: "PW-2026-0003",
     name: "David Miller",
     phone: "+61400222111",
     email: "david.m@surf.com.au",
@@ -580,7 +583,7 @@ export const MOCK_BOOKINGS = [
   },
   {
     id: 4,
-    code: "EPB-2026-0004",
+    code: "PW-2026-0004",
     name: "Keluarga Handoko",
     phone: "081388887777",
     email: "handoko@company.id",

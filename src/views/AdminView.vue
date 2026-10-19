@@ -10,16 +10,10 @@
         <!-- Card Header -->
         <div class="auth-card-header">
           <div class="auth-brand-logo">
-            <div class="logo-icon-box">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
-                <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-              </svg>
-            </div>
-            <span class="auth-brand-name">EXPLORE PESISIR BARAT</span>
+            <img class="brand-logo" src="/assets/images/logo-icon.svg" alt="Pesibar Wave" width="40" height="40" />
+            <span class="auth-brand-name">Pesibar <span class="logo-accent">Wave</span></span>
           </div>
-          <span class="auth-badge"><i class="fa-solid fa-shield-halved"></i> Portal Pengelola & Admin</span>
+          <span class="auth-badge"><i class="fa-solid fa-shield-halved"></i> Portal Pengelola Pesibar Wave</span>
         </div>
 
         <div id="auth-login-box">
@@ -28,15 +22,15 @@
             <p class="auth-subtitle">Kelola pemesanan, paket wisata & database Supabase</p>
           </div>
 
-          <div class="auth-demo-box" @click="fillQuickCreds" style="cursor:pointer;" title="Klik untuk isi otomatis kredensial pengelola">
+          <div class="auth-demo-box" @click="fillQuickCreds" style="cursor:pointer;" title="Klik untuk isi otomatis kredensial demo (tetap harus klik Masuk)">
             <div class="demo-box-header">
-              <span><i class="fa-solid fa-shield-halved"></i> Akun Pengelola (Demo / Bypass)</span>
+              <span><i class="fa-solid fa-shield-halved"></i> Akun Pengelola (Demo)</span>
               <span class="demo-auto-pill" style="background: var(--color-ocean-blue);">
                 <i class="fa-solid fa-bolt"></i> Isi Otomatis
               </span>
             </div>
             <div class="demo-box-creds" style="font-size:0.8rem; color:var(--color-text-medium);">
-              Username: <strong>admin</strong> | Password: <strong>pesisir2026</strong>
+              Email: <strong>admin@pesibarwave.id</strong> | Password: <strong>pesisir2026</strong>
             </div>
           </div>
 
@@ -53,7 +47,7 @@
                   id="login-email"
                   class="form-control"
                   v-model="loginUsername"
-                  placeholder="admin atau email pengelola"
+                  placeholder="admin@pesibarwave.id atau email pengelola"
                   required
                 >
               </div>
@@ -92,20 +86,16 @@
 
     <!-- 2. ADMIN DASHBOARD (WHEN LOGGED IN) -->
     <div v-else class="admin-dashboard-container">
-      <div v-if="mobileSidebarOpen" class="admin-sidebar-backdrop" @click="mobileSidebarOpen = false"></div>
+      <div v-if="mobileSidebarOpen" class="admin-sidebar-backdrop active" @click="mobileSidebarOpen = false"></div>
 
       <section class="admin-layout">
         <!-- Sidebar -->
-        <aside class="admin-sidebar" :class="{ 'mobile-open': mobileSidebarOpen }">
+        <aside class="admin-sidebar" :class="{ 'active': mobileSidebarOpen, 'mobile-open': mobileSidebarOpen }">
           <div class="admin-sidebar-header">
             <div class="admin-sidebar-logo">
               <div class="logo">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2.5 14.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8M2.5 17.5c2.3 0 3.3-1.8 5.5-1.8s3.2 1.8 5.5 1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
-                  <path d="M12 3v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  <path d="M12 8c1.5-1.5 4-2 6-1.5m-6 1.5c-1.5-1.5-4-2-6-1.5m6 1.5c1.5 1.5 2 4 1.5 6m-1.5-6c-1.5 1.5-2 4-1.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-                </svg>
-                <span>ADMIN EPB</span>
+                <img class="brand-logo brand-logo--sm" src="/assets/images/logo-icon.svg" alt="Pesibar Wave" width="34" height="34" />
+                <span>PW ADMIN</span>
               </div>
             </div>
             <button class="admin-sidebar-close" @click="mobileSidebarOpen = false" aria-label="Tutup Menu">
@@ -497,7 +487,7 @@ const activeTabIcon = computed(() => {
 })
 
 const fillQuickCreds = () => {
-  loginUsername.value = 'admin'
+  loginUsername.value = 'admin@pesibarwave.id'
   loginPassword.value = 'pesisir2026'
 }
 

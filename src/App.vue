@@ -32,10 +32,12 @@ import PariAIChat from '@/components/ai/PariAIChat.vue'
 import InfoModal from '@/components/modals/InfoModal.vue'
 import { useDataStore } from '@/stores/dataStore'
 import { useAuthStore } from '@/stores/authStore'
+import { useLangStore } from '@/stores/langStore'
 
 const route = useRoute()
 const dataStore = useDataStore()
 const authStore = useAuthStore()
+const langStore = useLangStore()
 
 const activeModal = ref(null)
 
@@ -48,6 +50,9 @@ const openModal = (modalName) => {
 }
 
 onMounted(async () => {
+  // Sync document attributes with current language
+  langStore.setLang(langStore.currentLang)
+
   await Promise.all([
     dataStore.fetchAllData(),
     authStore.initAuth()

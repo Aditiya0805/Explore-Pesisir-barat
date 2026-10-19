@@ -81,7 +81,7 @@ export const useBookingStore = defineStore('booking', () => {
     isSubmitting.value = true
     try {
       const randomNum = Math.floor(1000 + Math.random() * 9000)
-      const code = `EPB-2026-${randomNum}`
+      const code = `PW-2026-${randomNum}`
       lastBookingCode.value = code
 
       const bookingRecord = {

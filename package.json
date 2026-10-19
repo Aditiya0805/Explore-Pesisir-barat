@@ -1,7 +1,8 @@
 {
-  "name": "explore-pesisir-barat",
+  "name": "pesibar-wave",
   "private": true,
   "version": "1.0.0",
+  "description": "Pesibar Wave - Portal wisata cerdas Pesisir Barat, Lampung: destinasi, peta 3D, paket wisata, pemandu lokal, dan booking online.",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +11,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
+    "jspdf": "^4.2.1",
     "leaflet": "^1.9.4",
     "pinia": "^3.0.1",
     "vue": "^3.5.13",

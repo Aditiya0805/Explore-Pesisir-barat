@@ -52,18 +52,18 @@ const router = createRouter({
 })
 
 // Navigation Guard
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to) => {
   const authStore = useAuthStore()
-  if (to.meta.requiresAuth) {
-    if (!authStore.isAdmin && localStorage.getItem('isAdminLoggedIn') !== 'true') {
-      // User not authenticated as admin, allow them into admin view so the login form renders
-      next()
-    } else {
-      next()
+
+  if (to.meta.requiresAuth && !authStore.isAdmin) {
+    // The Admin route itself renders the login form, so it is allowed.
+    // Any other protected route is redirected to the login screen.
+    if (to.name !== 'Admin') {
+      return { name: 'Admin' }
     }
-  } else {
-    next()
   }
+
+  return true
 })
 
 export default router

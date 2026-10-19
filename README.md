@@ -1,6 +1,24 @@
-# Explore Pesisir Barat 🏄‍♂️🌊
-**Portal Pariwisata & Sistem Reservasi Terpadu Kabupaten Pesisir Barat, Lampung**  
+# Pesibar Wave 🏄‍♂️🌊
+**Portal Wisata Cerdas & Sistem Reservasi Terpadu Kabupaten Pesisir Barat, Lampung**  
+
+> 🌊 **Jelajah Cerdas, Lestarikan Pesisir** — *Ride the Wave, Preserve the Coast*
+
 *Karya Web Design untuk GEMATIK VI 2026*
+
+---
+
+## 🪪 Identitas Brand
+
+| Aspek | Keterangan |
+| :--- | :--- |
+| **Nama Brand** | Pesibar Wave |
+| **Makna** | "Pesibar" = singkatan lokal Pesisir Barat, "Wave" = ombak (ikon surfing kelas dunia & laut Pesisir Barat) |
+| **Tagline (ID)** | Jelajah Cerdas, Lestarikan Pesisir |
+| **Tagline (EN)** | Ride the Wave, Preserve the Coast |
+| **Deskripsi** | Portal wisata cerdas Pesisir Barat, Lampung: destinasi, peta 3D, paket wisata, pemandu lokal, dan booking online. |
+| **Asisten AI** | Pari AI — pemandu cerdas Pesibar Wave |
+
+> 📝 *Catatan:* "Pesisir Barat" tetap digunakan sebagai nama daerah/kabupaten. Nama brand website adalah **Pesibar Wave**.
 
 ---
 
@@ -53,7 +71,7 @@ Untuk kebutuhan demonstrasi, admin dapat masuk melalui menu profil atau rute `/a
 | Parameter | Kredensial Admin |
 | :--- | :--- |
 | **URL Akses** | `/admin` |
-| **Username** | `admin` |
+| **Username** | `admin@pesibarwave.id` (atau `admin`) |
 | **Kata Sandi** | `pesisir2026` |
 | **Role / Hak Akses** | Administrator Penuh (Pengelola Pariwisata Pesisir Barat) |
 
@@ -73,7 +91,7 @@ Tersedia tombol **Isi Otomatis** pada kartu login untuk kemudahan pengujian.
    - Step 1: Pilihan paket wisata terintegrasi dan opsi layanan tambahan (Pemandu Eksklusif +Rp250.000/hari, Dokumentasi Drone +Rp100.000).
    - Step 2: Formulir data wisatawan dengan validasi nomor WhatsApp, tanggal, dan email.
    - Step 3: Rincian konfirmasi transparan dengan sinkronisasi kalkulasi harga real-time.
-   - Step 4: Layar reservasi sukses dengan kode booking otomatis `EPB-2026-XXXX`, tersimpan langsung ke tabel `bookings` Supabase.
+   - Step 4: Layar reservasi sukses dengan kode booking otomatis `PW-2026-XXXX`, tersimpan langsung ke tabel `bookings` Supabase.
 
 3. **Pari AI - Asisten Wisata Pintar:**
    - Chatbot rekomendasi wisata interaktif berbasis query preferensi traveler (pantai keluarga, surfing pemula/ahli, kuliner seruit, tips rute perjalanan).
@@ -85,6 +103,29 @@ Tersedia tombol **Isi Otomatis** pada kartu login untuk kemudahan pengujian.
    - FAQs (Pertanyaan Umum seputar aksesibilitas Krui, musim ombak, Pulau Pisang).
    - Syarat & Ketentuan Pemesanan Berkelanjutan.
    - Kebijakan Privasi Perlindungan Data Pribadi Pengunjung.
+
+---
+
+## 🆕 Fitur Cerdas & Interaktif
+
+1. **Pari AI 2.0 — Rekomendasi Paket Otomatis (Rule-Based, Tanpa API Key):**
+   - Mendeteksi **budget** (mis. "1,5 juta", "500rb"), **jumlah orang**, dan **minat** (surfing, keluarga, budaya, kuliner, pulau, alam).
+   - Memberi peringkat paket dari **data nyata** di situs (harga paket, destinasi, dan pemandu), lengkap dengan estimasi biaya & alasan.
+   - Jawaban menyertakan **tombol aksi langsung** "Pesan paket ini" / "Lihat destinasi" yang membuka form pemesanan.
+   - Bilingual (Indonesia / English) dan **tidak pernah menampilkan error** ke pengguna (ada safety net).
+
+2. **Widget Cuaca & Kondisi Ombak per Destinasi (Open-Meteo, tanpa API key):**
+   - Suhu, kondisi langit, angin, kelembapan, **tinggi/periode/arah ombak**, dan tingkat kesulitan surfing (pemula–pro).
+   - Prakiraan 3 hari. Jika API gagal, otomatis menampilkan **perkiraan pola musiman** (tidak error).
+
+3. **Review & Rating Destinasi:**
+   - Ringkasan rata-rata + distribusi bintang dan daftar ulasan pada halaman detail.
+   - Form pengiriman ulasan. Tersimpan ke tabel `reviews` Supabase bila dikonfigurasi, atau fallback `localStorage`.
+
+4. **Bukti Booking (PDF) & Kirim WhatsApp:**
+   - Setelah booking sukses: tombol **Unduh Bukti Booking (PDF)** (dibuat client-side dengan `jspdf`, dimuat lazy) dan **Kirim via WhatsApp** dengan pesan otomatis terisi.
+
+> 🔧 *Variabel lingkungan opsional:* `VITE_ADMIN_WHATSAPP` (nomor WhatsApp operator, format internasional tanpa `+`) untuk mengarahkan tombol kirim bukti booking.
 
 ---
 

@@ -5,11 +5,17 @@
   >
     <div class="booking-cta-overlay"></div>
     <div class="container">
-      <h2>Siap Memulai Petualangan?</h2>
-      <p>Dapatkan diskon paket hemat pariwisata Pesisir Barat dengan melakukan reservasi online hari ini.</p>
+      <h2>{{ langStore.t('bookingCta.title') }}</h2>
+      <p>{{ langStore.t('bookingCta.subtitle') }}</p>
       <router-link to="/booking" class="btn btn-primary btn-lg">
-        <i class="fa-solid fa-paper-plane"></i> Mulai Pemesanan Sekarang
+        <i class="fa-solid fa-paper-plane"></i> {{ langStore.t('bookingCta.button') }}
       </router-link>
     </div>
   </section>
 </template>
+
+<script setup>
+import { useLangStore } from '@/stores/langStore'
+
+const langStore = useLangStore()
+</script>

@@ -1,5 +1,5 @@
 -- ==========================================================================
--- EXPLORE PESISIR BARAT - SUPABASE DATABASE SCHEMA
+-- PESIBAR WAVE - SUPABASE DATABASE SCHEMA
 -- Jalankan SQL ini di Supabase SQL Editor (Dashboard → SQL Editor → New Query)
 -- ==========================================================================
 
@@ -122,13 +122,23 @@ CREATE TABLE IF NOT EXISTS bookings (
 -- 8. TABEL: settings (Pengaturan Website)
 CREATE TABLE IF NOT EXISTS settings (
   id SERIAL PRIMARY KEY,
-  site_name TEXT DEFAULT 'Explore Pesisir Barat',
+  site_name TEXT DEFAULT 'Pesibar Wave',
   whatsapp TEXT DEFAULT '+62 812-3456-7890',
-  email TEXT DEFAULT 'info@explorepesisirbarat.com',
+  email TEXT DEFAULT 'info@pesibarwave.id',
   address TEXT DEFAULT 'Jl. Lintas Barat Sumatera, Krui, Pesisir Tengah, Pesisir Barat, Lampung 34272',
   instagram_url TEXT DEFAULT 'https://www.instagram.com/kruitourism_',
   facebook_url TEXT DEFAULT 'https://www.facebook.com/disporaparpesisirbarat',
   youtube_url TEXT DEFAULT 'https://www.youtube.com/@disporaparpesisirbarat',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 9. TABEL: reviews (Ulasan & Rating Destinasi Wisata)
+CREATE TABLE IF NOT EXISTS reviews (
+  id SERIAL PRIMARY KEY,
+  destination_id INTEGER REFERENCES destinations(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+  comment TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -145,6 +155,7 @@ ALTER TABLE gallery ENABLE ROW LEVEL SECURITY;
 ALTER TABLE articles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE reviews ENABLE ROW LEVEL SECURITY;
 
 -- Public read access for content tables
 CREATE POLICY "Public read destinations" ON destinations FOR SELECT USING (true);
@@ -157,6 +168,10 @@ CREATE POLICY "Public read settings" ON settings FOR SELECT USING (true);
 
 -- Bookings: authenticated users can insert
 CREATE POLICY "Anyone can create booking" ON bookings FOR INSERT WITH CHECK (true);
+
+-- Reviews: public read, anyone can submit a review
+CREATE POLICY "Public read reviews" ON reviews FOR SELECT USING (true);
+CREATE POLICY "Anyone can create review" ON reviews FOR INSERT WITH CHECK (true);
 
 -- Bookings: authenticated users can read their own bookings
 CREATE POLICY "Auth users read own bookings" ON bookings FOR SELECT USING (
@@ -208,7 +223,7 @@ SELECT setval('destinations_id_seq', (SELECT MAX(id) FROM destinations));
 -- ==========================================================================
 
 INSERT INTO map_locations (id, dest_id, name, category, category_label, lat, lng, icon, pin_class, rating, price, description, img, gmaps_query, gmaps_dir_url, gmaps_search_url) VALUES
-(1, 1, 'Pantai Karang Nyimbor (Ujung Bocur)', 'surfing', 'Surfing & Ombak', -5.313426, 103.998218, 'fa-water', 'pin-surf', '4.9 ★', 'Rp 15.000', 'Pusat surfing kelas dunia Tanjung Setia dengan ombak left-hander legendaris 6-7 meter.', '/assets/images/pantai-karang-nyimbor.jpg', 'Pantai+Karang+Nyimbor+Tanjung+Setia', 'https://www.google.com/maps/dir/?api=1&destination=-5.313426,103.998218', 'https://www.google.com/maps/search/?api=1&query=-5.313426,103.998218'),
+(1, 1, 'Pantai Karang Nyimbor (Ujung Bocur)', 'surfing', 'Surfing & Ombak', -5.313426, 103.998218, 'fa-water', 'pin-surf', '4.9 ★', 'Rp 15.000', 'Pusat surfing kelas dunia Pesisir Barat dengan ombak left-hander legendaris 6-7 meter.', '/assets/images/pantai-karang-nyimbor.jpg', 'Pantai+Karang+Nyimbor+Pesisir+Barat', 'https://www.google.com/maps/dir/?api=1&destination=-5.313426,103.998218', 'https://www.google.com/maps/search/?api=1&query=-5.313426,103.998218'),
 (2, 2, 'Pantai Way Jambu (The Pipeline)', 'surfing', 'Surfing Barrel', -5.358210, 104.053120, 'fa-water', 'pin-surf', '4.8 ★', 'Rp 10.000', 'Spot ombak barrel cepat menantang di atas karang dangkal berhadapan Samudra Hindia.', '/assets/images/pantai-way-jambu.jpg', 'Pantai+Way+Jambu+Pesisir+Barat', 'https://www.google.com/maps/dir/?api=1&destination=-5.358210,104.053120', 'https://www.google.com/maps/search/?api=1&query=-5.358210,104.053120'),
 (3, NULL, 'Pantai Mandiri (Black Sand Beach)', 'beach', 'Pantai Pasir Hitam', -5.247850, 103.921530, 'fa-umbrella-beach', 'pin-beach', '4.8 ★', 'Gratis', 'Hamparan pasir hitam vulkanis berkilau dengan panorama matahari terbenam (sunset) terbaik di Pesisir Barat.', '/assets/images/paket-explore-krui.jpg', 'Pantai+Mandiri+Krui+Pesisir+Barat', 'https://www.google.com/maps/dir/?api=1&destination=-5.247850,103.921530', 'https://www.google.com/maps/search/?api=1&query=-5.247850,103.921530'),
 (4, NULL, 'Pantai Labuhan Jukung Krui', 'beach', 'Ikon Rekreasi Pantai', -5.195610, 103.931240, 'fa-umbrella-beach', 'pin-beach', '4.9 ★', 'Rp 5.000', 'Ikon wisata utama Krui dengan ruang terbuka publik, panggung budaya, dan pusat kuliner tepi laut.', 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80', 'Pantai+Labuhan+Jukung+Krui', 'https://www.google.com/maps/dir/?api=1&destination=-5.195610,103.931240', 'https://www.google.com/maps/search/?api=1&query=-5.195610,103.931240'),
@@ -274,14 +289,14 @@ INSERT INTO articles (title, description, category, img_url, published_date, slu
 -- ==========================================================================
 
 INSERT INTO bookings (code, name, phone, email, package_id, package_name, visit_date, guests, notes, guide_addon, photo_addon, status, total) VALUES
-('EPB-2026-0001', 'John Doe', '081288889999', 'john@example.com', 'surf', 'Paket Surfing Adventure', '2026-08-15', 2, 'Request intermediate surf board', TRUE, FALSE, 'confirmed', 5250000),
-('EPB-2026-0002', 'Siti Aminah', '085611112222', 'siti.aminah@gmail.com', 'sunset', 'Paket Sunset & Culture', '2026-08-12', 4, 'Alergi makanan seafood diganti ayam bakar', FALSE, TRUE, 'pending', 2050000),
-('EPB-2026-0003', 'David Miller', '+61400222111', 'david.m@surf.com.au', 'surf', 'Paket Surfing Adventure', '2026-08-20', 1, 'Airport pick up requested from Bandar Lampung', TRUE, TRUE, 'confirmed', 3050000),
-('EPB-2026-0004', 'Keluarga Handoko', '081388887777', 'handoko@company.id', 'family', 'Paket Wisata Pulau Pisang', '2026-09-01', 5, 'Tour pulau & hunting sunset', FALSE, TRUE, 'pending', 1750000);
+('PW-2026-0001', 'John Doe', '081288889999', 'john@example.com', 'surf', 'Paket Surfing Adventure', '2026-08-15', 2, 'Request intermediate surf board', TRUE, FALSE, 'confirmed', 5250000),
+('PW-2026-0002', 'Siti Aminah', '085611112222', 'siti.aminah@gmail.com', 'sunset', 'Paket Sunset & Culture', '2026-08-12', 4, 'Alergi makanan seafood diganti ayam bakar', FALSE, TRUE, 'pending', 2050000),
+('PW-2026-0003', 'David Miller', '+61400222111', 'david.m@surf.com.au', 'surf', 'Paket Surfing Adventure', '2026-08-20', 1, 'Airport pick up requested from Bandar Lampung', TRUE, TRUE, 'confirmed', 3050000),
+('PW-2026-0004', 'Keluarga Handoko', '081388887777', 'handoko@company.id', 'family', 'Paket Wisata Pulau Pisang', '2026-09-01', 5, 'Tour pulau & hunting sunset', FALSE, TRUE, 'pending', 1750000);
 
 -- ==========================================================================
 -- SEED DATA: Settings
 -- ==========================================================================
 
 INSERT INTO settings (site_name, whatsapp, email, address) VALUES
-('Explore Pesisir Barat', '+62-822-8942-4809', 'Adityapratama2292@gmail.com', 'Krui, Pesisir Tengah, Pesisir Barat, Lampung 34272');
+('Pesibar Wave', '+62-822-8942-4809', 'Adityapratama2292@gmail.com', 'Krui, Pesisir Tengah, Pesisir Barat, Lampung 34272');

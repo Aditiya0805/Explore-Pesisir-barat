@@ -10,18 +10,18 @@
       <div class="hero-content">
         <div class="hero-tag">
           <span class="circle"></span>
-          <span>Destinasi Surfing & Pantai Kelas Dunia</span>
+          <span>{{ langStore.t('hero.tag') }}</span>
         </div>
-        <h1>Temukan Keindahan<br><span class="text-gradient-orange">Pesisir Barat</span></h1>
+        <h1>{{ langStore.t('hero.title1') }}<br><span class="text-gradient-orange">{{ langStore.t('hero.title2') }}</span></h1>
         <p class="subheadline">
-          Jelajahi surga tersembunyi Lampung: deburan ombak surfing kelas dunia, eksotisme Pulau Pisang, air terjun asri, hingga kekayaan budaya tenun Tapis.
+          {{ langStore.t('hero.subheadline') }}
         </p>
         <div class="hero-buttons">
           <a href="#destinasi" class="btn btn-primary btn-lg" @click.prevent="scrollToSection('destinasi')">
-            <i class="fa-solid fa-compass"></i> Jelajahi Destinasi
+            <i class="fa-solid fa-compass"></i> {{ langStore.t('hero.exploreBtn') }}
           </a>
           <router-link to="/booking" class="btn btn-outline btn-lg">
-            <i class="fa-solid fa-ticket"></i> Pesan Tiket & Pemandu
+            <i class="fa-solid fa-ticket"></i> {{ langStore.t('hero.bookTicketBtn') }}
           </router-link>
         </div>
       </div>
@@ -31,37 +31,37 @@
     <div class="search-bar-container">
       <div class="search-bar bg-glass">
         <div class="search-input-group">
-          <label for="search-dest"><i class="fa-solid fa-map-pin"></i> Mau menjelajah apa?</label>
+          <label for="search-dest"><i class="fa-solid fa-map-pin"></i> {{ langStore.t('hero.searchLabel') }}</label>
           <select id="search-dest" v-model="selectedPackage">
-            <option value="">Pilih Destinasi / Paket</option>
-            <option value="surf">Paket Surfing Adventure</option>
-            <option value="beach">Paket Explore Krui</option>
-            <option value="sunset">Paket Sunset & Culture</option>
-            <option value="family">Pulau Pisang</option>
+            <option value="">{{ langStore.t('hero.selectPackagePlaceholder') }}</option>
+            <option value="surf">{{ langStore.t('hero.packageSurf') }}</option>
+            <option value="beach">{{ langStore.t('hero.packageBeach') }}</option>
+            <option value="sunset">{{ langStore.t('hero.packageSunset') }}</option>
+            <option value="family">{{ langStore.t('hero.packageFamily') }}</option>
           </select>
         </div>
         <div class="search-input-group">
-          <label for="search-date"><i class="fa-solid fa-calendar"></i> Tanggal Kunjungan</label>
+          <label for="search-date"><i class="fa-solid fa-calendar"></i> {{ langStore.t('hero.dateLabel') }}</label>
           <input type="date" id="search-date" v-model="selectedDate">
         </div>
         <div class="search-input-group">
-          <label for="search-guests"><i class="fa-solid fa-users"></i> Jumlah Orang</label>
+          <label for="search-guests"><i class="fa-solid fa-users"></i> {{ langStore.t('hero.guestsLabel') }}</label>
           <select id="search-guests" v-model="selectedGuests">
-            <option value="1">1 Orang</option>
-            <option value="2">2 Orang</option>
-            <option value="3">3 Orang</option>
-            <option value="4">4 Orang</option>
-            <option value="5">5+ Orang</option>
+            <option value="1">{{ langStore.t('hero.guest1') }}</option>
+            <option value="2">{{ langStore.t('hero.guest2') }}</option>
+            <option value="3">{{ langStore.t('hero.guest3') }}</option>
+            <option value="4">{{ langStore.t('hero.guest4') }}</option>
+            <option value="5">{{ langStore.t('hero.guest5') }}</option>
           </select>
         </div>
         <button class="btn btn-primary" id="searchBarBtn" @click="handleSearch">
-          <i class="fa-solid fa-magnifying-glass"></i> Cari
+          <i class="fa-solid fa-magnifying-glass"></i> {{ langStore.t('hero.searchBtn') }}
         </button>
       </div>
     </div>
 
     <div class="scroll-indicator" @click="scrollToSection('destinasi')">
-      <span>Scroll ke bawah</span>
+      <span>{{ langStore.t('hero.scrollDown') }}</span>
       <div class="scroll-mouse">
         <div class="scroll-wheel"></div>
       </div>
@@ -73,9 +73,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useBookingStore } from '@/stores/bookingStore'
+import { useLangStore } from '@/stores/langStore'
 
 const router = useRouter()
 const bookingStore = useBookingStore()
+const langStore = useLangStore()
 
 const selectedPackage = ref('')
 const selectedDate = ref('')

@@ -3,9 +3,9 @@
     <div class="why-bg-overlay"></div>
     <div class="container">
       <div class="section-header">
-        <span class="badge badge-accent">Keunggulan Kami</span>
-        <h2>Mengapa Harus Pesisir Barat?</h2>
-        <p>Pengalaman liburan tropis terbaik yang tidak bisa Anda temukan di tempat lain.</p>
+        <span class="badge badge-accent">{{ langStore.t('why.badge') }}</span>
+        <h2>{{ langStore.t('why.title') }}</h2>
+        <p>{{ langStore.t('why.subtitle') }}</p>
       </div>
 
       <div class="why-grid">
@@ -13,34 +13,40 @@
           <div class="why-icon-box">
             <i class="fa-solid fa-water"></i>
           </div>
-          <h4 class="why-card-title">Pantai & Ombak Indah</h4>
-          <p class="why-card-desc">Pasir keemasan yang bersih berpadu dengan air laut biru jernih dan formasi batuan karang yang menawan.</p>
+          <h4 class="why-card-title">{{ langStore.t('why.card1Title') }}</h4>
+          <p class="why-card-desc">{{ langStore.t('why.card1Desc') }}</p>
         </div>
 
         <div class="why-card">
           <div class="why-icon-box">
             <i class="fa-solid fa-person-surfing"></i>
           </div>
-          <h4 class="why-card-title">Destinasi Surfing Dunia</h4>
-          <p class="why-card-desc">Ombak bergulir sempurna sepanjang 200 meter yang sangat populer di kalangan peselancar internasional.</p>
+          <h4 class="why-card-title">{{ langStore.t('why.card2Title') }}</h4>
+          <p class="why-card-desc">{{ langStore.t('why.card2Desc') }}</p>
         </div>
 
         <div class="why-card">
           <div class="why-icon-box">
             <i class="fa-solid fa-tree"></i>
           </div>
-          <h4 class="why-card-title">Alam yang Eksotis</h4>
-          <p class="why-card-desc">Dikelilingi kebun kelapa rimbun, hutan adat yang asri, serta kawasan konservasi penyu yang mengedukasi.</p>
+          <h4 class="why-card-title">{{ langStore.t('why.card3Title') }}</h4>
+          <p class="why-card-desc">{{ langStore.t('why.card3Desc') }}</p>
         </div>
 
         <div class="why-card">
           <div class="why-icon-box">
             <i class="fa-solid fa-handshake-angle"></i>
           </div>
-          <h4 class="why-card-title">Wisata Budaya Lokal</h4>
-          <p class="why-card-desc">Rasakan keramahtamahan warga lokal, pertunjukan seni adat Lampung, dan kelezatan seafood bakar segar.</p>
+          <h4 class="why-card-title">{{ langStore.t('why.card4Title') }}</h4>
+          <p class="why-card-desc">{{ langStore.t('why.card4Desc') }}</p>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { useLangStore } from '@/stores/langStore'
+
+const langStore = useLangStore()
+</script>
