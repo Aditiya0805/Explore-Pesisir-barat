@@ -41,18 +41,64 @@ export const supabaseConfig = {
   isConfigured
 }
 
-const clientUrl = isSupabaseConfigured
-  ? supabaseUrl.trim().replace(/\/+$/, '')
-  : 'https://placeholder.supabase.co'
-const clientKey = isSupabaseConfigured ? supabaseKey.trim() : 'placeholder-key'
-
-export const supabase = createClient(clientUrl, clientKey, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true
+/**
+ * Safely initialise the Supabase client.
+ *
+ * `@supabase/supabase-js` v2+ validates the URL **synchronously** inside
+ * `createClient()`. If the URL is a placeholder or empty, a `TypeError` is
+ * thrown which kills the entire Vue app before `app.mount()` runs — resulting
+ * in a blank white screen on Vercel production builds where the env vars may
+ * not be set yet.
+ *
+ * We wrap the call in a try/catch and fall back to a lightweight no-op proxy
+ * so the rest of the app can still boot and show the "Supabase belum
+ * dikonfigurasi" message instead of dying silently.
+ */
+function initClient() {
+  if (isSupabaseConfigured) {
+    try {
+      return createClient(supabaseUrl.trim().replace(/\/+$/, ''), supabaseKey.trim(), {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true
+        }
+      })
+    } catch (err) {
+      console.warn('[PesibarWave] Supabase createClient gagal:', err.message)
+    }
   }
-})
+
+  // Return a no-op stub so code that references `supabase.from(...)` etc.
+  // does not throw a "Cannot read properties of null" error.
+  const reject = () => Promise.resolve({ data: null, error: { message: 'Supabase belum dikonfigurasi' } })
+  const noopQuery = () => ({
+    select: noopQuery, insert: noopQuery, update: noopQuery, upsert: noopQuery,
+    delete: noopQuery, eq: noopQuery, neq: noopQuery, in: noopQuery,
+    order: noopQuery, limit: noopQuery, single: noopQuery, maybeSingle: noopQuery,
+    match: noopQuery, filter: noopQuery, range: noopQuery, ilike: noopQuery,
+    upload: reject, remove: reject, getPublicUrl: () => ({ data: { publicUrl: '' } }),
+    then: (resolve) => reject().then(resolve)
+  })
+  return {
+    from: noopQuery,
+    storage: { from: () => ({ upload: reject, remove: reject, getPublicUrl: () => ({ data: { publicUrl: '' } }) }) },
+    auth: {
+      getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+      getUser: () => Promise.resolve({ data: { user: null }, error: null }),
+      signInWithPassword: reject,
+      signOut: () => Promise.resolve({ error: null }),
+      onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } })
+    },
+    channel: () => ({
+      on: function () { return this },
+      subscribe: () => ({})
+    }),
+    removeChannel: () => {}
+  }
+}
+
+export const supabase = initClient()
 
 /** Name of the public storage bucket used for uploads. */
 export const MEDIA_BUCKET = 'media'
