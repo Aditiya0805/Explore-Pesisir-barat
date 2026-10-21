@@ -40,7 +40,7 @@
             <span v-else>Supabase belum dikonfigurasi — dashboard berjalan dengan data lokal.</span>
           </div>
 
-          <div v-if="!supabaseConfigured" class="auth-hint-box">
+          <div v-if="showSupabaseSetupWarning" class="auth-hint-box">
             <i class="fa-solid fa-circle-info"></i>
             <div>
               Isi <code>VITE_SUPABASE_URL</code> dan <code>VITE_SUPABASE_PUBLISHABLE_KEY</code> pada <code>.env</code>,
@@ -174,11 +174,11 @@
 
           <!-- Body -->
           <div class="admin-body">
-            <div v-if="authStore.isDemo || !supabaseConfigured" class="admin-banner admin-banner--warn">
+            <div v-if="authStore.isDemo || showSupabaseSetupWarning" class="admin-banner admin-banner--warn">
               <i class="fa-solid fa-triangle-exclamation"></i>
               <div>
                 <strong>Mode demo lokal aktif.</strong>
-                <span v-if="!supabaseConfigured">
+                <span v-if="showSupabaseSetupWarning">
                   Supabase belum dikonfigurasi pada <code>.env</code>. Isi URL &amp; publishable key, jalankan
                   <code>supabase_schema.sql</code>, lalu login memakai akun Supabase Auth untuk menyimpan perubahan.
                 </span>
@@ -529,6 +529,9 @@ const adminStore = useAdminStore()
 const dataStore = useDataStore()
 
 const supabaseConfigured = isSupabaseConfigured
+// Never show the "Supabase belum dikonfigurasi" setup warnings on Vercel
+// production builds, even when the build-time env vars are unavailable.
+const showSupabaseSetupWarning = !supabaseConfigured && !import.meta.env.PROD
 const currentTab = ref('dashboard')
 const mobileSidebarOpen = ref(false)
 const crudPanel = ref(null)

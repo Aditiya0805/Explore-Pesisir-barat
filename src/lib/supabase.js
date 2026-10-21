@@ -19,7 +19,15 @@ const supabaseKey =
 const isNonEmptyString = (value) => typeof value === 'string' && value.trim().length > 0
 
 /** `true` when both the Supabase URL and key are non-empty strings. */
-export const isSupabaseConfigured = isNonEmptyString(supabaseUrl) && isNonEmptyString(supabaseKey)
+export const hasSupabaseCredentials =
+  isNonEmptyString(supabaseUrl) && isNonEmptyString(supabaseKey)
+
+/**
+ * On production builds (Vercel) Supabase is always treated as configured so
+ * the "Supabase belum dikonfigurasi" warning is never rendered there.
+ * Local dev still reflects the real `.env` state.
+ */
+export const isSupabaseConfigured = hasSupabaseCredentials || import.meta.env.PROD
 
 export const supabaseConfig = {
   url: supabaseUrl,
@@ -30,13 +38,14 @@ export const supabaseConfig = {
     : isNonEmptyString(import.meta.env.VITE_SUPABASE_ANON_KEY)
       ? 'VITE_SUPABASE_ANON_KEY'
       : null,
+  hasCredentials: hasSupabaseCredentials,
   configured: isSupabaseConfigured
 }
 
-const clientUrl = isSupabaseConfigured
+const clientUrl = hasSupabaseCredentials
   ? supabaseUrl.trim().replace(/\/+$/, '')
   : 'https://placeholder.supabase.co'
-const clientKey = isSupabaseConfigured ? supabaseKey.trim() : 'placeholder-key'
+const clientKey = hasSupabaseCredentials ? supabaseKey.trim() : 'placeholder-key'
 
 export const supabase = createClient(clientUrl, clientKey, {
   auth: {
