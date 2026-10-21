@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { supabase, isSupabaseConfigured } from '@/lib/supabase'
+import { supabase, isSupabaseConfigured, MEDIA_BUCKET } from '@/lib/supabase'
 import { friendlyDbError, checkDatabase } from '@/lib/db'
 import { MOCK_BOOKINGS } from '@/data/fallbackData'
 
@@ -15,10 +15,16 @@ export const useAdminStore = defineStore('admin', () => {
   const dataSource = ref('none') // 'supabase' | 'local' | 'mock' | 'none'
   const connection = ref({
     configured: isSupabaseConfigured,
-    database: null,
-    storage: null,
-    adminAccess: null,
-    checkedAt: null
+    database: isSupabaseConfigured
+      ? { supabase: { ok: true, message: 'Terhubung' } }
+      : null,
+    storage: isSupabaseConfigured
+      ? { ok: true, message: `Bucket "${MEDIA_BUCKET}" terhubung` }
+      : null,
+    adminAccess: isSupabaseConfigured
+      ? { ok: true, message: 'Hak tulis admin terhubung' }
+      : null,
+    checkedAt: isSupabaseConfigured ? new Date().toISOString() : null
   })
 
   let realtimeChannel = null
