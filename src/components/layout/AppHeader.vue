@@ -86,7 +86,7 @@
         <!-- International Language Switcher -->
         <LanguageSwitcher />
 
-        <router-link to="/booking" class="btn btn-primary" id="headerBookingBtn" @click="closeMobileMenu">
+        <router-link to="/booking" class="btn btn-primary btn-header-booking" id="headerBookingBtn" @click="closeMobileMenu">
           <i class="fa-solid fa-calendar-check"></i> <span>{{ langStore.t('nav.bookNow') }}</span>
         </router-link>
 
@@ -271,5 +271,68 @@ onUnmounted(() => {
     border-color: var(--color-ocean-blue);
     box-shadow: 0 2px 8px rgba(8, 126, 164, 0.3);
   }
+}
+
+/* ==========================================================================
+   ENHANCED PROMINENT BOOKING CTA BUTTON
+   ========================================================================== */
+#headerBookingBtn,
+.btn-header-booking {
+  background: linear-gradient(135deg, #FF5E36 0%, #FFA034 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  padding: 0.55rem 1.25rem !important;
+  border-radius: 9999px !important;
+  white-space: nowrap !important;
+  gap: 0.45rem !important;
+  box-shadow: 0 4px 16px rgba(255, 94, 54, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  position: relative !important;
+}
+
+#headerBookingBtn span,
+#headerBookingBtn i,
+.btn-header-booking span,
+.btn-header-booking i {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+#headerBookingBtn i,
+.btn-header-booking i {
+  font-size: 0.95rem !important;
+  transition: transform 0.25s ease !important;
+}
+
+#headerBookingBtn:hover,
+.btn-header-booking:hover {
+  background: linear-gradient(135deg, #F4511E 0%, #FB8C00 100%) !important;
+  transform: translateY(-2px) scale(1.04) !important;
+  box-shadow: 0 8px 25px rgba(255, 94, 54, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+  color: #ffffff !important;
+}
+
+#headerBookingBtn:hover i,
+.btn-header-booking:hover i {
+  transform: scale(1.2) rotate(-8deg);
+}
+
+.mobile-drawer-booking-btn {
+  background: linear-gradient(135deg, #FF5E36 0%, #FFA034 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 4px 16px rgba(255, 94, 54, 0.45) !important;
+}
+
+.mobile-drawer-booking-btn span,
+.mobile-drawer-booking-btn i {
+  color: #ffffff !important;
 }
 </style>

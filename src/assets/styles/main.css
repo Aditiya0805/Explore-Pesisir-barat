@@ -367,12 +367,25 @@ button {
 
 a.btn {
   text-decoration: none;
-  color: inherit;
 }
 
-.btn-primary {
+.btn-primary,
+a.btn-primary {
   background: linear-gradient(135deg, var(--color-ocean-blue), var(--color-turquoise));
-  color: var(--color-white);
+  color: #ffffff !important;
+}
+
+.btn-sm {
+  padding: 0.45rem 1rem !important;
+  font-size: 0.825rem !important;
+}
+
+.btn-xs {
+  padding: 0.35rem 0.7rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  border-radius: var(--border-radius-sm) !important;
+  gap: 0.35rem !important;
 }
 
 .btn-primary:hover {
@@ -612,24 +625,32 @@ a.btn {
 }
 
 .header-actions .btn {
-  padding: 0.55rem 1.2rem;
+  padding: 0.55rem 1.3rem;
   font-size: 0.85rem;
   font-weight: 700;
   border-radius: var(--border-radius-full);
   white-space: nowrap;
-  gap: 0.4rem;
-  box-shadow:
-    0 6px 18px rgba(8, 126, 164, 0.3),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2);
-  transition: all 0.25s ease;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  gap: 0.45rem;
+  background: linear-gradient(135deg, #FF5E36 0%, #FFA034 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(255, 94, 54, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.header-actions .btn *,
+.header-actions .btn i,
+.header-actions .btn span {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .header-actions .btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow:
-    0 10px 28px rgba(8, 126, 164, 0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px) scale(1.04);
+  background: linear-gradient(135deg, #F4511E 0%, #FB8C00 100%) !important;
+  box-shadow: 0 8px 25px rgba(255, 94, 54, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+  color: #ffffff !important;
 }
 
 .profile-trigger {
@@ -1864,6 +1885,125 @@ a.profile-trigger {
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
+}
+
+/* Enhanced Map Spot Item */
+.map-spot-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.8rem;
+  border-radius: var(--border-radius-md);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.map-spot-item:hover {
+  border-color: var(--color-ocean-blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background: #f8fcff;
+}
+
+.map-spot-item.active {
+  border-color: var(--color-ocean-blue);
+  background: rgba(8, 126, 164, 0.05);
+  box-shadow: 0 4px 16px rgba(8, 126, 164, 0.18);
+  outline: 2px solid var(--color-ocean-blue);
+}
+
+.spot-thumbnail-box {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  background-color: #0b2535;
+}
+
+.spot-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.map-spot-item:hover .spot-thumbnail {
+  transform: scale(1.05);
+}
+
+.spot-category-tag {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: rgba(7, 59, 76, 0.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: var(--color-white);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--border-radius-full);
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.spot-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.spot-item-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.775rem;
+}
+
+.spot-rating {
+  font-weight: 700;
+  color: #d97706;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.spot-price {
+  font-weight: 600;
+  color: var(--color-ocean-blue);
+  background: rgba(8, 126, 164, 0.08);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--border-radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.spot-item-desc {
+  font-size: 0.775rem;
+  color: var(--color-text-medium);
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.spot-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+
+.spot-actions .btn {
+  flex: 1;
 }
 
 /* Map Footer Banner */
