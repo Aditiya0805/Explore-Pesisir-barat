@@ -314,6 +314,11 @@
           <span class="code-val">{{ bookingStore.lastBookingCode }}</span>
         </div>
 
+        <div v-if="bookingStore.lastSyncWarning" class="booking-sync-warning">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>{{ bookingStore.lastSyncWarning }}</span>
+        </div>
+
         <div class="booking-success-info">
           <i class="fa-solid fa-circle-exclamation"></i>
           <strong>{{ langStore.t('booking.nextStepTitle') }}</strong><br>
@@ -348,13 +353,18 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useBookingStore } from '@/stores/bookingStore'
 import { useLangStore } from '@/stores/langStore'
 import { downloadBookingPdf, buildWhatsAppLink } from '@/lib/bookingProof'
 
 const bookingStore = useBookingStore()
 const langStore = useLangStore()
+
+onMounted(() => {
+  // Use the latest price/name from the `packages` table.
+  bookingStore.syncPackagePrice()
+})
 
 // Complete booking record used for the PDF proof & WhatsApp share message.
 const bookingRecord = computed(() => ({
@@ -467,5 +477,20 @@ const prevStep = () => {
   font-size: 0.8rem;
   margin-top: 4px;
   display: block;
+}
+.booking-sync-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  max-width: 560px;
+  margin: 0 auto 1.25rem;
+  padding: 0.7rem 0.9rem;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: left;
 }
 </style>

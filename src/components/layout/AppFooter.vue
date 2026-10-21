@@ -10,13 +10,13 @@
           <p class="footer-tagline">{{ langStore.t('footer.brandTagline') }}</p>
           <p>{{ langStore.t('footer.tagline') }}</p>
           <div class="social-links">
-            <a href="https://www.instagram.com/kruitourism_" target="_blank" rel="noopener noreferrer" class="social-link" title="Instagram">
+            <a :href="contact.instagram_url" target="_blank" rel="noopener noreferrer" class="social-link" title="Instagram">
               <i class="fa-brands fa-instagram"></i>
             </a>
-            <a href="https://www.facebook.com/disporaparpesisirbarat" target="_blank" rel="noopener noreferrer" class="social-link" title="Facebook Disporapar">
+            <a :href="contact.facebook_url" target="_blank" rel="noopener noreferrer" class="social-link" title="Facebook Disporapar">
               <i class="fa-brands fa-facebook-f"></i>
             </a>
-            <a href="https://www.youtube.com/@disporaparpesisirbarat" target="_blank" rel="noopener noreferrer" class="social-link" title="YouTube Pariwisata">
+            <a :href="contact.youtube_url" target="_blank" rel="noopener noreferrer" class="social-link" title="YouTube Pariwisata">
               <i class="fa-brands fa-youtube"></i>
             </a>
           </div>
@@ -56,9 +56,15 @@
         <div>
           <h4 class="footer-title">{{ langStore.t('footer.contactTitle') }}</h4>
           <ul class="footer-contact">
-            <li><i class="fa-solid fa-phone"></i> <span>+62-822-8942-4809</span></li>
-            <li><i class="fa-solid fa-envelope"></i> <span>Adityapratama2292@gmail.com</span></li>
-            <li><i class="fa-solid fa-location-dot"></i> <span>Krui, Pesisir Tengah, Pesisir Barat, Lampung 34272</span></li>
+            <li>
+              <i class="fa-solid fa-phone"></i>
+              <a :href="waLink" target="_blank" rel="noopener noreferrer">{{ contact.whatsapp }}</a>
+            </li>
+            <li>
+              <i class="fa-solid fa-envelope"></i>
+              <a :href="`mailto:${contact.email}`">{{ contact.email }}</a>
+            </li>
+            <li><i class="fa-solid fa-location-dot"></i> <span>{{ contact.address }}</span></li>
           </ul>
         </div>
       </div>
@@ -99,10 +105,19 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useLangStore } from '@/stores/langStore'
+import { useDataStore } from '@/stores/dataStore'
 
 defineEmits(['openModal'])
 const langStore = useLangStore()
+const dataStore = useDataStore()
+
+const contact = computed(() => dataStore.settings || {})
+const waLink = computed(() => {
+  const digits = String(contact.value.whatsapp || '').replace(/[^\d]/g, '')
+  return digits ? `https://wa.me/${digits}` : '#'
+})
 </script>
 
 <style scoped>

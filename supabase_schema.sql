@@ -146,6 +146,91 @@ CREATE TABLE IF NOT EXISTS reviews (
 -- ROW LEVEL SECURITY (RLS)
 -- ==========================================================================
 
+-- Admin allowlist. Only emails listed here may write to the database.
+-- The dashboard login must use a Supabase Auth account with the same email.
+CREATE TABLE IF NOT EXISTS admins (
+  email TEXT PRIMARY KEY,
+  is_active BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+ALTER TABLE admins ENABLE ROW LEVEL SECURITY;
+-- No policies on purpose: rows are only readable through the SECURITY DEFINER
+-- helper below and directly via the Supabase SQL editor / service role.
+
+-- Seed the operator account. Add more rows for additional admins.
+INSERT INTO admins (email) VALUES ('admin@pesibarwave.id')
+ON CONFLICT (email) DO NOTHING;
+
+-- Helper used by every write policy.
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.admins a
+    WHERE lower(a.email) = lower(coalesce(auth.jwt() ->> 'email', ''))
+      AND a.is_active = TRUE
+  );
+$$;
+
+GRANT EXECUTE ON FUNCTION public.is_admin() TO anon, authenticated;
+
+-- Updated-at helper + columns (safe to re-run)
+CREATE OR REPLACE FUNCTION public.set_updated_at()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$;
+
+ALTER TABLE destinations ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+ALTER TABLE map_locations ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+ALTER TABLE guides ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+ALTER TABLE gallery ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+ALTER TABLE articles ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+ALTER TABLE reviews ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+ALTER TABLE settings ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+
+DO $$
+DECLARE
+  t TEXT;
+BEGIN
+  FOREACH t IN ARRAY ARRAY['destinations','map_locations','packages','guides','gallery','articles','bookings','reviews','settings']
+  LOOP
+    EXECUTE format('DROP TRIGGER IF EXISTS trg_%s_updated_at ON %I', t, t);
+    EXECUTE format(
+      'CREATE TRIGGER trg_%s_updated_at BEFORE UPDATE ON %I FOR EACH ROW EXECUTE FUNCTION public.set_updated_at()',
+      t, t
+    );
+  END LOOP;
+END $$;
+
+-- Indexes for the queries used by the app
+CREATE INDEX IF NOT EXISTS idx_map_locations_dest_id ON map_locations (dest_id);
+CREATE INDEX IF NOT EXISTS idx_bookings_status ON bookings (status);
+CREATE INDEX IF NOT EXISTS idx_bookings_created_at ON bookings (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_reviews_destination_id ON reviews (destination_id);
+CREATE INDEX IF NOT EXISTS idx_gallery_sort_order ON gallery (sort_order);
+CREATE INDEX IF NOT EXISTS idx_packages_sort_order ON packages (sort_order);
+
+-- Realtime: allow the dashboard to receive live booking changes.
+DO $$
+BEGIN
+  ALTER PUBLICATION supabase_realtime ADD TABLE bookings;
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+  WHEN undefined_object THEN NULL;
+END $$;
+
 -- Enable RLS on all tables
 ALTER TABLE destinations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE map_locations ENABLE ROW LEVEL SECURITY;
@@ -157,7 +242,28 @@ ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE reviews ENABLE ROW LEVEL SECURITY;
 
--- Public read access for content tables
+-- Remove legacy policies so this file can be re-run safely.
+DROP POLICY IF EXISTS "Public read destinations" ON destinations;
+DROP POLICY IF EXISTS "Public read map_locations" ON map_locations;
+DROP POLICY IF EXISTS "Public read packages" ON packages;
+DROP POLICY IF EXISTS "Public read guides" ON guides;
+DROP POLICY IF EXISTS "Public read gallery" ON gallery;
+DROP POLICY IF EXISTS "Public read articles" ON articles;
+DROP POLICY IF EXISTS "Public read settings" ON settings;
+DROP POLICY IF EXISTS "Anyone can create booking" ON bookings;
+DROP POLICY IF EXISTS "Auth users read own bookings" ON bookings;
+DROP POLICY IF EXISTS "Auth users update bookings" ON bookings;
+DROP POLICY IF EXISTS "Public read reviews" ON reviews;
+DROP POLICY IF EXISTS "Anyone can create review" ON reviews;
+DROP POLICY IF EXISTS "Auth users manage destinations" ON destinations;
+DROP POLICY IF EXISTS "Auth users manage map_locations" ON map_locations;
+DROP POLICY IF EXISTS "Auth users manage packages" ON packages;
+DROP POLICY IF EXISTS "Auth users manage guides" ON guides;
+DROP POLICY IF EXISTS "Auth users manage gallery" ON gallery;
+DROP POLICY IF EXISTS "Auth users manage articles" ON articles;
+DROP POLICY IF EXISTS "Auth users manage settings" ON settings;
+
+-- Public read for website content
 CREATE POLICY "Public read destinations" ON destinations FOR SELECT USING (true);
 CREATE POLICY "Public read map_locations" ON map_locations FOR SELECT USING (true);
 CREATE POLICY "Public read packages" ON packages FOR SELECT USING (true);
@@ -166,31 +272,85 @@ CREATE POLICY "Public read gallery" ON gallery FOR SELECT USING (true);
 CREATE POLICY "Public read articles" ON articles FOR SELECT USING (true);
 CREATE POLICY "Public read settings" ON settings FOR SELECT USING (true);
 
--- Bookings: authenticated users can insert
-CREATE POLICY "Anyone can create booking" ON bookings FOR INSERT WITH CHECK (true);
+-- Admin-only writes (insert / update / delete) on content tables
+CREATE POLICY "Admin write destinations" ON destinations FOR ALL TO authenticated
+  USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "Admin write map_locations" ON map_locations FOR ALL TO authenticated
+  USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "Admin write packages" ON packages FOR ALL TO authenticated
+  USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "Admin write guides" ON guides FOR ALL TO authenticated
+  USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "Admin write gallery" ON gallery FOR ALL TO authenticated
+  USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "Admin write articles" ON articles FOR ALL TO authenticated
+  USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "Admin write settings" ON settings FOR ALL TO authenticated
+  USING (public.is_admin()) WITH CHECK (public.is_admin());
 
--- Reviews: public read, anyone can submit a review
+-- Bookings: anyone can reserve; only admins (or the owning user) can read.
+CREATE POLICY "Anyone can create booking" ON bookings FOR INSERT TO anon, authenticated
+  WITH CHECK (true);
+CREATE POLICY "Admin read bookings" ON bookings FOR SELECT TO authenticated
+  USING (public.is_admin() OR auth.uid() = user_id);
+CREATE POLICY "Admin update bookings" ON bookings FOR UPDATE TO authenticated
+  USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "Admin delete bookings" ON bookings FOR DELETE TO authenticated
+  USING (public.is_admin());
+
+-- Reviews: public read, anyone can submit, admins can moderate.
 CREATE POLICY "Public read reviews" ON reviews FOR SELECT USING (true);
-CREATE POLICY "Anyone can create review" ON reviews FOR INSERT WITH CHECK (true);
+CREATE POLICY "Anyone can create review" ON reviews FOR INSERT TO anon, authenticated
+  WITH CHECK (true);
+CREATE POLICY "Admin update reviews" ON reviews FOR UPDATE TO authenticated
+  USING (public.is_admin()) WITH CHECK (public.is_admin());
+CREATE POLICY "Admin delete reviews" ON reviews FOR DELETE TO authenticated
+  USING (public.is_admin());
 
--- Bookings: authenticated users can read their own bookings
-CREATE POLICY "Auth users read own bookings" ON bookings FOR SELECT USING (
-  auth.uid() = user_id OR auth.role() = 'authenticated'
-);
+-- ==========================================================================
+-- STORAGE: public "media" bucket used by the admin dashboard uploads.
+-- Images are compressed client-side to max 1 MB before upload.
+-- ==========================================================================
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'media',
+  'media',
+  TRUE,
+  1048576, -- 1 MB hard limit enforced by Supabase Storage as well
+  ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+)
+ON CONFLICT (id) DO UPDATE
+SET public = TRUE,
+    file_size_limit = 1048576,
+    allowed_mime_types = ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
--- Bookings: admin (authenticated) can update status
-CREATE POLICY "Auth users update bookings" ON bookings FOR UPDATE USING (
-  auth.role() = 'authenticated'
-);
+DROP POLICY IF EXISTS "Public read media" ON storage.objects;
+DROP POLICY IF EXISTS "Admin upload media" ON storage.objects;
+DROP POLICY IF EXISTS "Admin update media" ON storage.objects;
+DROP POLICY IF EXISTS "Admin delete media" ON storage.objects;
 
--- Admin full access for content management
-CREATE POLICY "Auth users manage destinations" ON destinations FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth users manage map_locations" ON map_locations FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth users manage packages" ON packages FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth users manage guides" ON guides FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth users manage gallery" ON gallery FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth users manage articles" ON articles FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "Auth users manage settings" ON settings FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Public read media" ON storage.objects FOR SELECT
+  USING (bucket_id = 'media');
+CREATE POLICY "Admin upload media" ON storage.objects FOR INSERT TO authenticated
+  WITH CHECK (bucket_id = 'media' AND public.is_admin());
+CREATE POLICY "Admin update media" ON storage.objects FOR UPDATE TO authenticated
+  USING (bucket_id = 'media' AND public.is_admin())
+  WITH CHECK (bucket_id = 'media' AND public.is_admin());
+CREATE POLICY "Admin delete media" ON storage.objects FOR DELETE TO authenticated
+  USING (bucket_id = 'media' AND public.is_admin());
+
+-- ==========================================================================
+-- CATATAN: Membuat akun login admin
+-- 1. Supabase Dashboard -> Authentication -> Users -> "Add user"
+--    Email   : admin@pesibarwave.id
+--    Password: pesisir2026  (ganti dengan kata sandi yang kuat)
+--    Centang "Auto Confirm User".
+-- 2. Pastikan email tersebut ada di tabel admins:
+--    INSERT INTO admins (email) VALUES ('email-anda@gmail.com')
+--      ON CONFLICT (email) DO NOTHING;
+-- 3. Login dashboard memakai email + password tersebut.
+-- ==========================================================================
+
 
 -- ==========================================================================
 -- SEED DATA: Destinations
@@ -213,7 +373,8 @@ INSERT INTO destinations (id, name, location, lat, lng, price, rating, hours, ca
 
 (16, 'Pantai Biha & Pesisir', 'Biha, Pesisir Selatan, Pesisir Barat, Lampung', -5.334020, 104.015010, 10000, '4.7 / 5.0 (Ramah Keluarga & Kuliner)', '06:00 - 20:00 WIB', 'Wisata Bahari & Sentra Seruit', 'Pantai berpasir putih keemasan yang tenang, pusat kuliner ikan bakar seruit.', 'Pantai Biha memiliki karakteristik garis pantai yang landai dengan ombak sedang, menjadikannya destinasi wisata paling aman untuk keluarga dan anak-anak yang ingin bermain air. Di sekitar pantai, pengunjung dapat menyaksikan langsung hilir mudik perahu nelayan tradisional ''Jukung'' yang membawa hasil tangkapan laut segar. Pantai ini terkenal sebagai pusat kuliner ikan bakar khas Lampung Pesisir dengan racikan bumbu tradisional sambal seruit yang menggugah selera.', '/assets/images/pantai-biha.jpg', ARRAY['/assets/images/pantai-biha.jpg', '/assets/images/galeri-santai-pantai.jpg', '/assets/images/sunset-culture.jpg'], ARRAY['Warung Makan Seruit Segar', 'Sewa Ban Renang Anak', 'Mushola', 'Spot Foto Perahu Jukung', 'Pusat Oleh-oleh Kain Tapis']),
 
-(17, 'Konservasi Penyu Muara Tembulih', 'Pekon Muara Tembulih, Ngambur, Pesisir Barat, Lampung', -5.392000, 104.085000, 10000, '4.9 / 5.0 (Konservasi Laut SDG 14)', '08:00 - 18:00 WIB', 'Konservasi Satwa Liar Bahari', 'Pusat pelestarian dan penangkaran penyu belimbing & penyu sisik langka.', 'Kawasan Konservasi Penyu Muara Tembulih didedikasikan untuk melindungi populasi penyu laut langka (penyu belimbing, penyu sisik, dan lekang) dari ancaman kepunahan. Pengunjung dapat belajar siklus hidup penyu, melihat sarang telur semi-alami, dan mengikuti program pelepasan tukik (anak penyu) ke Samudra Hindia.', 'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=800&q=80', ARRAY['https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=400&q=80', '/assets/images/galeri-santai-pantai.jpg', '/assets/images/pantai-biha.jpg'], ARRAY['Pusat Edukasi & Penetasan Tukik', 'Kolam Karantina Penyu', 'Pemandu Konservasi', 'Area Pelepasan Tukik', 'Toilet & Gazebo']);
+(17, 'Konservasi Penyu Muara Tembulih', 'Pekon Muara Tembulih, Ngambur, Pesisir Barat, Lampung', -5.392000, 104.085000, 10000, '4.9 / 5.0 (Konservasi Laut SDG 14)', '08:00 - 18:00 WIB', 'Konservasi Satwa Liar Bahari', 'Pusat pelestarian dan penangkaran penyu belimbing & penyu sisik langka.', 'Kawasan Konservasi Penyu Muara Tembulih didedikasikan untuk melindungi populasi penyu laut langka (penyu belimbing, penyu sisik, dan lekang) dari ancaman kepunahan. Pengunjung dapat belajar siklus hidup penyu, melihat sarang telur semi-alami, dan mengikuti program pelepasan tukik (anak penyu) ke Samudra Hindia.', 'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=800&q=80', ARRAY['https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=400&q=80', '/assets/images/galeri-santai-pantai.jpg', '/assets/images/pantai-biha.jpg'], ARRAY['Pusat Edukasi & Penetasan Tukik', 'Kolam Karantina Penyu', 'Pemandu Konservasi', 'Area Pelepasan Tukik', 'Toilet & Gazebo'])
+ON CONFLICT (id) DO NOTHING;
 
 -- Reset sequence
 SELECT setval('destinations_id_seq', (SELECT MAX(id) FROM destinations));
@@ -240,7 +401,8 @@ INSERT INTO map_locations (id, dest_id, name, category, category_label, lat, lng
 (15, NULL, 'Pulau Betuah (Pulau Selatan)', 'island', 'Pulau Tak Berpenghuni', -5.451200, 104.128000, 'fa-sailboat', 'pin-island', '4.8 ★', 'Ekspedisi', 'Pulau kecil eksotis tak berpenghuni di batas terluar Lampung Barat dengan terumbu karang alami yang masih sangat perawan.', 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=600&q=80', 'Pulau+Betuah+Pesisir+Barat', 'https://www.google.com/maps/dir/?api=1&destination=-5.451200,104.128000', 'https://www.google.com/maps/search/?api=1&query=-5.451200,104.128000'),
 (16, 16, 'Pantai Biha & Sentra Seruit', 'culinary', 'Kuliner & Bahari', -5.334020, 104.015010, 'fa-utensils', 'pin-culinary', '4.7 ★', 'Rp 10.000', 'Pusat kuliner seruit ikan bakar tradisional Lampung & pantai ramah keluarga dengan jajaran perahu nelayan Jukung.', '/assets/images/pantai-biha.jpg', 'Pantai+Biha+Pesisir+Barat', 'https://www.google.com/maps/dir/?api=1&destination=-5.334020,104.015010', 'https://www.google.com/maps/search/?api=1&query=-5.334020,104.015010'),
 (17, NULL, 'Konservasi Penyu Muara Tembulih', 'conservation', 'Konservasi Satwa', -5.392000, 104.085000, 'fa-shield-halved', 'pin-conservation', '4.9 ★', 'Donasi', 'Pusat pelestarian, penetasan telur penyu belimbing dan penyu sisik, serta edukasi ekosistem laut terpadu.', 'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=600&q=80', 'Konservasi+Penyu+Muara+Tembulih+Ngambur', 'https://www.google.com/maps/dir/?api=1&destination=-5.392000,104.085000', 'https://www.google.com/maps/search/?api=1&query=-5.392000,104.085000'),
-(18, NULL, 'Taman Nasional TNBBS Resort Biha', 'conservation', 'Taman Nasional UNESCO', -5.305000, 104.062000, 'fa-seedling', 'pin-conservation', '4.9 ★', 'Izin Masuk', 'Ekowisata trekking hutan hujan tropis warisan dunia UNESCO, habitat Rafflesia arnoldii & satwa liar Sumatra.', 'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=600&q=80', 'Taman+Nasional+Bukit+Barisan+Selatan+Biha', 'https://www.google.com/maps/dir/?api=1&destination=-5.305000,104.062000', 'https://www.google.com/maps/search/?api=1&query=-5.305000,104.062000');
+(18, NULL, 'Taman Nasional TNBBS Resort Biha', 'conservation', 'Taman Nasional UNESCO', -5.305000, 104.062000, 'fa-seedling', 'pin-conservation', '4.9 ★', 'Izin Masuk', 'Ekowisata trekking hutan hujan tropis warisan dunia UNESCO, habitat Rafflesia arnoldii & satwa liar Sumatra.', 'https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=600&q=80', 'Taman+Nasional+Bukit+Barisan+Selatan+Biha', 'https://www.google.com/maps/dir/?api=1&destination=-5.305000,104.062000', 'https://www.google.com/maps/search/?api=1&query=-5.305000,104.062000')
+ON CONFLICT (id) DO NOTHING;
 
 SELECT setval('map_locations_id_seq', (SELECT MAX(id) FROM map_locations));
 
@@ -252,28 +414,35 @@ INSERT INTO packages (id, name, price, description, duration, min_persons, ameni
 ('surf', 'Paket Surfing Adventure', 2450000, 'Homestay premium, papan selancar, pelatih profesional & antar jemput spot', '3 Hari 2 Malam', 'Min. 2 Orang', ARRAY['Menginap di Surf Camp Premium', 'Papan Surfing & Pelatih Profesional', 'Antar-jemput Spot Ombak Terbaik', 'Makan 3x Sehari (Menu Khas Lokal)'], '/assets/images/paket-surfing.jpg', TRUE, 1),
 ('beach', 'Paket Explore Krui', 1200000, 'Vila, pemandu lokal, sewa motor & dokumentasi lengkap', '2 Hari 1 Malam', 'Min. 3 Orang', ARRAY['Homestay AC Pinggir Pantai', 'Tour Guide Lokal berpengalaman', 'Sewa Sepeda Motor / Mobil Offroad', 'Dokumentasi Foto DSLR & Drone'], '/assets/images/paket-explore-krui.jpg', FALSE, 2),
 ('sunset', 'Paket Sunset & Culture', 450000, 'Kuliner seafood, keliling desa adat & tenun Tapis', '1 Hari (Full Day)', 'Tanpa Minimal', ARRAY['Transportasi keliling desa', 'Kulineran Seafood di tepi pantai', 'Kunjungan Sentra Kerajinan Tapis', 'Welcome drink kelapa muda segar'], '/assets/images/paket-sunset.jpg', FALSE, 3),
-('family', 'Paket Wisata Pulau Pisang', 300000, 'Tour Pulau Pisang, Batu Ghuri, Goa Liang, Pengrajin Tapis & BBQ Ikan Bakar', '1 Day Trip & Explore', 'Tanpa Minimal', ARRAY['Tour Pulau Pisang, Batu Ghuri & Goa Liang', 'Hunting Sunset & Manasuar View Pulau', 'Kearifan Lokal Pengrajin Tapis & Sekolah Belanda', 'Guide Lokal, Pelampung, Makan & BBQ Ikan Bakar'], '/assets/images/paket-pulau-pisang.jpg', FALSE, 4);
+('family', 'Paket Wisata Pulau Pisang', 300000, 'Tour Pulau Pisang, Batu Ghuri, Goa Liang, Pengrajin Tapis & BBQ Ikan Bakar', '1 Day Trip & Explore', 'Tanpa Minimal', ARRAY['Tour Pulau Pisang, Batu Ghuri & Goa Liang', 'Hunting Sunset & Manasuar View Pulau', 'Kearifan Lokal Pengrajin Tapis & Sekolah Belanda', 'Guide Lokal, Pelampung, Makan & BBQ Ikan Bakar'], '/assets/images/paket-pulau-pisang.jpg', FALSE, 4)
+ON CONFLICT (id) DO NOTHING;
 
 -- ==========================================================================
 -- SEED DATA: Guides
 -- ==========================================================================
 
-INSERT INTO guides (name, specialty, badge_label, rating, review_count, experience_years, languages, price, price_unit) VALUES
-('Yudi Antara', 'Surfing Coach', 'Surfing Coach', 5.0, 48, 8, 'ID, EN', 350000, '/ hari'),
-('Rian Kurniawan', 'Nature & Trekking', 'Nature & Trekking', 4.5, 32, 5, 'ID, EN, JP', 250000, '/ hari'),
-('Santi Rahayu', 'Culture & Foodies', 'Culture & Foodies', 5.0, 54, 6, 'ID, EN', 250000, '/ hari');
+INSERT INTO guides (name, specialty, badge_label, rating, review_count, experience_years, languages, price, price_unit)
+SELECT * FROM (VALUES
+  ('Yudi Antara', 'Surfing Coach', 'Surfing Coach', 5.0, 48, 8, 'ID, EN', 350000, '/ hari'),
+  ('Rian Kurniawan', 'Nature & Trekking', 'Nature & Trekking', 4.5, 32, 5, 'ID, EN, JP', 250000, '/ hari'),
+  ('Santi Rahayu', 'Culture & Foodies', 'Culture & Foodies', 5.0, 54, 6, 'ID, EN', 250000, '/ hari')
+) AS v(name, specialty, badge_label, rating, review_count, experience_years, languages, price, price_unit)
+WHERE NOT EXISTS (SELECT 1 FROM guides);
 
 -- ==========================================================================
 -- SEED DATA: Gallery
 -- ==========================================================================
 
-INSERT INTO gallery (title, category, img_url, css_class, sort_order) VALUES
+INSERT INTO gallery (title, category, img_url, css_class, sort_order)
+SELECT * FROM (VALUES
 ('Menembus Ombak Ujung Bocur', 'surfing', 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=500&q=80', 'tall', 1),
 ('Matahari Terbenam Keemasan di Pesisir Barat', 'sunset', '/assets/images/paket-sunset.jpg', 'wide', 2),
 ('Pohon Kelapa Teduh Way Jambu', 'pantai', '/assets/images/pantai-way-jambu.jpg', '', 3),
 ('Menyusuri Pasir Putih Bersama Pasangan', 'aktivitas', '/assets/images/galeri-santai-pantai.jpg', '', 4),
 ('Perahu Nelayan Tradisional di Biha', 'pantai', '/assets/images/pantai-biha.jpg', '', 5),
-('Eksplorasi Keindahan Laut Bawah Air', 'surfing', 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=800&q=80', 'wide', 6);
+('Eksplorasi Keindahan Laut Bawah Air', 'surfing', 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=800&q=80', 'wide', 6)
+) AS v(title, category, img_url, css_class, sort_order)
+WHERE NOT EXISTS (SELECT 1 FROM gallery);
 
 -- ==========================================================================
 -- SEED DATA: Articles
@@ -282,7 +451,8 @@ INSERT INTO gallery (title, category, img_url, css_class, sort_order) VALUES
 INSERT INTO articles (title, description, category, img_url, published_date, slug) VALUES
 ('Panduan Lengkap Backpacker ke Pesisir Barat dari Jakarta', 'Ingin liburan murah ke pesisir barat? Simak rute perjalanan bus, kapal penyeberangan, hingga penginapan backpacker hemat.', 'Tips Wisata', 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=500&q=80', '10 Agustus 2026', 'panduan-backpacker-pesisir-barat'),
 ('Musim Ombak Terbaik di Pesisir Barat untuk Peselancar Pemula', 'Jangan salah bulan berkunjung! Ketahui grafik pasang surut air laut dan bulan-bulan terbaik untuk berselancar aman bagi pemula.', 'Surfing', '/assets/images/musim-ombak.jpg', '28 Juli 2026', 'musim-ombak-terbaik'),
-('Mengenal Tradisi Kerajinan Kain Tapis Khas Pesisir Barat', 'Eksplorasi nilai historis di balik tenunan emas kain tradisional Tapis Pesisir barat yang dibuat secara manual dengan penuh kesabaran.', 'Budaya', '/assets/images/kain-tapis.jpg', '15 Juli 2026', 'tradisi-kain-tapis');
+('Mengenal Tradisi Kerajinan Kain Tapis Khas Pesisir Barat', 'Eksplorasi nilai historis di balik tenunan emas kain tradisional Tapis Pesisir barat yang dibuat secara manual dengan penuh kesabaran.', 'Budaya', '/assets/images/kain-tapis.jpg', '15 Juli 2026', 'tradisi-kain-tapis')
+ON CONFLICT (slug) DO NOTHING;
 
 -- ==========================================================================
 -- SEED DATA: Bookings (Demo)
@@ -292,11 +462,13 @@ INSERT INTO bookings (code, name, phone, email, package_id, package_name, visit_
 ('PW-2026-0001', 'John Doe', '081288889999', 'john@example.com', 'surf', 'Paket Surfing Adventure', '2026-08-15', 2, 'Request intermediate surf board', TRUE, FALSE, 'confirmed', 5250000),
 ('PW-2026-0002', 'Siti Aminah', '085611112222', 'siti.aminah@gmail.com', 'sunset', 'Paket Sunset & Culture', '2026-08-12', 4, 'Alergi makanan seafood diganti ayam bakar', FALSE, TRUE, 'pending', 2050000),
 ('PW-2026-0003', 'David Miller', '+61400222111', 'david.m@surf.com.au', 'surf', 'Paket Surfing Adventure', '2026-08-20', 1, 'Airport pick up requested from Bandar Lampung', TRUE, TRUE, 'confirmed', 3050000),
-('PW-2026-0004', 'Keluarga Handoko', '081388887777', 'handoko@company.id', 'family', 'Paket Wisata Pulau Pisang', '2026-09-01', 5, 'Tour pulau & hunting sunset', FALSE, TRUE, 'pending', 1750000);
+('PW-2026-0004', 'Keluarga Handoko', '081388887777', 'handoko@company.id', 'family', 'Paket Wisata Pulau Pisang', '2026-09-01', 5, 'Tour pulau & hunting sunset', FALSE, TRUE, 'pending', 1750000)
+ON CONFLICT (code) DO NOTHING;
 
 -- ==========================================================================
 -- SEED DATA: Settings
 -- ==========================================================================
 
-INSERT INTO settings (site_name, whatsapp, email, address) VALUES
-('Pesibar Wave', '+62-822-8942-4809', 'Adityapratama2292@gmail.com', 'Krui, Pesisir Tengah, Pesisir Barat, Lampung 34272');
+INSERT INTO settings (site_name, whatsapp, email, address)
+SELECT 'Pesibar Wave', '+62-822-8942-4809', 'Adityapratama2292@gmail.com', 'Krui, Pesisir Tengah, Pesisir Barat, Lampung 34272'
+WHERE NOT EXISTS (SELECT 1 FROM settings);

@@ -203,11 +203,35 @@ export const useLangStore = defineStore('lang', () => {
       long_description: "Labuhan Jukung Beach is the lively recreational heart of Krui. Featuring open green spaces, cultural performance stages, and rows of local seafood stalls, its welcoming waters are also ideal for beginner to intermediate surfers.",
       facilities: ["Public Waterfront Park", "Cultural Amphitheater", "Fresh Grilled Fish Stalls", "Visitor Center", "Spacious Restrooms & Parking"]
     },
+    5: {
+      category: "International Surf Championship Arena",
+      description: "Home of the annual WSL Krui Pro world tour, featuring golden sands and vibrant oceanfront surf resorts.",
+      long_description: "Tanjung Setia Beach is the premier stage for the annual World Surf League (WSL) Krui Pro QS 5000 competition, welcoming elite surfers worldwide. It features powder-soft sands, lush coconut palms, international eco-resorts, and relaxed beachfront cafes.",
+      facilities: ["WSL Pro Event Stage", "Surf Camps & Eco Lodges", "Board Rental & Instructors", "Beachfront Cafes & Bars", "24/7 Security & Parking"]
+    },
     6: {
       category: "Tropical Rainforest Ecotourism",
       description: "Pristine mountain cascade hidden amidst the lush rainforest canopies of Krui.",
       long_description: "Way Detun Waterfall offers crystal-clear, refreshing mountain waters with natural turquoise pools underneath. Surrounded by dramatic rock shelves and lush greenery, it provides the ultimate refreshing escape after exploring ocean swells.",
       facilities: ["Scenic Trekking Paths", "Resting Shelters", "Local Nature Guides", "Snack Stalls", "Natural Photo Spots"]
+    },
+    7: {
+      category: "Seaside Meadows & Palm Groves",
+      description: "Tranquil beach shaded by thousands of swaying coconut palms and green meadows overlooking the ocean.",
+      long_description: "Walur Beach blends spacious grassy lawns with coconut groves right on the shoreline. Its peaceful, shady atmosphere makes it a prime haven for family picnics, hammock relaxation, and camping beneath the stars.",
+      facilities: ["Camping & Hammock Zones", "Bamboo Gazebos", "Fresh Coconut Shacks", "Grassy Picnic Grounds", "Motorbike & Car Parking"]
+    },
+    8: {
+      category: "Geological Sea Stack Landmark",
+      description: "Monumental 25-meter natural monolith sea stack rock standing dramatically by the river mouth and ocean.",
+      long_description: "Batu Tihang Beach is famed for its monumental 25-meter volcanic sea stack rising proudly above the estuary and crushing Indian Ocean waves, creating a dramatic coastal photo landmark.",
+      facilities: ["Rock Observation Deck", "River Estuary Bridge", "Local Coffee Stalls", "Highway Rest Parking", "Geological Photo Vantage"]
+    },
+    9: {
+      category: "Tiered Waterfall & Highland Valley",
+      description: "Magnificent tiered waterfalls cascading over andesite shelves with refreshing natural freshwater pools.",
+      long_description: "Tucked inside the Lemong highland hills at the northern gateway of Pesisir Barat, Curup Cay cascades across tiered rock ledges into deep natural swimming lagoons surrounded by pristine virgin rainforests.",
+      facilities: ["Forest Foothpaths", "Natural Swimming Pool", "Resting Huts", "Local Trail Guides", "Scenic Nature Vantage"]
     },
     10: {
       category: "Cultural Heritage & Crafts (SDG 11.4)",
@@ -215,11 +239,35 @@ export const useLangStore = defineStore('lang', () => {
       long_description: "The Pesisir Barat Tapis Weaving Center empowers local women artisans in safeguarding traditional Lampung motifs woven with fine golden threads. Visitors can experience hand-weaving demonstrations and purchase authentic hand-crafted textiles directly from makers.",
       facilities: ["Tapis Craft Gallery", "Weaving Workshops", "Souvenir Boutique", "Cultural Educators", "Restroom Facilities"]
     },
+    11: {
+      category: "Coastal Karst Sea Cave & Legends",
+      description: "Mystical sea cave perched on coastal cliffs inhabited by thousands of bats with sweeping ocean vistas.",
+      long_description: "Goa Matu overlooks the crashing surf of the Indian Ocean from dramatic limestone cliffs. Featuring ancient stalactites and home to large bat colonies, local folklore honors it as an ancient spiritual retreat.",
+      facilities: ["Stairway Descent", "Cliff Safety Rails", "Local Folklore Guides", "Refreshment Stalls", "Parking Area"]
+    },
+    12: {
+      category: "Coastal Cultural & Religious Harmony",
+      description: "Majestic seaside Hindu temple perched on rocky shorelines offering sunset scenes akin to Bali's Tanah Lot.",
+      long_description: "Melasti Beach in Marang serves as the sacred heart for the Melasti purification rituals preceding Nyepi. Its sea temple set against crashing breakers and glowing sunsets offers a peaceful, mystical aura.",
+      facilities: ["Seaside Temple Complex", "Ceremonial Esplanade", "Coastal Gazebos", "Spacious Parking", "Melasti Sunset Vantage"]
+    },
+    13: {
+      category: "World Agroforestry Heritage",
+      description: "Renowned traditional Damar Mata Kucing resin canopy forest recognized by global forestry institutions.",
+      long_description: "Repong Damar is a world-acclaimed traditional agroforestry system. Travelers can trek under hundred-year-old damar canopies, watch fearless farmers climb 30-meter high trees, and learn resin harvesting.",
+      facilities: ["Canopy Trekking Trail", "Tree Climbing Demonstrations", "Eco Guides", "Forest Info Center", "Authentic Resin Display"]
+    },
     14: {
       category: "Exotic Island & Marine Paradise",
       description: "Secluded island haven with crystal-clear waters, wild dolphins & historic colonial architecture.",
       long_description: "Banana Island is the most captivating marine gem of Pesisir Barat. Floating in the Indian Ocean off Krui, it offers crystalline waters, vibrant coral gardens, powder-soft white sand, morning pods of wild dolphins leaping beside wooden boats, and classic heritage houses from the colonial era.",
       facilities: ["Boat Pier & Harbour", "Traditional Wooden Homestays", "Snorkeling Equipment Rental", "Island Guides", "Fresh Catch Dining"]
+    },
+    15: {
+      category: "Panoramic City & Ocean Viewpoint",
+      description: "Historic coastal hilltop with 360-degree vistas over Kuala Stabas Harbour, the lighthouse, and glowing sunsets.",
+      long_description: "Bukit Selalaw rises 30 meters directly beside Kuala Stabas Port in central Krui. The breezy summit presents unmatched 360-degree views of the ocean, Banana Island on clear days, and traditional jukung fleets.",
+      facilities: ["Open Lookout Pavilion", "Lighthouse Beacon", "Concrete Walkways", "Hilltop Coffee Shack", "Visitor Parking"]
     },
     16: {
       category: "Marine Leisure & Seruit Dining",
@@ -232,6 +280,12 @@ export const useLangStore = defineStore('lang', () => {
       description: "Conservation and nesting sanctuary for endangered leatherback and hawksbill sea turtles.",
       long_description: "Muara Tembulih Turtle Sanctuary is dedicated to preserving endangered marine turtles (leatherback, hawksbill, and olive ridley). Visitors learn about the turtle lifecycle, observe semi-natural hatchery nests, and take part in releasing hatchlings into the open Indian Ocean.",
       facilities: ["Hatchery & Education Center", "Turtle Quarantine Pools", "Conservation Guides", "Hatchling Release Zone", "Toilets & Observation Gazebos"]
+    },
+    18: {
+      category: "Island Gateway & Rocky Shore",
+      description: "Scenic rock-strewn beach serving as the primary departure pier for traditional jukung boats to Banana Island.",
+      long_description: "Tembakak Beach is the main maritime springboard to Pulau Pisang. Decorated by picturesque sea rocks and outrigger canoes, travelers can embark on ocean crossings or relax by the pristine coastline.",
+      facilities: ["Jukung Pier", "Boat Ticket Office", "Seaside Warungs", "Passenger Waiting Area", "Spacious Vehicle Parking"]
     }
   }
 

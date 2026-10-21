@@ -45,12 +45,13 @@ const PACKAGE_MIN_PERSONS = {
 
 // Interests mapped to destination ids (Real site destinations).
 const INTEREST_DESTINATIONS = {
-  surf: [1, 2, 4],
-  family: [16, 17, 4],
-  culinary: [16, 4],
-  island: [14],
-  culture: [10],
-  nature: [6]
+  surf: [1, 2, 4, 5],
+  family: [3, 4, 7, 16, 17, 18],
+  culinary: [4, 16],
+  island: [14, 18],
+  culture: [10, 12, 13],
+  nature: [6, 7, 9, 13, 17],
+  landmark: [8, 11, 15]
 }
 
 const INTEREST_LABEL = {

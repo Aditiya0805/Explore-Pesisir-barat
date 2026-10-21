@@ -64,10 +64,11 @@ export const useReviewStore = defineStore('review', () => {
     currentDestId.value = destId
 
     // Optimistic local data first (instant render)
-    const all = loadLocal()
-    reviews.value = all
-      .filter(r => Number(r.destination_id) === destId)
+    const localForDest = loadLocal()
+      .filter((r) => Number(r.destination_id) === destId)
       .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))
+
+    reviews.value = localForDest
 
     if (!isSupabaseConfigured()) return
 
@@ -79,8 +80,14 @@ export const useReviewStore = defineStore('review', () => {
         .eq('destination_id', destId)
         .order('created_at', { ascending: false })
 
-      if (!error && data) {
-        reviews.value = data
+      if (!error && Array.isArray(data)) {
+        // Merge: keep local-only reviews (offline submissions) that are not
+        // present on the server yet instead of dropping them from the view.
+        const serverKeys = new Set(data.map((r) => `${r.name}|${r.comment}`))
+        const localOnly = localForDest.filter((r) => !serverKeys.has(`${r.name}|${r.comment}`))
+        reviews.value = [...localOnly, ...data].sort(
+          (a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0)
+        )
       }
     } catch (err) {
       console.warn('Review fetch note, using local data:', err?.message || err)

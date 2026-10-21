@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { supabase, isSupabaseConfigured } from '@/lib/supabase'
+import { useDataStore } from '@/stores/dataStore'
 
 export const useBookingStore = defineStore('booking', () => {
+  const dataStore = useDataStore()
   const currentStep = ref(1)
 
   const packageId = ref('surf')
@@ -21,20 +23,52 @@ export const useBookingStore = defineStore('booking', () => {
 
   const lastBookingCode = ref('')
   const isSubmitting = ref(false)
+  const lastSyncWarning = ref('')
 
-  // Package map
-  const packageOptions = {
+  // Package map — sourced from the `packages` table, with a hardcoded
+  // fallback so the wizard still works when Supabase is offline.
+  const FALLBACK_OPTIONS = {
     surf: { name: 'Paket Surfing Adventure', price: 2450000 },
     beach: { name: 'Paket Explore Krui', price: 1200000 },
     sunset: { name: 'Paket Sunset & Culture', price: 450000 },
     family: { name: 'Paket Wisata Pulau Pisang', price: 300000 }
   }
 
+  const packageOptions = computed(() => {
+    const options = {}
+    const source = dataStore.packages?.length ? dataStore.packages : []
+
+    source.forEach((pkg) => {
+      if (!pkg?.id) return
+      options[pkg.id] = {
+        name: pkg.name,
+        price: Number(pkg.price) || 0
+      }
+    })
+
+    // Keep the core four even if the table is not seeded yet.
+    Object.entries(FALLBACK_OPTIONS).forEach(([id, value]) => {
+      if (!options[id]) options[id] = value
+    })
+
+    return options
+  })
+
   const setPackage = (pkgId) => {
-    if (packageOptions[pkgId]) {
+    const option = packageOptions.value[pkgId]
+    if (option) {
       packageId.value = pkgId
-      packageName.value = packageOptions[pkgId].name
-      packagePrice.value = packageOptions[pkgId].price
+      packageName.value = option.name
+      packagePrice.value = option.price
+    }
+  }
+
+  // Keep the selected package in sync with fresh Supabase data.
+  const syncPackagePrice = () => {
+    const option = packageOptions.value[packageId.value]
+    if (option) {
+      packageName.value = option.name
+      packagePrice.value = option.price
     }
   }
 
@@ -64,8 +98,8 @@ export const useBookingStore = defineStore('booking', () => {
   const resetForm = () => {
     currentStep.value = 1
     packageId.value = 'surf'
-    packageName.value = packageOptions.surf.name
-    packagePrice.value = packageOptions.surf.price
+    packageName.value = packageOptions.value.surf.name
+    packagePrice.value = packageOptions.value.surf.price
     guideAddon.value = false
     photoAddon.value = false
     name.value = ''
@@ -79,16 +113,18 @@ export const useBookingStore = defineStore('booking', () => {
   // Submit booking to Supabase & localStorage
   const submitBooking = async () => {
     isSubmitting.value = true
+    let syncWarning = ''
+    lastSyncWarning.value = ''
     try {
       const randomNum = Math.floor(1000 + Math.random() * 9000)
-      const code = `PW-2026-${randomNum}`
+      const code = `PW-${new Date().getFullYear()}-${randomNum}`
       lastBookingCode.value = code
 
       const bookingRecord = {
         code,
-        name: name.value,
-        phone: phone.value,
-        email: email.value,
+        name: name.value.trim(),
+        phone: phone.value.trim(),
+        email: email.value.trim(),
         package_id: packageId.value,
         package_name: packageName.value,
         visit_date: date.value || new Date().toISOString().split('T')[0],
@@ -97,23 +133,35 @@ export const useBookingStore = defineStore('booking', () => {
         guide_addon: guideAddon.value,
         photo_addon: photoAddon.value,
         status: 'pending',
-        total: total.value,
-        created_at: new Date().toISOString()
+        total: total.value
       }
 
-      // 1. Save to localStorage
+      // 1. Save locally first so the booking is never lost.
       const localBookings = JSON.parse(localStorage.getItem('bookings') || '[]')
-      localBookings.unshift(bookingRecord)
+      localBookings.unshift({ ...bookingRecord, created_at: new Date().toISOString() })
       localStorage.setItem('bookings', JSON.stringify(localBookings))
 
-      // 2. Save to Supabase if configured
+      // 2. Save to Supabase if configured.
       if (isSupabaseConfigured()) {
-        const { error } = await supabase.from('bookings').insert([bookingRecord])
-        if (error) console.warn('Supabase booking insert warning:', error.message)
+        try {
+          const { data: sessionData } = await supabase.auth.getSession()
+          const payload = {
+            ...bookingRecord,
+            user_id: sessionData?.session?.user?.id || null
+          }
+          const { error } = await supabase.from('bookings').insert([payload])
+          if (error) throw error
+        } catch (err) {
+          syncWarning =
+            'Booking tersimpan di perangkat ini, tetapi gagal dikirim ke server. ' +
+            'Tunjukkan kode booking kepada admin agar data tetap tercatat.'
+          console.warn('Supabase booking insert warning:', err?.message || err)
+        }
       }
 
       currentStep.value = 4
-      return { success: true, code }
+      lastSyncWarning.value = syncWarning
+      return { success: true, code, syncWarning }
     } catch (err) {
       console.error('Submit booking failed:', err)
       return { success: false, message: err.message }
@@ -137,12 +185,14 @@ export const useBookingStore = defineStore('booking', () => {
     notes,
     lastBookingCode,
     isSubmitting,
+    lastSyncWarning,
     packageOptions,
     guideAddonPrice,
     photoAddonPrice,
     subtotal,
     total,
     setPackage,
+    syncPackagePrice,
     formatCurrency,
     resetForm,
     submitBooking

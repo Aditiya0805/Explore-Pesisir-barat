@@ -3,7 +3,7 @@ export const DESTINATIONS = [
   {
     id: 1,
     name: "Pantai Karang Nyimbor (Ujung Bocur)",
-    location: "Pesisir Selatan, Pesisir Barat, Lampung",
+    location: "Pekon Tanjung Setia, Pesisir Selatan, Pesisir Barat, Lampung",
     lat: -5.313426,
     lng: 103.998218,
     price: 15000,
@@ -15,35 +15,35 @@ export const DESTINATIONS = [
     cover_img: "/assets/images/pantai-karang-nyimbor.jpg",
     thumbs: [
       "/assets/images/pantai-karang-nyimbor.jpg",
-      "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=400&q=80"
+      "/assets/images/paket-surfing.jpg",
+      "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80"
     ],
     facilities: ["Parkir Luas & Aman", "Toilet & Shower Bersih", "Surf Camp & Resorts", "Penyewaan Board", "Warung Kuliner Seafood"]
   },
   {
     id: 2,
     name: "Pantai Way Jambu (The Pipeline)",
-    location: "Way Jambu, Pesisir Selatan, Pesisir Barat, Lampung",
+    location: "Pekon Way Jambu, Pesisir Selatan, Pesisir Barat, Lampung",
     lat: -5.358210,
     lng: 104.053120,
     price: 10000,
     rating: "4.8 / 5.0 (Sangat Asri)",
     hours: "06:00 - 18:30 WIB",
     category: "Pantai & Konservasi Alam",
-    description: "Dikenal sebagai 'The Pipeline' Lampung dengan ombak barrel yang menantang.",
+    description: "Dikenal sebagai 'The Pipeline' Krui dengan ombak barrel cepat menantang.",
     long_description: "Pantai Way Jambu menyuguhkan pemandangan pantai tropis klasik dengan deretan pohon kelapa rimbun yang berjejer di sepanjang tepian pasir pantai. Ombak di Way Jambu bertipe barel cepat dan tajam di atas batu karang dangkal, menjadikannya destinasi favorit bagi peselancar profesional tingkat lanjut. Bagi non-peselancar, Way Jambu menawarkan suasana damai yang jauh dari keramaian kota, kebersihan yang sangat terjaga, serta pemandangan sunset berlatar ombak besar yang memecah karang.",
     cover_img: "/assets/images/pantai-way-jambu.jpg",
     thumbs: [
       "/assets/images/pantai-way-jambu.jpg",
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80",
-      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=400&q=80"
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80"
     ],
     facilities: ["Area Camping Ground", "Toilet Bersih", "Gazebo Teduh", "Toko Asesoris Pantai", "Pemandu Lokal Berlisensi"]
   },
   {
     id: 3,
     name: "Pantai Mandiri (Black Sand Beach)",
-    location: "Mandiri Sejati, Krui Selatan, Pesisir Barat, Lampung",
+    location: "Pekon Mandiri Sejati, Krui Selatan, Pesisir Barat, Lampung",
     lat: -5.247850,
     lng: 103.921530,
     price: 5000,
@@ -63,47 +63,127 @@ export const DESTINATIONS = [
   {
     id: 4,
     name: "Pantai Labuhan Jukung Krui",
-    location: "Kampung Jawa, Pesisir Tengah, Krui, Pesisir Barat, Lampung",
+    location: "Pekon Kampung Jawa, Pesisir Tengah, Krui, Pesisir Barat, Lampung",
     lat: -5.195610,
     lng: 103.931240,
     price: 5000,
     rating: "4.9 / 5.0 (Ikon Wisata Kota)",
     hours: "Buka 24 Jam",
     category: "Pusat Rekreasi & Budaya",
-    description: "Ikon pariwisata utama Krui dengan panggung kesenian dan kuliner pesisir.",
+    description: "Ikon pariwisata utama Krui dengan panggung kesenian dan sentra kuliner pesisir.",
     long_description: "Pantai Labuhan Jukung adalah jantung wisata kota Krui. Pantai ini memiliki taman terbuka hijau, panggung pertunjukan budaya, dan deretan kios kuliner khas Lampung Pesisir. Ombak di sini juga ramah bagi peselancar pemula hingga menengah, sementara tepi pantainya sangat aman untuk rekreasi santai bersama keluarga.",
     cover_img: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=800&q=80",
     thumbs: [
-      "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80",
       "/assets/images/galeri-santai-pantai.jpg",
       "/assets/images/paket-explore-krui.jpg"
     ],
     facilities: ["Taman Terbuka Publik", "Panggung Kesenian Budaya", "Sentra Kuliner Ikan Bakar", "Pusat Informasi Wisata", "Toilet & Parkir Luas"]
   },
   {
+    id: 5,
+    name: "Pantai Tanjung Setia (WSL Krui Pro Arena)",
+    location: "Pekon Tanjung Setia, Pesisir Selatan, Pesisir Barat, Lampung",
+    lat: -5.319500,
+    lng: 104.004200,
+    price: 15000,
+    rating: "4.9 / 5.0 (Arena WSL Pro)",
+    hours: "Buka 24 Jam",
+    category: "Arena Selancar Internasional",
+    description: "Arena kejuaraan selancar dunia WSL Krui Pro dengan pasir putih keemasan dan deretan resort tepi pantai.",
+    long_description: "Pantai Tanjung Setia merupakan panggung utama kejuaraan selancar dunia tahunan World Surf League (WSL) Krui Pro QS 5000 yang menarik ratusan peselancar top dari puluhan negara. Pantai ini memiliki hamparan pasir putih bersih, barisan pepohonan kelapa yang rimbun, deretan surf camp berstandar internasional, serta kafe pesisir estetik untuk menikmati senja Samudra Hindia.",
+    cover_img: "/assets/images/paket-surfing.jpg",
+    thumbs: [
+      "/assets/images/paket-surfing.jpg",
+      "/assets/images/pantai-karang-nyimbor.jpg",
+      "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=600&q=80"
+    ],
+    facilities: ["Panggung WSL Pro Event", "Surf Camp & Eco Lodge", "Sewa Papan Selancar & Pelatih", "Kafe & Bar Tepi Pantai", "Parkir Mobil & Keamanan 24 Jam"]
+  },
+  {
     id: 6,
     name: "Air Terjun Way Detun (Curug Detun)",
-    location: "Karya Penggawa, Pesisir Barat, Lampung",
+    location: "Pekon Penengahan, Karya Penggawa, Pesisir Barat, Lampung",
     lat: -5.148500,
     lng: 103.968200,
     price: 10000,
     rating: "4.8 / 5.0 (Wisata Hutan)",
     hours: "07:30 - 17:00 WIB",
     category: "Ekowisata Hutan Tropis",
-    description: "Air terjun alami di balik rimbunnya hutan hujan tropis Krui.",
+    description: "Air terjun alami tersembunyi di balik rimbunnya hutan hujan tropis Krui.",
     long_description: "Air Terjun Way Detun menyajikan kesegaran air pegunungan yang jernih dengan kolam alami berwarna toska di bawahnya. Dikelilingi tebing bebatuan alami dan pohon-pohon rindang, tempat ini menjadi lokasi favorit untuk melepaskan penat setelah menjelajahi ombak pantai.",
     cover_img: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80",
     thumbs: [
-      "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80",
       "/assets/images/paket-explore-krui.jpg",
-      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=400&q=80"
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80"
     ],
     facilities: ["Jalur Trekking Alami", "Saung Istirahat", "Pemandu Lokal Trekking", "Warung Makanan Ringan", "Spot Foto Alami"]
   },
   {
+    id: 7,
+    name: "Pantai Walur (Coconut Grove Beach)",
+    location: "Pekon Walur, Krui Selatan, Pesisir Barat, Lampung",
+    lat: -5.221500,
+    lng: 103.928000,
+    price: 5000,
+    rating: "4.7 / 5.0 (Pantai Nyiur Asri)",
+    hours: "06:00 - 18:30 WIB",
+    category: "Pantai & Padang Rumput Hijau",
+    description: "Pantai teduh dengan deretan ribuan pohon kelapa dan hamparan padang rumput hijau menghadap laut.",
+    long_description: "Pantai Walur menawarkan pemandangan unik di mana padang rumput hijau yang luas berpadu dengan ribuan pohon kelapa yang berjejer rapi di sepanjang garis pantai Samudra Hindia. Suasananya yang teduh, sejuk, dan tidak terlalu ramai menjadikannya tempat terbaik untuk piknik keluarga, bersantai di hammock, dan berkemah di bawah rindangnya pohon kelapa.",
+    cover_img: "/assets/images/galeri-santai-pantai.jpg",
+    thumbs: [
+      "/assets/images/galeri-santai-pantai.jpg",
+      "/assets/images/paket-explore-krui.jpg",
+      "/assets/images/pasir-putih-santai.jpg"
+    ],
+    facilities: ["Spot Camping & Hammock", "Pondok Gazebo Bambu", "Warung Es Kelapa Muda", "Area Piknik Rumput", "Parkir Roda Dua & Empat"]
+  },
+  {
+    id: 8,
+    name: "Pantai Batu Tihang",
+    location: "Pekon Kota Batu, Pesisir Utara, Pesisir Barat, Lampung",
+    lat: -5.087200,
+    lng: 103.896500,
+    price: 5000,
+    rating: "4.8 / 5.0 (Ikon Karang Raksasa)",
+    hours: "06:00 - 18:00 WIB",
+    category: "Ikon Landmark Alam Karang",
+    description: "Monolit batu karang raksasa setinggi 25 meter yang tegak megah di bibir muara sungai dan pantai.",
+    long_description: "Pantai Batu Tihang terkenal karena keberadaan batu karang tegak raksasa (sea stack) yang menjulang lebih dari 25 meter di tepi muara sungai Way Batu Tihang dan Samudra Hindia. Formasi geologi purba ini menjadi landmark ikonik di jalur lintas barat Sumatera bagian Pesisir Utara dengan hamparan batu kerikil putih halus dan deburan ombak spektakuler.",
+    cover_img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    thumbs: [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+      "/assets/images/galeri-santai-pantai.jpg",
+      "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80"
+    ],
+    facilities: ["Gardu Pandang Batu Tihang", "Jembatan Muara Sungai", "Warung Kopi & Makanan Lokal", "Area Parkir Lintas Barat", "Spot Foto Geologi"]
+  },
+  {
+    id: 9,
+    name: "Air Terjun Curup Cay (Curup Lemong)",
+    location: "Pekon Penengahan, Lemong, Pesisir Barat, Lampung",
+    lat: -4.982000,
+    lng: 103.842000,
+    price: 10000,
+    rating: "4.8 / 5.0 (Air Terjun Tingkat)",
+    hours: "08:00 - 17:00 WIB",
+    category: "Air Terjun Tingkat & Lembah Hijau",
+    description: "Air terjun bertingkat megah di perbatasan utara Pesisir Barat dengan air jernih dan kolam alami.",
+    long_description: "Terletak di kawasan perbukitan Kecamatan Lemong di ujung utara Pesisir Barat, Air Terjun Curup Cay menyuguhkan aliran air terjun berundak-undak yang mengalir deras di antara batuan andesit hitam dan hutan primer yang masih sangat perawan. Kolam alaminya sangat luas dan berair dingin menyegarkan, cocok untuk berenang dan relaksasi alami.",
+    cover_img: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80",
+    thumbs: [
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80",
+      "/assets/images/paket-explore-krui.jpg"
+    ],
+    facilities: ["Jalur Setapak Hutan", "Kolam Pemandian Alami", "Saung Peristirahatan", "Pemandu Hutan Lokal", "Spot Selfie Alam"]
+  },
+  {
     id: 10,
     name: "Sentra Tenun Kain Tapis Pesisir",
-    location: "Krui, Pesisir Barat, Lampung",
+    location: "Pekon Sukaminambang, Pesisir Tengah, Krui, Pesisir Barat, Lampung",
     lat: -5.191200,
     lng: 103.941500,
     price: 0,
@@ -121,6 +201,66 @@ export const DESTINATIONS = [
     facilities: ["Galeri Kerajinan Tapis", "Workshop Belajar Menenun", "Toko Cendera Mata", "Pemandu Edukasi Budaya", "Toilet Bersih"]
   },
   {
+    id: 11,
+    name: "Goa Matu (Gua Karst Samudra)",
+    location: "Pekon Way Mindi, Karya Penggawa, Pesisir Barat, Lampung",
+    lat: -5.141200,
+    lng: 103.882500,
+    price: 5000,
+    rating: "4.7 / 5.0 (Wisata Sejarah & Karst)",
+    hours: "07:00 - 17:30 WIB",
+    category: "Gua Alam & Tebing Samudra",
+    description: "Gua tebing karst laut mistis bersejarah dengan koloni ribuan kelelawar dan pemandangan laut lepas.",
+    long_description: "Goa Matu bertengger di atas tebing karang laut yang menghadap langsung ke Samudra Hindia. Di dalam gua terdapat stalaktit dan stalagmit alami serta lorong-lorong batu karst yang dihuni ribuan kelelawar. Menurut legenda masyarakat adat setempat, gua ini memiliki ikatan sejarah masa lalu yang sakral dan menjadi tempat bertapa para tokoh legendaris.",
+    cover_img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+    thumbs: [
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+      "/assets/images/galeri-santai-pantai.jpg",
+      "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80"
+    ],
+    facilities: ["Anak Tangga Menuju Gua", "Pagar Pengaman Tebing", "Pemandu Sejarah Lokal", "Warung Minuman Segar", "Area Parkir Motor & Mobil"]
+  },
+  {
+    id: 12,
+    name: "Pantai Melasti (Pura Hindu Samudra)",
+    location: "Pekon Marang, Pesisir Selatan, Pesisir Barat, Lampung",
+    lat: -5.375500,
+    lng: 104.072000,
+    price: 5000,
+    rating: "4.8 / 5.0 (Wisata Religi & Budaya)",
+    hours: "06:00 - 18:30 WIB",
+    category: "Wisata Budaya & Toleransi Religi",
+    description: "Pura megah umat Hindu di tepian Samudra Hindia dengan panorama senja dramatis mirip Tanah Lot.",
+    long_description: "Pantai Melasti di Pekon Marang merupakan pusat upacara keagamaan Melasti umat Hindu di Kabupaten Pesisir Barat menjelang Hari Raya Nyepi. Pura yang berdiri megah di atas bebatuan tepi pantai dengan latar deburan ombak Samudra Hindia dan matahari terbenam menyajikan pemandangan magis yang mengingatkan pengunjung pada pesona pantai di Pulau Dewata Bali.",
+    cover_img: "/assets/images/sunset-culture.jpg",
+    thumbs: [
+      "/assets/images/sunset-culture.jpg",
+      "/assets/images/paket-sunset.jpg",
+      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=600&q=80"
+    ],
+    facilities: ["Pura Samudra Megah", "Pelataran Upacara Adat", "Gazebo Tepi Pantai", "Area Parkir Luas", "Spot Foto Sunset Melasti"]
+  },
+  {
+    id: 13,
+    name: "Kawasan Ekowisata Repong Damar",
+    location: "Pekon Pahmungan, Pesisir Tengah, Krui, Pesisir Barat, Lampung",
+    lat: -5.178000,
+    lng: 103.958000,
+    price: 10000,
+    rating: "4.9 / 5.0 (Warisan Dunia)",
+    hours: "08:00 - 16:30 WIB",
+    category: "Agroforestri & Konservasi Hutan",
+    description: "Hutan kanopi pohon damar mata kucing tradisional warisan budaya dunia kebanggaan Krui.",
+    long_description: "Repong Damar adalah sistem agroforestri tradisional masyarakat Krui yang telah diakui para peneliti kehutanan dunia dan lembaga internasional (ICRAF/FAO). Wisatawan diajak berjalan di bawah kanopi pepohonan damar raksasa berusia ratusan tahun, menyaksikan atraksi para petani damar memanjat pohon setinggi 30 meter tanpa tali pengaman, dan belajar memanen getah damar mata kucing kualitas ekspor.",
+    cover_img: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80",
+    thumbs: [
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80",
+      "/assets/images/paket-explore-krui.jpg"
+    ],
+    facilities: ["Jalur Edukasi Hutan Kanopi", "Atraksi Panjat Pohon Damar", "Pemandu Ekowisata", "Saung Informasi Hutan", "Sentra Getah Damar Asli"]
+  },
+  {
     id: 14,
     name: "Pulau Pisang (Banana Island)",
     location: "Kecamatan Pulau Pisang, Pesisir Barat, Lampung",
@@ -136,21 +276,41 @@ export const DESTINATIONS = [
     thumbs: [
       "/assets/images/paket-pulau-pisang.jpg",
       "/assets/images/galeri-santai-pantai.jpg",
-      "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=400&q=80"
+      "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=600&q=80"
     ],
     facilities: ["Dermaga Perahu Nelayan", "Homestay Rumah Kayu Tradisional", "Sewa Alat Snorkeling", "Pemandu Keliling Pulau", "Kuliner Ikan Segar"]
   },
   {
+    id: 15,
+    name: "Bukit Selalaw (Gardu Pandang Krui)",
+    location: "Pasar Kota Krui, Pesisir Tengah, Pesisir Barat, Lampung",
+    lat: -5.188900,
+    lng: 103.931000,
+    price: 5000,
+    rating: "4.8 / 5.0 (Panorama Sunset 360°)",
+    hours: "05:00 - 20:00 WIB",
+    category: "Gardu Pandang Landmark Kota",
+    description: "Puncak bukit bersejarah dengan pemandangan 360 derajat Pelabuhan Kuala Stabas dan Samudra Hindia.",
+    long_description: "Bukit Selalaw adalah bukit berketinggian sekitar 30 meter di bibir laut Kota Krui yang bersebelahan dengan Pelabuhan Kuala Stabas. Dari puncak bukit ini, pengunjung disuguhi panorama 360 derajat meliputi lautan lepas Samudra Hindia, Pulau Pisang di kejauhan, kapal nelayan jukung yang berjejer rapi, serta lanskap kota Krui berlatar Bukit Barisan.",
+    cover_img: "/assets/images/paket-explore-krui.jpg",
+    thumbs: [
+      "/assets/images/paket-explore-krui.jpg",
+      "/assets/images/paket-sunset.jpg",
+      "/assets/images/galeri-santai-pantai.jpg"
+    ],
+    facilities: ["Gardu Pandang Terbuka", "Mercusuar Pandu Laut", "Jalur Tangga Semen", "Kedai Kopi Puncak", "Parkir Wisatawan"]
+  },
+  {
     id: 16,
-    name: "Pantai Biha & Pesisir",
-    location: "Biha, Pesisir Selatan, Pesisir Barat, Lampung",
+    name: "Pantai Biha & Sentra Seruit",
+    location: "Pekon Biha, Pesisir Selatan, Pesisir Barat, Lampung",
     lat: -5.334020,
     lng: 104.015010,
     price: 10000,
     rating: "4.7 / 5.0 (Ramah Keluarga & Kuliner)",
     hours: "06:00 - 20:00 WIB",
     category: "Wisata Bahari & Sentra Seruit",
-    description: "Pantai berpasir putih keemasan yang tenang, pusat kuliner ikan bakar seruit.",
+    description: "Pantai berpasir putih keemasan yang tenang, pusat kuliner ikan bakar seruit khas Pesisir Barat.",
     long_description: "Pantai Biha memiliki karakteristik garis pantai yang landai dengan ombak sedang, menjadikannya destinasi wisata paling aman untuk keluarga dan anak-anak yang ingin bermain air. Di sekitar pantai, pengunjung dapat menyaksikan langsung hilir mudik perahu nelayan tradisional 'Jukung' yang membawa hasil tangkapan laut segar. Pantai ini terkenal sebagai pusat kuliner ikan bakar khas Lampung Pesisir dengan racikan bumbu tradisional sambal seruit yang menggugah selera.",
     cover_img: "/assets/images/pantai-biha.jpg",
     thumbs: [
@@ -174,11 +334,31 @@ export const DESTINATIONS = [
     long_description: "Kawasan Konservasi Penyu Muara Tembulih didedikasikan untuk melindungi populasi penyu laut langka (penyu belimbing, penyu sisik, dan lekang) dari ancaman kepunahan. Pengunjung dapat belajar siklus hidup penyu, melihat sarang telur semi-alami, dan mengikuti program pelepasan tukik (anak penyu) ke Samudra Hindia.",
     cover_img: "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=800&q=80",
     thumbs: [
-      "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=600&q=80",
       "/assets/images/galeri-santai-pantai.jpg",
       "/assets/images/pantai-biha.jpg"
     ],
     facilities: ["Pusat Edukasi & Penetasan Tukik", "Kolam Karantina Penyu", "Pemandu Konservasi", "Area Pelepasan Tukik", "Toilet & Gazebo"]
+  },
+  {
+    id: 18,
+    name: "Pantai Tembakak & Dermaga Jukung",
+    location: "Pekon Tembakak, Karya Penggawa, Pesisir Barat, Lampung",
+    lat: -5.123500,
+    lng: 103.874200,
+    price: 5000,
+    rating: "4.8 / 5.0 (Dermaga Wisata Pulau)",
+    hours: "06:00 - 18:00 WIB",
+    category: "Dermaga Pulau & Pantai Karang",
+    description: "Pantai berbatu karang eksotis dengan dermaga penyeberangan perahu jukung menuju Pulau Pisang.",
+    long_description: "Pantai Tembakak adalah pintu gerbang maritim utama untuk menyeberang menuju Pulau Pisang menggunakan perahu tradisional Jukung nelayan Krui. Pantai ini dihiasi tebing karang unik, deretan perahu jukung berwarna-warni yang bersandar di tepian pantai, serta pemandangan laut biru jernih yang memukau.",
+    cover_img: "/assets/images/paket-pulau-pisang.jpg",
+    thumbs: [
+      "/assets/images/paket-pulau-pisang.jpg",
+      "/assets/images/galeri-santai-pantai.jpg",
+      "/assets/images/paket-explore-krui.jpg"
+    ],
+    facilities: ["Dermaga Perahu Jukung", "Loket Tiket Penyeberangan", "Warung Makanan & Kopi", "Ruang Tunggu Penumpang", "Parkir Kendaraan Luas"]
   }
 ];
 
@@ -230,7 +410,7 @@ export const MAP_LOCATIONS = [
     icon: "fa-umbrella-beach",
     pin_class: "pin-beach",
     rating: "4.8 ★",
-    price: "Gratis",
+    price: "Rp 5.000",
     description: "Hamparan pasir hitam vulkanis berkilau dengan panorama matahari terbenam (sunset) terbaik di Pesisir Barat.",
     img: "/assets/images/paket-explore-krui.jpg",
     gmaps_query: "Pantai+Mandiri+Krui+Pesisir+Barat",
@@ -249,7 +429,7 @@ export const MAP_LOCATIONS = [
     pin_class: "pin-beach",
     rating: "4.9 ★",
     price: "Rp 5.000",
-    description: "Ikon wisata utama Krui dengan ruang terbuka publik, panggung budaya, dan pusat kuliner tepi laut.",
+    description: "Ikon wisata utama Krui dengan ruang terbuka publik, panggung budaya, dan sentra kuliner pesisir.",
     img: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80",
     gmaps_query: "Pantai+Labuhan+Jukung+Krui",
     gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.195610,103.931240",
@@ -257,21 +437,21 @@ export const MAP_LOCATIONS = [
   },
   {
     id: 5,
-    dest_id: null,
-    name: "Pantai Walur (Coconut Grove Beach)",
-    category: "beach",
-    category_label: "Pantai Nyiur Melambai",
-    lat: -5.221500,
-    lng: 103.928000,
-    icon: "fa-umbrella-beach",
-    pin_class: "pin-beach",
-    rating: "4.7 ★",
-    price: "Rp 5.000",
-    description: "Pantai dengan deretan pohon kelapa teduh dan hamparan rumput hijau alami yang menghadap langsung ke laut.",
-    img: "/assets/images/galeri-santai-pantai.jpg",
-    gmaps_query: "Pantai+Walur+Pesisir+Barat",
-    gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.221500,103.928000",
-    gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.221500,103.928000"
+    dest_id: 5,
+    name: "Pantai Tanjung Setia (WSL Krui Pro)",
+    category: "surfing",
+    category_label: "Arena WSL Krui Pro",
+    lat: -5.319500,
+    lng: 104.004200,
+    icon: "fa-trophy",
+    pin_class: "pin-surf",
+    rating: "4.9 ★",
+    price: "Rp 15.000",
+    description: "Arena kejuaraan dunia World Surf League (WSL) Krui Pro QS 5000 dengan pasir putih dan resort berkelas internasional.",
+    img: "/assets/images/paket-surfing.jpg",
+    gmaps_query: "Pantai+Tanjung+Setia+Pesisir+Barat",
+    gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.319500,104.004200",
+    gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.319500,104.004200"
   },
   {
     id: 6,
@@ -292,6 +472,60 @@ export const MAP_LOCATIONS = [
     gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.148500,103.968200"
   },
   {
+    id: 7,
+    dest_id: 7,
+    name: "Pantai Walur (Coconut Grove)",
+    category: "beach",
+    category_label: "Pantai Nyiur Asri",
+    lat: -5.221500,
+    lng: 103.928000,
+    icon: "fa-umbrella-beach",
+    pin_class: "pin-beach",
+    rating: "4.7 ★",
+    price: "Rp 5.000",
+    description: "Pantai dengan deretan ribuan pohon kelapa teduh dan hamparan rumput hijau alami menghadap Samudra Hindia.",
+    img: "/assets/images/galeri-santai-pantai.jpg",
+    gmaps_query: "Pantai+Walur+Pesisir+Barat",
+    gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.221500,103.928000",
+    gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.221500,103.928000"
+  },
+  {
+    id: 8,
+    dest_id: 8,
+    name: "Pantai Batu Tihang",
+    category: "landmark",
+    category_label: "Monolit Karang Raksasa",
+    lat: -5.087200,
+    lng: 103.896500,
+    icon: "fa-mountain-sun",
+    pin_class: "pin-landmark",
+    rating: "4.8 ★",
+    price: "Rp 5.000",
+    description: "Batu karang monolit raksasa setinggi 25 meter yang berdiri kokoh di muara sungai dan bibir Samudra Hindia.",
+    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+    gmaps_query: "Pantai+Batu+Tihang+Pesisir+Barat",
+    gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.087200,103.896500",
+    gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.087200,103.896500"
+  },
+  {
+    id: 9,
+    dest_id: 9,
+    name: "Air Terjun Curup Cay (Curup Lemong)",
+    category: "nature",
+    category_label: "Air Terjun Bertingkat",
+    lat: -4.982000,
+    lng: 103.842000,
+    icon: "fa-tree",
+    pin_class: "pin-nature",
+    rating: "4.8 ★",
+    price: "Rp 10.000",
+    description: "Air terjun bertingkat megah di perbukitan asri Lemong dengan kolam alami andesit yang jernih dan segar.",
+    img: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80",
+    gmaps_query: "Curup+Cay+Lemong+Pesisir+Barat",
+    gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-4.982000,103.842000",
+    gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-4.982000,103.842000"
+  },
+  {
     id: 10,
     dest_id: 10,
     name: "Sentra Tenun Kain Tapis Pesisir",
@@ -310,6 +544,60 @@ export const MAP_LOCATIONS = [
     gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.191200,103.941500"
   },
   {
+    id: 11,
+    dest_id: 11,
+    name: "Goa Matu (Gua Karst Samudra)",
+    category: "landmark",
+    category_label: "Gua Karst & Samudra",
+    lat: -5.141200,
+    lng: 103.882500,
+    icon: "fa-archway",
+    pin_class: "pin-landmark",
+    rating: "4.7 ★",
+    price: "Rp 5.000",
+    description: "Gua tebing karst laut mistis bersejarah dengan koloni ribuan kelelawar dan pemandangan laut lepas Samudra Hindia.",
+    img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+    gmaps_query: "Goa+Matu+Pesisir+Barat",
+    gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.141200,103.882500",
+    gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.141200,103.882500"
+  },
+  {
+    id: 12,
+    dest_id: 12,
+    name: "Pantai Melasti (Pura Samudra)",
+    category: "culture",
+    category_label: "Wisata Budaya & Religi",
+    lat: -5.375500,
+    lng: 104.072000,
+    icon: "fa-place-of-worship",
+    pin_class: "pin-culture",
+    rating: "4.8 ★",
+    price: "Rp 5.000",
+    description: "Pura megah umat Hindu di tepi bebatuan karang Samudra Hindia dengan nuansa magis ala Tanah Lot saat senja.",
+    img: "/assets/images/sunset-culture.jpg",
+    gmaps_query: "Pantai+Melasti+Marang+Pesisir+Barat",
+    gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.375500,104.072000",
+    gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.375500,104.072000"
+  },
+  {
+    id: 13,
+    dest_id: 13,
+    name: "Kawasan Ekowisata Repong Damar",
+    category: "nature",
+    category_label: "Agroforestri Warisan Dunia",
+    lat: -5.178000,
+    lng: 103.958000,
+    icon: "fa-seedling",
+    pin_class: "pin-nature",
+    rating: "4.9 ★",
+    price: "Rp 10.000",
+    description: "Hutan agroforestri pohon damar mata kucing khas Krui yang diakui dunia internasional, trekking hutan kanopi rimbun.",
+    img: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80",
+    gmaps_query: "Repong+Damar+Pahmungan+Pesisir+Barat",
+    gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.178000,103.958000",
+    gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.178000,103.958000"
+  },
+  {
     id: 14,
     dest_id: 14,
     name: "Pulau Pisang (Banana Island)",
@@ -326,6 +614,24 @@ export const MAP_LOCATIONS = [
     gmaps_query: "Pulau+Pisang+Pesisir+Barat+Lampung",
     gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.115830,103.852110",
     gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.115830,103.852110"
+  },
+  {
+    id: 15,
+    dest_id: 15,
+    name: "Bukit Selalaw & Gardu Pandang",
+    category: "landmark",
+    category_label: "Gardu Pandang Panorama",
+    lat: -5.188900,
+    lng: 103.931000,
+    icon: "fa-binoculars",
+    pin_class: "pin-landmark",
+    rating: "4.8 ★",
+    price: "Rp 5.000",
+    description: "Puncak bukit kota Krui dengan pemandangan 360 derajat ke Pelabuhan Kuala Stabas, Samudra Hindia, dan matahari terbenam.",
+    img: "/assets/images/paket-explore-krui.jpg",
+    gmaps_query: "Bukit+Selalaw+Krui+Pesisir+Barat",
+    gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.188900,103.931000",
+    gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.188900,103.931000"
   },
   {
     id: 16,
@@ -362,6 +668,24 @@ export const MAP_LOCATIONS = [
     gmaps_query: "Konservasi+Penyu+Muara+Tembulih+Ngambur",
     gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.392000,104.085000",
     gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.392000,104.085000"
+  },
+  {
+    id: 18,
+    dest_id: 18,
+    name: "Pantai Tembakak & Dermaga Jukung",
+    category: "beach",
+    category_label: "Dermaga Pulau & Karang",
+    lat: -5.123500,
+    lng: 103.874200,
+    icon: "fa-ship",
+    pin_class: "pin-beach",
+    rating: "4.8 ★",
+    price: "Rp 5.000",
+    description: "Pantai karang berair jernih tempat bersandarnya armada perahu jukung tradisional menuju Pulau Pisang.",
+    img: "/assets/images/paket-pulau-pisang.jpg",
+    gmaps_query: "Pantai+Tembakak+Karya+Penggawa+Pesisir+Barat",
+    gmaps_dir_url: "https://www.google.com/maps/dir/?api=1&destination=-5.123500,103.874200",
+    gmaps_search_url: "https://www.google.com/maps/search/?api=1&query=-5.123500,103.874200"
   }
 ];
 

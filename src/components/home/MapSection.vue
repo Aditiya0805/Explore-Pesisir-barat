@@ -61,7 +61,7 @@
                 :class="{ active: is3DTilt }"
                 id="btnToggle3D"
                 :title="langStore.isEn ? 'Toggle 3D Tilt View' : 'Toggle Perspektif 3D Tilt'"
-                @click="is3DTilt = !is3DTilt"
+                @click="toggle3D"
               >
                 <i class="fa-solid fa-cube"></i> <span>{{ is3DTilt ? langStore.t('map.tilt2d') : langStore.t('map.tilt3d') }}</span>
               </button>
@@ -247,9 +247,20 @@ const spotEnOverrides = {
   2: { desc: "Fast and hollow reef barrel break facing the open Indian Ocean swell.", cat: "Reef Barrel Surf" },
   3: { desc: "Wide volcanic black sand beach offering magnificent sunset views over the Indian Ocean.", cat: "Black Sand Beach" },
   4: { desc: "Signature urban beach of Krui featuring public parks, cultural stages, and fresh seafood stalls.", cat: "Recreation Hub" },
-  5: { desc: "Quiet beach shaded by tall palm trees and gentle green meadows overlooking the blue ocean.", cat: "Palm Grove Beach" },
+  5: { desc: "Home of the annual WSL Krui Pro world tour, featuring golden sands and vibrant oceanfront surf resorts.", cat: "WSL Pro Surf Arena" },
   6: { desc: "Hidden cascade tucked inside lush mountain rainforests with cool natural rock pools.", cat: "Rainforest Falls" },
-  10: { desc: "Traditional Saibatin gold-thread handwoven Tapis textile center.", cat: "Culture & Crafts" }
+  7: { desc: "Tranquil beach shaded by thousands of swaying coconut palms and green meadows overlooking the ocean.", cat: "Palm Grove Beach" },
+  8: { desc: "Monumental 25-meter natural monolith sea stack rock standing dramatically by the river mouth and ocean.", cat: "Monolith Landmark" },
+  9: { desc: "Magnificent multi-tiered waterfalls cascading across tiered andesite rock ledges into deep natural pools.", cat: "Tiered Cascade" },
+  10: { desc: "Traditional Saibatin gold-thread handwoven Tapis textile center and craft workshops.", cat: "Culture & Crafts" },
+  11: { desc: "Mystical sea cave perched on coastal cliffs inhabited by thousands of bats with sweeping ocean vistas.", cat: "Karst Sea Cave" },
+  12: { desc: "Majestic seaside Hindu temple perched on rocky shorelines offering sunset scenes akin to Bali's Tanah Lot.", cat: "Sacred Sea Temple" },
+  13: { desc: "Acclaimed traditional agroforestry canopy forest of hundred-year-old Damar Mata Kucing trees.", cat: "World Agroforestry" },
+  14: { desc: "Secluded island haven with crystal-clear waters, wild dolphins & historic colonial architecture.", cat: "Exotic Island" },
+  15: { desc: "Historic coastal hilltop with 360-degree vistas over Kuala Stabas Harbour, the lighthouse, and glowing sunsets.", cat: "City Lookout" },
+  16: { desc: "Gentle golden sandy beach, home to traditional Jukung fishing fleets and local grilled fish centers.", cat: "Culinary & Beach" },
+  17: { desc: "Conservation and nesting sanctuary for endangered leatherback and hawksbill sea turtles.", cat: "Turtle Sanctuary" },
+  18: { desc: "Scenic rock-strewn beach serving as the primary departure pier for traditional jukung boats to Banana Island.", cat: "Island Pier & Beach" }
 }
 
 const getSpotDesc = (spot) => {
@@ -284,8 +295,11 @@ const getCategoryCount = (catId) => {
 const filteredSpots = computed(() => {
   return dataStore.mapLocations.filter(spot => {
     const matchCat = selectedCategory.value === 'all' || spot.category === selectedCategory.value
-    const query = searchQuery.value.toLowerCase()
-    const matchQuery = !query || spot.name.toLowerCase().includes(query) || (spot.description && spot.description.toLowerCase().includes(query))
+    const query = searchQuery.value.trim().toLowerCase()
+    const matchQuery = !query ||
+      spot.name.toLowerCase().includes(query) ||
+      (spot.description && spot.description.toLowerCase().includes(query)) ||
+      (spot.category_label && spot.category_label.toLowerCase().includes(query))
     return matchCat && matchQuery
   })
 })
@@ -293,6 +307,15 @@ const filteredSpots = computed(() => {
 const setCategory = (catId) => {
   selectedCategory.value = catId
   renderMarkers()
+}
+
+const toggle3D = () => {
+  is3DTilt.value = !is3DTilt.value
+  setTimeout(() => {
+    if (mapInstance) {
+      mapInstance.invalidateSize()
+    }
+  }, 350)
 }
 
 // Tile Layer URLs
@@ -325,11 +348,19 @@ const switchLayer = (type) => {
 const initMap = () => {
   if (!mapContainerRef.value || mapInstance) return
 
+  const isMobile = window.innerWidth <= 768
+
   // Center on Krui / Pesisir Barat
   mapInstance = L.map(mapContainerRef.value, {
-    center: [-5.27, 103.95],
-    zoom: 11,
-    zoomControl: true
+    center: [-5.24, 103.95],
+    zoom: isMobile ? 10 : 11,
+    zoomControl: true,
+    scrollWheelZoom: false
+  })
+
+  // Enable scrollWheelZoom once user clicks or interacts with the map
+  mapInstance.on('click', () => {
+    if (mapInstance) mapInstance.scrollWheelZoom.enable()
   })
 
   currentTileLayer = L.tileLayer(tileLayers.sat.url, {
@@ -353,13 +384,13 @@ const createCustomIcon = (spot) => {
     html: `
       <div class="map-marker-pin ${pinClass}">
         <i class="fa-solid ${iconClass}"></i>
-        <div class="marker-label">${spot.name.substring(0, 20)}</div>
+        <div class="marker-label">${spot.name.substring(0, 22)}</div>
         <div class="marker-pulse"></div>
       </div>
     `,
-    iconSize: [56, 70],
-    iconAnchor: [28, 70],
-    popupAnchor: [0, -70]
+    iconSize: [44, 56],
+    iconAnchor: [22, 56],
+    popupAnchor: [0, -56]
   })
 }
 
@@ -382,11 +413,12 @@ const renderMarkers = () => {
     const desc = getSpotDesc(spot)
     const priceText = getSpotPriceLabel(spot)
     const routeBtnText = langStore.isEn ? 'Directions' : 'Arah'
-    const bookBtnText = langStore.isEn ? 'Book' : 'Pesan'
+    const viewDetailText = langStore.isEn ? 'Detail' : 'Detail'
+    const destLink = spot.dest_id ? `/detail/${spot.dest_id}` : '/#destinasi'
 
     const popupHtml = `
       <div class="enhanced-map-popup">
-        <img src="${spot.img || '/assets/images/pantai-karang-nyimbor.jpg'}" alt="${spot.name}" class="popup-thumb" />
+        <img src="${spot.img || '/assets/images/pantai-karang-nyimbor.jpg'}" alt="${spot.name}" class="popup-thumb" loading="lazy" />
         
         <div class="popup-header">
           <h4>${spot.name}</h4>
@@ -400,10 +432,10 @@ const renderMarkers = () => {
           </div>
           <div class="meta-row">
             <i class="fa-solid fa-location-dot" style="color:#06b6d4;"></i>
-            <span>${spot.location || 'Pesisir Barat'}</span>
+            <span>${spot.location || 'Pesisir Barat, Lampung'}</span>
           </div>
           <div class="meta-row">
-            <i class="fa-solid fa-tag" style="color:#8b5cf6;"></i>
+            <i class="fa-solid fa-ticket" style="color:#10b981;"></i>
             <span>${priceText}</span>
           </div>
         </div>
@@ -411,19 +443,26 @@ const renderMarkers = () => {
         <p class="popup-desc">${desc || 'Spot wisata menarik di Pesisir Barat'}</p>
         
         <div class="popup-actions">
-          <a href="${gmapsUrl}" target="_blank" class="popup-btn gmaps-btn" title="Google Maps">
+          <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" class="popup-btn gmaps-btn" title="Google Maps">
             <i class="fa-brands fa-google"></i> ${routeBtnText}
           </a>
-          <button class="popup-btn book-btn" onclick="document.querySelector('[href=\\'/booking\\']')?.click()" title="Book Now">
-            <i class="fa-solid fa-calendar-check"></i> ${bookBtnText}
-          </button>
+          <a href="${destLink}" class="popup-btn book-btn" title="Lihat Destinasi">
+            <i class="fa-solid fa-circle-info"></i> ${viewDetailText}
+          </a>
         </div>
       </div>
     `
     marker.bindPopup(popupHtml, { 
-      maxWidth: 300,
+      maxWidth: 320,
+      autoPan: true,
+      autoPanPadding: [20, 20],
       className: 'enhanced-popup-wrapper'
     })
+
+    marker.on('click', () => {
+      selectedSpotId.value = spot.id
+    })
+
     markers.push(marker)
   })
 }
@@ -431,7 +470,7 @@ const renderMarkers = () => {
 const flyToSpot = (spot) => {
   selectedSpotId.value = spot.id
   if (mapInstance) {
-    mapInstance.flyTo([spot.lat, spot.lng], 15, { duration: 1.5 })
+    mapInstance.flyTo([spot.lat, spot.lng], 15, { duration: 1.2 })
     const targetMarker = markers.find(m => {
       const ll = m.getLatLng()
       return Math.abs(ll.lat - spot.lat) < 0.0001 && Math.abs(ll.lng - spot.lng) < 0.0001
@@ -439,14 +478,23 @@ const flyToSpot = (spot) => {
     if (targetMarker) {
       setTimeout(() => {
         targetMarker.openPopup()
-      }, 1500)
+      }, 1200)
+    }
+  }
+
+  // Smooth scroll to map viewport on smaller screen sizes
+  if (window.innerWidth <= 1024) {
+    const mapWrapper = document.getElementById('mapViewportWrapper')
+    if (mapWrapper) {
+      mapWrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }
   }
 }
 
 const resetView = () => {
   if (mapInstance) {
-    mapInstance.flyTo([-5.27, 103.95], 11, { duration: 1.2 })
+    const isMobile = window.innerWidth <= 768
+    mapInstance.flyTo([-5.24, 103.95], isMobile ? 10 : 11, { duration: 1.2 })
   }
 }
 
@@ -474,6 +522,17 @@ const locateMe = () => {
   }
 }
 
+const handleResize = () => {
+  if (mapInstance) {
+    mapInstance.invalidateSize()
+  }
+}
+
+// Watch filters or search query change to update markers
+watch([() => selectedCategory.value, () => searchQuery.value], () => {
+  renderMarkers()
+})
+
 // Watch language change to re-render markers with updated translations
 watch(() => langStore.currentLang, () => {
   renderMarkers()
@@ -482,9 +541,13 @@ watch(() => langStore.currentLang, () => {
 onMounted(async () => {
   await nextTick()
   initMap()
+  window.addEventListener('resize', handleResize)
+  window.addEventListener('orientationchange', handleResize)
 })
 
 onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+  window.removeEventListener('orientationchange', handleResize)
   if (mapInstance) {
     mapInstance.remove()
     mapInstance = null

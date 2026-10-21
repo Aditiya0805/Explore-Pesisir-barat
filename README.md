@@ -50,18 +50,31 @@
 ## 🗄️ Setup Database Supabase
 
 1. Buat project baru di [Supabase Dashboard](https://supabase.com).
-2. Masuk ke **SQL Editor** → Klik **New Query**.
-3. Salin dan jalankan seluruh isi berkas: [`supabase_schema.sql`](./supabase_schema.sql).
-4. Dapatkan URL & Anon Key dari project Supabase Anda:
-   - Masuk ke **Project Settings** → **API**.
-   - Salin **Project URL** dan **anon public key**.
-5. Buka berkas `.env` di root project dan masukkan kredensial:
+2. Masuk ke **SQL Editor** → **New Query**.
+3. Salin dan jalankan **seluruh** isi berkas [`supabase_schema.sql`](./supabase_schema.sql). Skrip ini aman dijalankan berulang (idempotent) dan akan membuat:
+   - 9 tabel konten + tabel `admins` (allowlist admin),
+   - Row Level Security: publik hanya bisa **membaca**, penulisan hanya untuk admin,
+   - Bucket Storage publik `media` dengan batas **1 MB per gambar**,
+   - Seed data awal (destinasi, peta, paket, pemandu, galeri, artikel).
+4. Ambil **Project URL** dan **publishable key** di **Project Settings → API**.
+5. Buat berkas `.env` di root project (contoh tersedia di [`.env.example`](./.env.example)):
    ```env
    VITE_SUPABASE_URL=https://your-project.supabase.co
-   VITE_SUPABASE_ANON_KEY=your-anon-key
+   VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxxxxxxxxx
+   ```
+   > Kunci lama `VITE_SUPABASE_ANON_KEY` juga masih didukung.
+6. Buat akun login admin di **Authentication → Users → Add user**:
+   - Email: `admin@pesibarwave.id`
+   - Password: `pesisir2026` (ganti dengan kata sandi kuat)
+   - Centang **Auto Confirm User**.
+7. Pastikan email admin terdaftar pada tabel `admins` (seed sudah berisi `admin@pesibarwave.id`). Untuk email lain:
+   ```sql
+   INSERT INTO admins (email) VALUES ('email-anda@gmail.com')
+   ON CONFLICT (email) DO NOTHING;
    ```
 
-> 💡 *Catatan:* Aplikasi ini memiliki fitur **Dual-mode Fallback**. Jika kredensial Supabase belum diisi, aplikasi otomatis menggunakan fallback data lokal sehingga seluruh fitur (Peta 3D, Booking Wizard, Pari AI, dan Admin Dashboard) tetap berjalan 100% normal tanpa error.
+> 💡 *Catatan:* Aplikasi memiliki **Dual-mode Fallback**. Jika Supabase belum dikonfigurasi atau tabel belum dibuat, aplikasi otomatis memakai `src/data/fallbackData.js` + `localStorage` sehingga seluruh fitur tetap berjalan. Dashboard akan menampilkan status koneksi per tabel agar mudah didiagnosis.
+
 
 ---
 
@@ -71,11 +84,25 @@ Untuk kebutuhan demonstrasi, admin dapat masuk melalui menu profil atau rute `/a
 | Parameter | Kredensial Admin |
 | :--- | :--- |
 | **URL Akses** | `/admin` |
-| **Username** | `admin@pesibarwave.id` (atau `admin`) |
+| **Email Supabase** | `admin@pesibarwave.id` (buat di Authentication → Users) |
+| **Username Demo** | `admin` (atau `admin@pesibarwave.id`) |
 | **Kata Sandi** | `pesisir2026` |
-| **Role / Hak Akses** | Administrator Penuh (Pengelola Pariwisata Pesisir Barat) |
+| **Role / Hak Akses** | Administrator Penuh (email harus ada di tabel `admins`) |
+
+> ⚠️ Login dengan kredensial demo tanpa akun Supabase Auth membuka **mode lokal read-only**: dashboard tetap bisa dijelajahi, tetapi perubahan tidak dikirim ke database.
 
 Tersedia tombol **Isi Otomatis** pada kartu login untuk kemudahan pengujian.
+
+---
+
+## 🖼️ Upload Gambar & Batas 1 MB
+
+- Semua upload dari dashboard menggunakan bucket Storage publik bernama **`media`**.
+- Foto diseleksi di browser lalu **dikompresi otomatis** (canvas + penurunan kualitas/resolusi) hingga ukuran akhir **≤ 1 MB** sebelum dikirim.
+- Gambar yang sudah ≤ 1 MB diunggah apa adanya; PNG transparan tetap dipertahankan.
+- Batas 1 MB juga ditegakkan di sisi Supabase Storage (`file_size_limit` + `allowed_mime_types`).
+- Jika kompresi gagal mencapai 1 MB, unggahan ditolak dan pengguna diminta memilih foto dengan resolusi lebih kecil.
+- Dashboard juga menerima URL gambar eksternal (mis. `/assets/images/...`) tanpa upload.
 
 ---
 
@@ -96,8 +123,12 @@ Tersedia tombol **Isi Otomatis** pada kartu login untuk kemudahan pengujian.
 3. **Pari AI - Asisten Wisata Pintar:**
    - Chatbot rekomendasi wisata interaktif berbasis query preferensi traveler (pantai keluarga, surfing pemula/ahli, kuliner seruit, tips rute perjalanan).
 
-4. **Dashboard Admin Pengelola:**
-   - Pemantauan statistik total reservasi, pemesanan pending, terkonfirmasi, estimasi omset, verifikasi status, filter pencarian, dan integrasi tabel Supabase.
+4. **Dashboard Admin Pengelola (CRUD penuh + Supabase Storage):**
+   - Statistik real dari tabel `bookings`, grafik tren bulanan, dan paket terpopuler dihitung otomatis.
+   - CRUD untuk destinasi, titik peta, paket wisata, pemandu, galeri, artikel, dan pengaturan situs.
+   - Upload gambar langsung ke bucket `media`; foto otomatis dikompresi di browser hingga **≤ 1 MB**.
+   - Update status booking real-time (Supabase Realtime), filter, pencarian, dan hapus booking.
+   - Kartu **Status Koneksi** memeriksa setiap tabel + bucket storage dan menampilkan pesan perbaikan.
 
 5. **Modul Legalitas & Edukasi (Info Modals):**
    - FAQs (Pertanyaan Umum seputar aksesibilitas Krui, musim ombak, Pulau Pisang).
