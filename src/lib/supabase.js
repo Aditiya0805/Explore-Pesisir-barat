@@ -9,12 +9,11 @@ import { createClient } from '@supabase/supabase-js'
  *   VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...   (new)
  *   VITE_SUPABASE_ANON_KEY=eyJ...                      (legacy)
  */
-const env = import.meta.env
-const supabaseUrl = (env.VITE_SUPABASE_URL || '').trim().replace(/\/+$/, '')
+const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || '').trim().replace(/\/+$/, '')
 const supabaseKey = (
-  env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-  env.VITE_SUPABASE_ANON_KEY ||
-  env.VITE_SUPABASE_KEY ||
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+  import.meta.env.VITE_SUPABASE_ANON_KEY ||
+  import.meta.env.VITE_SUPABASE_KEY ||
   ''
 ).trim()
 
@@ -31,9 +30,9 @@ export const supabaseConfig = {
   url: supabaseUrl,
   hasUrl: Boolean(supabaseUrl),
   hasKey: Boolean(supabaseKey),
-  keyVariable: env.VITE_SUPABASE_PUBLISHABLE_KEY
+  keyVariable: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
     ? 'VITE_SUPABASE_PUBLISHABLE_KEY'
-    : env.VITE_SUPABASE_ANON_KEY
+    : import.meta.env.VITE_SUPABASE_ANON_KEY
       ? 'VITE_SUPABASE_ANON_KEY'
       : null,
   get configured() {
