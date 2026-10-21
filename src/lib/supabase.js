@@ -12,30 +12,36 @@ import { createClient } from '@supabase/supabase-js'
  * The values are read directly from `import.meta.env` at build time so Vite
  * can statically replace them (required for Vercel environment variables).
  */
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseKey =
-  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
+const rawUrl = import.meta.env.VITE_SUPABASE_URL
+const rawKey =
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+  import.meta.env.VITE_SUPABASE_ANON_KEY ||
+  import.meta.env.VITE_SUPABASE_KEY
 
-const isNonEmptyString = (value) => typeof value === 'string' && value.trim().length > 0
+const PLACEHOLDERS = ['your-project', 'your-anon-key', 'your-publishable-key', 'placeholder']
 
-/** `true` when both the Supabase URL and key are non-empty strings. */
-export const hasSupabaseCredentials =
-  isNonEmptyString(supabaseUrl) && isNonEmptyString(supabaseKey)
+const isNonEmpty = (val) => typeof val === 'string' && val.trim().length > 0
 
-/**
- * On production builds (Vercel) Supabase is always treated as configured so
- * the "Supabase belum dikonfigurasi" warning is never rendered there.
- * Local dev still reflects the real `.env` state.
- */
-export const isSupabaseConfigured = hasSupabaseCredentials || import.meta.env.PROD
+const checkValid = (url, key) => {
+  if (!isNonEmpty(url) || !isNonEmpty(key)) return false
+  const cleanUrl = url.trim()
+  const cleanKey = key.trim()
+  if (!/^https?:\/\//i.test(cleanUrl)) return false
+  if (PLACEHOLDERS.some((p) => cleanUrl.includes(p) || cleanKey.includes(p))) return false
+  return true
+}
+
+/** `true` when valid Supabase URL and key are provided via .env or Vercel */
+export const hasSupabaseCredentials = checkValid(rawUrl, rawKey)
+export const isSupabaseConfigured = hasSupabaseCredentials
 
 export const supabaseConfig = {
-  url: supabaseUrl,
-  hasUrl: isNonEmptyString(supabaseUrl),
-  hasKey: isNonEmptyString(supabaseKey),
-  keyVariable: isNonEmptyString(import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY)
+  url: isNonEmpty(rawUrl) ? rawUrl.trim() : '',
+  hasUrl: isNonEmpty(rawUrl),
+  hasKey: isNonEmpty(rawKey),
+  keyVariable: isNonEmpty(import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY)
     ? 'VITE_SUPABASE_PUBLISHABLE_KEY'
-    : isNonEmptyString(import.meta.env.VITE_SUPABASE_ANON_KEY)
+    : isNonEmpty(import.meta.env.VITE_SUPABASE_ANON_KEY)
       ? 'VITE_SUPABASE_ANON_KEY'
       : null,
   hasCredentials: hasSupabaseCredentials,
@@ -43,9 +49,9 @@ export const supabaseConfig = {
 }
 
 const clientUrl = hasSupabaseCredentials
-  ? supabaseUrl.trim().replace(/\/+$/, '')
+  ? rawUrl.trim().replace(/\/+$/, '')
   : 'https://placeholder.supabase.co'
-const clientKey = hasSupabaseCredentials ? supabaseKey.trim() : 'placeholder-key'
+const clientKey = hasSupabaseCredentials ? rawKey.trim() : 'placeholder-key'
 
 export const supabase = createClient(clientUrl, clientKey, {
   auth: {
