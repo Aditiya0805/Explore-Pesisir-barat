@@ -135,7 +135,7 @@ function safeName(name) {
  * Returns { url, path, originalSize, size, compressed }.
  */
 export async function uploadImage(file, { folder = 'misc', onProgress } = {}) {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured) {
     throw new Error('Upload gambar membutuhkan koneksi Supabase. Isi kredensial pada .env lalu login ulang.')
   }
 

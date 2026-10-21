@@ -14,7 +14,7 @@ export const useAdminStore = defineStore('admin', () => {
   const lastError = ref('')
   const dataSource = ref('none') // 'supabase' | 'local' | 'mock' | 'none'
   const connection = ref({
-    configured: isSupabaseConfigured(),
+    configured: isSupabaseConfigured,
     database: null,
     storage: null,
     adminAccess: null,
@@ -46,7 +46,7 @@ export const useAdminStore = defineStore('admin', () => {
     lastError.value = ''
 
     try {
-      if (isSupabaseConfigured()) {
+      if (isSupabaseConfigured) {
         const { data, error } = await supabase
           .from('bookings')
           .select('*')
@@ -91,7 +91,7 @@ export const useAdminStore = defineStore('admin', () => {
     writeLocal(bookings.value)
     lastError.value = ''
 
-    if (!isSupabaseConfigured()) {
+    if (!isSupabaseConfigured) {
       return { success: true, local: true }
     }
 
@@ -116,7 +116,7 @@ export const useAdminStore = defineStore('admin', () => {
   }
 
   const deleteBooking = async (bookingCode) => {
-    if (!isSupabaseConfigured()) {
+    if (!isSupabaseConfigured) {
       bookings.value = bookings.value.filter((b) => b.code !== bookingCode)
       writeLocal(bookings.value)
       return { success: true, local: true }
@@ -135,7 +135,7 @@ export const useAdminStore = defineStore('admin', () => {
 
   /** Subscribe to live INSERT/UPDATE/DELETE events on the bookings table. */
   const subscribeRealtime = () => {
-    if (!isSupabaseConfigured() || realtimeChannel) return
+    if (!isSupabaseConfigured || realtimeChannel) return
     try {
       realtimeChannel = supabase
         .channel('admin-bookings')

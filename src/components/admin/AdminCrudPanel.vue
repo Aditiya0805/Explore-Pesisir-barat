@@ -268,7 +268,7 @@ const props = defineProps({
 
 const emit = defineEmits(['changed'])
 
-const configured = isSupabaseConfigured()
+const configured = isSupabaseConfigured
 const rows = ref([])
 const loading = ref(false)
 const saving = ref(false)

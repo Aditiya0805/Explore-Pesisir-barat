@@ -142,7 +142,7 @@ export const useBookingStore = defineStore('booking', () => {
       localStorage.setItem('bookings', JSON.stringify(localBookings))
 
       // 2. Save to Supabase if configured.
-      if (isSupabaseConfigured()) {
+      if (isSupabaseConfigured) {
         try {
           const { data: sessionData } = await supabase.auth.getSession()
           const payload = {

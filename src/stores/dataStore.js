@@ -40,7 +40,7 @@ export const useDataStore = defineStore('data', () => {
 
   const loading = ref(false)
   const lastError = ref('')
-  const dataSource = ref(isSupabaseConfigured() ? 'supabase' : 'fallback')
+  const dataSource = ref(isSupabaseConfigured ? 'supabase' : 'fallback')
 
   const applyTable = (refTarget, rows, { allowEmpty }) => {
     if (Array.isArray(rows) && (allowEmpty || rows.length)) {
@@ -55,7 +55,7 @@ export const useDataStore = defineStore('data', () => {
    *   allowEmpty=true accepts empty tables (used after admin deletes data).
    */
   const fetchAllData = async ({ allowEmpty = false } = {}) => {
-    if (!isSupabaseConfigured()) {
+    if (!isSupabaseConfigured) {
       dataSource.value = 'fallback'
       return { configured: false }
     }

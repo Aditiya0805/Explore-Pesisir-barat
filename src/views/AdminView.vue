@@ -528,7 +528,7 @@ const authStore = useAuthStore()
 const adminStore = useAdminStore()
 const dataStore = useDataStore()
 
-const supabaseConfigured = isSupabaseConfigured()
+const supabaseConfigured = isSupabaseConfigured
 const currentTab = ref('dashboard')
 const mobileSidebarOpen = ref(false)
 const crudPanel = ref(null)

@@ -34,7 +34,7 @@ export function friendlyDbError(error, table) {
 }
 
 function ensureClient() {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured) {
     throw new Error('Supabase belum dikonfigurasi. Isi VITE_SUPABASE_URL dan VITE_SUPABASE_PUBLISHABLE_KEY pada berkas .env.')
   }
 }
@@ -78,7 +78,7 @@ export function upsertRow(table, payload, onConflict = 'id') {
 
 /** Diagnostics used by the dashboard "Koneksi" card. */
 export async function checkDatabase() {
-  if (!isSupabaseConfigured()) {
+  if (!isSupabaseConfigured) {
     return {
       configured: false,
       tables: {},

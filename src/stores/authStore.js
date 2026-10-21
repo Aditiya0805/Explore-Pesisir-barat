@@ -42,7 +42,7 @@ export const useAuthStore = defineStore('auth', () => {
       // Clear the retired persistent flag so it can never bypass the form.
       localStorage.removeItem(LEGACY_ADMIN_FLAG)
 
-      if (!isSupabaseConfigured()) {
+      if (!isSupabaseConfigured) {
         authMode.value = null
         isAdmin.value = false
         return
@@ -83,7 +83,7 @@ export const useAuthStore = defineStore('auth', () => {
     const normalizedUsername = String(username || '').trim().toLowerCase()
     lastAuthError.value = ''
 
-    if (isSupabaseConfigured()) {
+    if (isSupabaseConfigured) {
       try {
         const { data, error } = await supabase.auth.signInWithPassword({
           email: normalizedUsername,
@@ -115,7 +115,7 @@ export const useAuthStore = defineStore('auth', () => {
       }
     }
 
-    if (isSupabaseConfigured() && lastAuthError.value) {
+    if (isSupabaseConfigured && lastAuthError.value) {
       const hint = /invalid login credentials/i.test(lastAuthError.value) ? ` ${MISSING_ADMIN_HINT}` : ''
       return {
         success: false,
@@ -132,7 +132,7 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
     session.value = null
     localStorage.removeItem(LEGACY_ADMIN_FLAG)
-    if (isSupabaseConfigured()) {
+    if (isSupabaseConfigured) {
       await supabase.auth.signOut()
     }
   }

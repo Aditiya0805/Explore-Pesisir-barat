@@ -70,7 +70,7 @@ export const useReviewStore = defineStore('review', () => {
 
     reviews.value = localForDest
 
-    if (!isSupabaseConfigured()) return
+    if (!isSupabaseConfigured) return
 
     loading.value = true
     try {
@@ -115,7 +115,7 @@ export const useReviewStore = defineStore('review', () => {
     }
 
     // 2. Sync to Supabase when available (best-effort, never block the UI).
-    if (isSupabaseConfigured()) {
+    if (isSupabaseConfigured) {
       submitting.value = true
       try {
         const { error } = await supabase.from('reviews').insert([{
